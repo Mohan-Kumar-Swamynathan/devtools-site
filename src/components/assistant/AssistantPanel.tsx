@@ -1,11 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Mic, MicOff, Send, Volume2, VolumeX } from 'lucide-react';
+import { X, Send, Search, ArrowRight } from 'lucide-react';
 import AssistantAvatar from './AssistantAvatar';
 import MessageBubble from './MessageBubble';
 import SuggestionChips from './SuggestionChips';
 import { useAssistant } from '@/hooks/useAssistant';
-import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
-import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis';
+import { searchTools } from '@/lib/tools';
 
 interface Props {
   onClose: () => void;
@@ -13,49 +12,37 @@ interface Props {
 
 export default function AssistantPanel({ onClose }: Props) {
   const [input, setInput] = useState('');
-  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [suggestions, setSuggestions] = useState<any[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   
-  const { messages, mood, sendMessage, isProcessing } = useAssistant();
-  const { isListening, startListening, stopListening, transcript, isSupported: speechSupported } = useSpeechRecognition();
-  const { speak, stop: stopSpeaking, isSpeaking } = useSpeechSynthesis();
+  const { messages, mood, sendMessage, isProcessing, redirectToTool } = useAssistant();
 
   // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Real-time tool search as user types
+  useEffect(() => {
+    if (input.trim().length > 2) {
+      const matches = searchTools(input.trim()).slice(0, 5);
+      setSuggestions(matches);
+    } else {
+      setSuggestions([]);
+    }
+  }, [input]);
+
   const handleSend = useCallback(async (text?: string) => {
     const msg = text || input.trim();
     if (!msg) return;
     setInput('');
-    stopSpeaking();
+    setSuggestions([]);
     await sendMessage(msg);
-  }, [input, stopSpeaking, sendMessage]);
+  }, [input, sendMessage]);
 
-  // Handle transcript
-  useEffect(() => {
-    if (transcript && !isListening) {
-      handleSend(transcript);
-    }
-  }, [transcript, isListening, handleSend]);
-
-  // Speak assistant response
-  useEffect(() => {
-    const lastMsg = messages[messages.length - 1];
-    if (lastMsg?.role === 'assistant' && voiceEnabled && !isProcessing && !isSpeaking) {
-      speak(lastMsg.content);
-    }
-  }, [messages, voiceEnabled, isProcessing, isSpeaking]);
-
-  const toggleVoice = () => {
-    if (isListening) {
-      stopListening();
-    } else {
-      stopSpeaking();
-      startListening();
-    }
-  };
+  const handleToolClick = useCallback((tool: any) => {
+    redirectToTool(tool.slug);
+  }, [redirectToTool]);
 
   return (
     <div className="assistant-panel animate-slide-up" style={{ maxHeight: '80vh' }}>
@@ -66,20 +53,11 @@ export default function AssistantPanel({ onClose }: Props) {
           <div>
             <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>DevBot</h3>
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              {isListening ? 'Listening...' : isSpeaking ? 'Speaking...' : 'Ask me anything'}
+              {isProcessing ? 'Searching...' : 'Find tools & navigate'}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          <button 
-            onClick={() => setVoiceEnabled(!voiceEnabled)} 
-            className="btn-icon p-2"
-            title={voiceEnabled ? 'Mute' : 'Unmute'}
-          >
-            {voiceEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-          </button>
-          <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
-        </div>
+        <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
       </div>
 
       {/* Messages */}
@@ -89,13 +67,19 @@ export default function AssistantPanel({ onClose }: Props) {
             <AssistantAvatar mood="happy" size={80} />
             <p className="mt-4 font-medium" style={{ color: 'var(--text-primary)' }}>Hi! I'm DevBot 👋</p>
             <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-              I can help you find tools and explain how to use them.
+              Search for tools or ask me to navigate. I'll help you find what you need!
             </p>
           </div>
         )}
         
         {messages.map((msg, i) => (
-          <MessageBubble key={i} role={msg.role} content={msg.content} />
+          <MessageBubble 
+            key={i} 
+            role={msg.role} 
+            content={msg.content}
+            tool={msg.tool}
+            onToolClick={msg.tool ? () => handleToolClick(msg.tool) : undefined}
+          />
         ))}
         
         {isProcessing && (
@@ -111,33 +95,58 @@ export default function AssistantPanel({ onClose }: Props) {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Tool Suggestions (while typing) */}
+      {suggestions.length > 0 && input.trim().length > 2 && (
+        <div className="px-4 pb-2 border-t" style={{ borderColor: 'var(--border-primary)' }}>
+          <p className="text-xs font-medium mb-2" style={{ color: 'var(--text-muted)' }}>Quick Access:</p>
+          <div className="flex flex-wrap gap-2">
+            {suggestions.map((tool) => (
+              <button
+                key={tool.id}
+                onClick={() => handleToolClick(tool)}
+                className="px-3 py-1.5 text-xs rounded-lg border transition-all hover:scale-105 flex items-center gap-1.5"
+                style={{ 
+                  borderColor: 'var(--border-primary)', 
+                  color: 'var(--text-primary)',
+                  backgroundColor: 'var(--bg-primary)'
+                }}
+              >
+                <span>{tool.icon}</span>
+                <span>{tool.name}</span>
+                <ArrowRight size={12} />
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Suggestions */}
-      {messages.length === 0 && (
+      {messages.length === 0 && suggestions.length === 0 && (
         <SuggestionChips onSelect={handleSend} />
       )}
 
       {/* Input */}
       <div className="p-4 border-t" style={{ borderColor: 'var(--border-primary)' }}>
         <div className="flex items-center gap-2">
-          {speechSupported && (
-            <button
-              onClick={toggleVoice}
-              className={`btn-icon p-3 rounded-full transition-colors ${isListening ? 'bg-red-500 text-white' : ''}`}
-              title={isListening ? 'Stop listening' : 'Start voice input'}
-            >
-              {isListening ? <MicOff size={20} /> : <Mic size={20} />}
-            </button>
-          )}
-          
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Type or speak..."
-            className="flex-1 input-base py-2.5"
-            disabled={isListening}
-          />
+          <div className="relative flex-1">
+            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2" style={{ color: 'var(--text-muted)' }} />
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !isProcessing) {
+                  if (suggestions.length === 1) {
+                    handleToolClick(suggestions[0]);
+                  } else {
+                    handleSend();
+                  }
+                }
+              }}
+              placeholder="Search tools or ask a question..."
+              className="flex-1 input-base py-2.5 pl-10"
+            />
+          </div>
           
           <button
             onClick={() => handleSend()}
@@ -147,8 +156,12 @@ export default function AssistantPanel({ onClose }: Props) {
             <Send size={18} />
           </button>
         </div>
+        {input.trim().length > 0 && suggestions.length === 0 && (
+          <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
+            Press Enter to search, or type more to see suggestions
+          </p>
+        )}
       </div>
     </div>
   );
 }
-
