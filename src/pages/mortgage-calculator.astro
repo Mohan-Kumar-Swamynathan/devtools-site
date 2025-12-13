@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import MortgageCalculator from '@/components/tools/MortgageCalculator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('mortgage-calculator')!;
+const relatedTools = getToolsByCategory('calculators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <MortgageCalculator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Mortgage Calculator?</h2>
+    <p>
+      Mortgage Calculator is a free online tool that calculates monthly mortgage payments with principal, interest, 
+      taxes, and insurance.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Calculate monthly mortgage payments</li>
+      <li>Include property tax and insurance</li>
+      <li>PMI calculation</li>
+      <li>Loan term options (15, 20, 25, 30 years)</li>
+      <li>Payment breakdown</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

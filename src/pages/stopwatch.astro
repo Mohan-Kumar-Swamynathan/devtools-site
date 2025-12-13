@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import Stopwatch from '@/components/tools/Stopwatch.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('stopwatch')!;
+const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <Stopwatch client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Stopwatch?</h2>
+    <p>
+      Stopwatch is a free online tool that provides accurate time tracking with lap functionality. 
+      Track time for any activity with precision.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Accurate time tracking (centisecond precision)</li>
+      <li>Lap times functionality</li>
+      <li>Start, pause, and reset controls</li>
+      <li>Lap history with total time</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

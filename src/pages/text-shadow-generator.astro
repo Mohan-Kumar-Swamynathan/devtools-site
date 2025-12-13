@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TextShadowGenerator from '@/components/tools/TextShadowGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('text-shadow-generator')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <TextShadowGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Text Shadow Generator?</h2>
+    <p>
+      Text Shadow Generator is a free online tool that allows you to create CSS text shadows visually. 
+      Create multiple text shadows with color, blur, and offset controls.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Create multiple text shadows</li>
+      <li>Adjust X and Y offsets</li>
+      <li>Control blur radius</li>
+      <li>Choose colors and opacity</li>
+      <li>Real-time preview</li>
+      <li>Copy generated CSS code</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

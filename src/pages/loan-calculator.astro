@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import LoanCalculator from '@/components/tools/LoanCalculator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('loan-calculator')!;
+const relatedTools = getToolsByCategory('calculators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <LoanCalculator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Loan/EMI Calculator?</h2>
+    <p>
+      Loan/EMI Calculator is a free online tool that calculates monthly EMI, interest, and total amount for loans. 
+      View amortization schedule.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Calculate monthly EMI</li>
+      <li>View total interest and total amount</li>
+      <li>Amortization schedule (first 12 months)</li>
+      <li>Support for years or months</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

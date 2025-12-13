@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import GifFrameExtractor from '@/components/tools/GifFrameExtractor.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('gif-frame-extractor')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <GifFrameExtractor client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is GIF Frame Extractor?</h2>
+    <p>
+      GIF Frame Extractor is a free online tool that allows you to extract individual frames from animated GIFs. 
+      Preview and download all frames or select specific ones.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Extract all frames from animated GIFs</li>
+      <li>Preview extracted frames</li>
+      <li>Download individual frames as PNG</li>
+      <li>Download all frames as a ZIP file</li>
+      <li>100% client-side - your GIFs never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

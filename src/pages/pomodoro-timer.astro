@@ -1,0 +1,39 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import PomodoroTimer from '@/components/tools/PomodoroTimer.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('pomodoro-timer')!;
+const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <PomodoroTimer client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Pomodoro Timer?</h2>
+    <p>
+      Pomodoro Timer is a free online productivity tool that implements the Pomodoro Technique - 
+      25-minute focus sessions with breaks. Boost productivity with structured time management.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>25-minute Pomodoro sessions</li>
+      <li>5-minute short breaks</li>
+      <li>15-minute long breaks (after 4 Pomodoros)</li>
+      <li>Visual progress indicator</li>
+      <li>Browser notifications</li>
+      <li>Track completed Pomodoros</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

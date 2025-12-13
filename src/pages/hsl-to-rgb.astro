@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HslToRgb from '@/components/tools/HslToRgb.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('hsl-to-rgb')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <HslToRgb client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is HSL to RGB Converter?</h2>
+    <p>
+      HSL to RGB Converter is a free online tool that converts HSL color values to RGB and vice versa. 
+      Complete color conversion tool.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert HSL to RGB</li>
+      <li>Convert RGB to HSL</li>
+      <li>Interactive sliders</li>
+      <li>Color preview</li>
+      <li>Hex color output</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonPathBuilder from '@/components/tools/JsonPathBuilder.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('json-path-builder')!;
+const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <JsonPathBuilder client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is JSON Path Builder?</h2>
+    <p>
+      JSON Path Builder is a free online tool that allows you to build and test JSON paths visually. 
+      Explore JSON structures and generate path expressions.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Build JSON paths interactively</li>
+      <li>Test paths against JSON data</li>
+      <li>Support for nested objects and arrays</li>
+      <li>Copy results</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

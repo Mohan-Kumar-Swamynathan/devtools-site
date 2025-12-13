@@ -1,18 +1,28 @@
 import { useState, useCallback } from 'react';
-import OutputPanel from '@/components/common/OutputPanel';
+import { Copy, Send, RotateCcw } from 'lucide-react';
+import { useToast } from '@/hooks/useToast';
+import ErrorMessage from '@/components/common/ErrorMessage';
 
 export default function WebhookTester() {
   const [url, setUrl] = useState('');
-  const [method, setMethod] = useState<'GET' | 'POST' | 'PUT' | 'DELETE'>('POST');
+  const [method, setMethod] = useState('POST');
   const [headers, setHeaders] = useState('Content-Type: application/json');
-  const [body, setBody] = useState('{"test": "data"}');
+  const [payload, setPayload] = useState('{"key": "value"}');
   const [response, setResponse] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { showToast } = useToast();
 
-  const test = useCallback(async () => {
-    setLoading(true);
+  const handleTest = useCallback(async () => {
+    if (!url.trim()) {
+      setError('Please enter a webhook URL');
+      return;
+    }
+
+    setError('');
+    setIsLoading(true);
     setResponse(null);
-    
+
     try {
       const headerObj: Record<string, string> = {};
       headers.split('\n').forEach(line => {
@@ -22,146 +32,177 @@ export default function WebhookTester() {
         }
       });
 
-      const options: RequestInit = {
+      let body = null;
+      if (method !== 'GET' && payload.trim()) {
+        try {
+          body = JSON.parse(payload);
+        } catch {
+          body = payload;
+        }
+      }
+
+      const res = await fetch(url, {
         method,
-        headers: headerObj
-      };
+        headers: headerObj,
+        body: method !== 'GET' ? JSON.stringify(body) : undefined,
+      });
 
-      if (method !== 'GET' && body) {
-        options.body = body;
-      }
-
-      const res = await fetch(url, options);
-      const text = await res.text();
-      
-      let parsed;
-      try {
-        parsed = JSON.parse(text);
-      } catch {
-        parsed = text;
-      }
-
-      setResponse({
+      const responseData = {
         status: res.status,
         statusText: res.statusText,
         headers: Object.fromEntries(res.headers.entries()),
-        body: parsed
-      });
+        body: await res.text(),
+      };
+
+      setResponse(responseData);
+      showToast('Webhook tested!', 'success');
     } catch (e) {
-      const error = e as Error;
-      let errorMessage = error.message;
-      
-      // Provide user-friendly error messages
-      if (errorMessage.includes('Failed to fetch') || errorMessage.includes('NetworkError')) {
-        errorMessage = 'Network error: Could not connect to the server. Please check your internet connection and the URL.';
-      } else if (errorMessage.includes('CORS')) {
-        errorMessage = 'CORS error: The server blocked the request. This might be due to CORS policy restrictions.';
-      } else if (errorMessage.includes('Invalid URL')) {
-        errorMessage = 'Invalid URL: Please enter a valid URL (e.g., https://api.example.com/webhook)';
-      }
-      
-      setResponse({
-        error: errorMessage,
-        errorType: error.name
-      });
+      setError(`Error: ${(e as Error).message}`);
+      showToast('Webhook test failed', 'error');
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
-  }, [url, method, headers, body]);
+  }, [url, method, headers, payload, showToast]);
+
+  const handleCopy = useCallback(() => {
+    if (response) {
+      const text = JSON.stringify(response, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied to clipboard!', 'success');
+      });
+    }
+  }, [response, showToast]);
 
   return (
     <div className="space-y-6">
-      <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-primary)' }}>
-        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-          <strong>Note:</strong> This tool makes actual HTTP requests. Use with caution and only test your own endpoints.
-        </p>
-      </div>
-
-      <div>
-        <label className="label">Webhook URL</label>
-        <input
-          type="url"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="https://api.example.com/webhook"
-          className="input-base font-mono"
-        />
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="label">HTTP Method</label>
-          <select value={method} onChange={(e) => setMethod(e.target.value as any)} className="input-base">
-            <option value="GET">GET</option>
-            <option value="POST">POST</option>
-            <option value="PUT">PUT</option>
-            <option value="DELETE">DELETE</option>
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <label className="label">Headers (one per line)</label>
-        <textarea
-          value={headers}
-          onChange={(e) => setHeaders(e.target.value)}
-          placeholder="Content-Type: application/json
-Authorization: Bearer token"
-          className="input-base min-h-[80px] font-mono text-sm"
-        />
-      </div>
-
-      {method !== 'GET' && (
-        <div>
-          <label className="label">Request Body</label>
-          <textarea
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            placeholder='{"key": "value"}'
-            className="input-base min-h-[100px] font-mono text-sm"
-          />
-        </div>
-      )}
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="flex flex-wrap items-center gap-3">
-        <button onClick={test} disabled={!url || loading} className="btn-primary">
-          {loading ? 'Testing...' : 'Test Webhook'}
+        <button
+          onClick={handleTest}
+          disabled={isLoading}
+          className="btn-primary flex items-center gap-2"
+        >
+          <Send size={18} />
+          {isLoading ? 'Testing...' : 'Test Webhook'}
         </button>
-        <button onClick={() => { setUrl(''); setResponse(null); }} className="btn-ghost">
+        {response && (
+          <button
+            onClick={handleCopy}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <Copy size={18} />
+            Copy Response
+          </button>
+        )}
+        <button
+          onClick={() => {
+            setUrl('');
+            setHeaders('Content-Type: application/json');
+            setPayload('{"key": "value"}');
+            setResponse(null);
+            setError('');
+          }}
+          className="btn-ghost flex items-center gap-2"
+        >
+          <RotateCcw size={18} />
           Clear
         </button>
       </div>
 
-      {response && (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
-          {response.error ? (
-            <div className="alert-error">
-              <div className="font-semibold mb-1">Error</div>
-              <div>{response.error}</div>
-              {response.errorType && (
-                <div className="text-xs mt-2 opacity-75">Type: {response.errorType}</div>
-              )}
+          <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+            Request
+          </h3>
+          <div className="p-4 rounded-xl border space-y-4" style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-primary)'
+          }}>
+            <div>
+              <label className="label">Method</label>
+              <select
+                value={method}
+                onChange={(e) => setMethod(e.target.value)}
+                className="input w-full"
+              >
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="PATCH">PATCH</option>
+                <option value="DELETE">DELETE</option>
+              </select>
             </div>
-          ) : (
-            <>
-              <div className={`p-4 rounded-xl border ${
-                response.status >= 200 && response.status < 300 ? 'alert-success' : 'alert-error'
-              }`}>
-                <div className="font-medium">
-                  {response.status} {response.statusText}
+            <div>
+              <label className="label">Webhook URL</label>
+              <input
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                className="input w-full"
+                placeholder="https://example.com/webhook"
+              />
+            </div>
+            <div>
+              <label className="label">Headers</label>
+              <textarea
+                value={headers}
+                onChange={(e) => setHeaders(e.target.value)}
+                className="input w-full h-24 font-mono text-sm"
+                placeholder="Content-Type: application/json"
+              />
+            </div>
+            {method !== 'GET' && (
+              <div>
+                <label className="label">Payload (JSON)</label>
+                <textarea
+                  value={payload}
+                  onChange={(e) => setPayload(e.target.value)}
+                  className="input w-full h-32 font-mono text-sm"
+                  placeholder='{"key": "value"}'
+                />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+            Response
+          </h3>
+          <div className="p-4 rounded-xl border min-h-[400px]" style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-primary)'
+          }}>
+            {response ? (
+              <div className="space-y-4">
+                <div>
+                  <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
+                    Status
+                  </div>
+                  <div className="text-lg font-semibold" style={{ 
+                    color: response.status >= 200 && response.status < 300 ? 'var(--status-success)' : 'var(--status-error)' 
+                  }}>
+                    {response.status} {response.statusText}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-sm font-medium mb-2" style={{ color: 'var(--text-muted)' }}>
+                    Response Body
+                  </div>
+                  <pre className="text-xs p-3 rounded bg-gray-100 dark:bg-gray-800 overflow-x-auto max-h-64" style={{ color: 'var(--text-primary)' }}>
+                    {response.body}
+                  </pre>
                 </div>
               </div>
-              <OutputPanel
-                value={JSON.stringify(response, null, 2)}
-                label="Response"
-                language="json"
-                showLineNumbers
-              />
-            </>
-          )}
+            ) : (
+              <div className="flex items-center justify-center h-full" style={{ color: 'var(--text-muted)' }}>
+                Response will appear here after testing
+              </div>
+            )}
+          </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
-

@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageCropper from '@/components/tools/ImageCropper.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-cropper')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageCropper client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Cropper?</h2>
+    <p>
+      Image Cropper is a free online tool that allows you to crop images with an interactive selection tool. 
+      Choose from preset aspect ratios or crop freely. All processing happens in your browser.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Interactive crop selection with drag and resize</li>
+      <li>Preset aspect ratios (1:1, 16:9, 4:3, 3:2, 9:16) or free-form cropping</li>
+      <li>Real-time preview of crop area</li>
+      <li>Download cropped images instantly</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

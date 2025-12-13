@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import PdfCompressor from '@/components/tools/PdfCompressor.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('pdf-compressor')!;
+const relatedTools = getToolsByCategory('pdf').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <PdfCompressor client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is PDF Compressor?</h2>
+    <p>
+      PDF Compressor is a free online tool that compresses PDF files to reduce file size. 
+      Optimize PDFs for web or email.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Compress PDF files</li>
+      <li>Reduce file size</li>
+      <li>See compression statistics</li>
+      <li>Download compressed PDF</li>
+      <li>100% client-side - your files never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

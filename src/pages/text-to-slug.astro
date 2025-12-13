@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TextToSlug from '@/components/tools/TextToSlug.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('text-to-slug')!;
+const relatedTools = getToolsByCategory('text').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <TextToSlug client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Text to Slug Converter?</h2>
+    <p>
+      Text to Slug Converter is a free online tool that converts any text to URL-friendly slugs. 
+      Remove special characters, lowercase, and replace spaces for SEO-friendly URLs.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert text to URL-friendly slugs</li>
+      <li>Customizable options (lowercase, remove special chars, etc.)</li>
+      <li>Real-time conversion</li>
+      <li>Copy or download slug</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

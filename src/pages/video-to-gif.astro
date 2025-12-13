@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import VideoToGif from '@/components/tools/VideoToGif.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('video-to-gif')!;
+const relatedTools = getToolsByCategory('video').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <VideoToGif client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Video to GIF?</h2>
+    <p>
+      Video to GIF is a free online tool that converts video segments to animated GIFs. 
+      Select time range, set frame rate, and create GIFs from videos.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert video segments to animated GIFs</li>
+      <li>Select custom time range</li>
+      <li>Adjustable frame rate</li>
+      <li>Preview before downloading</li>
+      <li>100% client-side - your videos never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

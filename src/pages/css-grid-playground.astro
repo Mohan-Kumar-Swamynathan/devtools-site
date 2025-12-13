@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CssGridPlayground from '@/components/tools/CssGridPlayground.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('css-grid-playground')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CssGridPlayground client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is CSS Grid Playground?</h2>
+    <p>
+      CSS Grid Playground is a free online tool that allows you to learn CSS Grid interactively. 
+      Create grid layouts with visual examples and real-time preview.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Adjust columns and rows</li>
+      <li>Control gap between items</li>
+      <li>Set justify-items and align-items</li>
+      <li>Real-time preview</li>
+      <li>Copy generated CSS code</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

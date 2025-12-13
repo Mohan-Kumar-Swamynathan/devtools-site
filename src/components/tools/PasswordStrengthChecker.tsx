@@ -1,94 +1,121 @@
 import { useState, useCallback } from 'react';
-import OutputPanel from '@/components/common/OutputPanel';
+import { Eye, EyeOff, Check, X } from 'lucide-react';
 
 export default function PasswordStrengthChecker() {
   const [password, setPassword] = useState('');
-  const [result, setResult] = useState<{
-    strength: 'weak' | 'medium' | 'strong' | 'very-strong';
-    score: number;
-    feedback: string[];
-  } | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const check = useCallback(() => {
+  const checkStrength = useCallback((pwd: string) => {
     let score = 0;
-    const feedback: string[] = [];
+    const checks = {
+      length: pwd.length >= 8,
+      lowercase: /[a-z]/.test(pwd),
+      uppercase: /[A-Z]/.test(pwd),
+      numbers: /\d/.test(pwd),
+      special: /[!@#$%^&*(),.?":{}|<>]/.test(pwd),
+      long: pwd.length >= 12,
+    };
 
-    if (password.length >= 8) score += 1;
-    else feedback.push('Use at least 8 characters');
+    if (checks.length) score += 1;
+    if (checks.lowercase) score += 1;
+    if (checks.uppercase) score += 1;
+    if (checks.numbers) score += 1;
+    if (checks.special) score += 1;
+    if (checks.long) score += 1;
 
-    if (password.length >= 12) score += 1;
-    if (password.length >= 16) score += 1;
+    let strength = 'Weak';
+    let color = 'red';
+    if (score <= 2) {
+      strength = 'Weak';
+      color = 'red';
+    } else if (score <= 4) {
+      strength = 'Medium';
+      color = 'orange';
+    } else if (score <= 5) {
+      strength = 'Strong';
+      color = 'green';
+    } else {
+      strength = 'Very Strong';
+      color = 'darkgreen';
+    }
 
-    if (/[a-z]/.test(password)) score += 1;
-    else feedback.push('Add lowercase letters');
+    return { score, strength, color, checks };
+  }, []);
 
-    if (/[A-Z]/.test(password)) score += 1;
-    else feedback.push('Add uppercase letters');
-
-    if (/[0-9]/.test(password)) score += 1;
-    else feedback.push('Add numbers');
-
-    if (/[^a-zA-Z0-9]/.test(password)) score += 1;
-    else feedback.push('Add special characters');
-
-    let strength: 'weak' | 'medium' | 'strong' | 'very-strong';
-    if (score <= 2) strength = 'weak';
-    else if (score <= 4) strength = 'medium';
-    else if (score <= 6) strength = 'strong';
-    else strength = 'very-strong';
-
-    setResult({ strength, score, feedback });
-  }, [password]);
+  const result = checkStrength(password);
 
   return (
     <div className="space-y-6">
-      <div>
-        <label className="label">Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => { setPassword(e.target.value); check(); }}
-          placeholder="Enter password to check"
-          className="input-base font-mono"
-        />
-      </div>
+      <div className="space-y-4">
+        <div>
+          <label className="label">Password</label>
+          <div className="relative">
+            <input
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input w-full pr-10"
+              placeholder="Enter password to check..."
+            />
+            <button
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1"
+            >
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
+        </div>
 
-      {result && (
-        <div className="space-y-4">
-          <div className={`p-4 rounded-xl border ${
-            result.strength === 'very-strong' ? 'alert-success' :
-            result.strength === 'strong' ? 'alert-success' :
-            result.strength === 'medium' ? 'alert-warning' :
-            'alert-error'
-          }`}>
-            <div className="flex items-center justify-between mb-2">
-              <div className="font-medium text-lg capitalize">{result.strength.replace('-', ' ')}</div>
-              <div className="text-sm">Score: {result.score}/7</div>
+        {password && (
+          <div className="p-4 rounded-xl border space-y-4" style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-primary)'
+          }}>
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  Strength: {result.strength}
+                </span>
+                <span className="text-sm" style={{ color: result.color }}>
+                  {result.score}/6
+                </span>
+              </div>
+              <div className="w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+                <div
+                  className="h-full transition-all"
+                  style={{
+                    width: `${(result.score / 6) * 100}%`,
+                    backgroundColor: result.color
+                  }}
+                />
+              </div>
             </div>
-            <div className="w-full bg-opacity-20 rounded-full h-2" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-              <div
-                className="h-2 rounded-full transition-all"
-                style={{
-                  width: `${(result.score / 7) * 100}%`,
-                  backgroundColor: result.strength === 'very-strong' || result.strength === 'strong' ? '#22c55e' :
-                                  result.strength === 'medium' ? '#f59e0b' : '#ef4444'
-                }}
-              />
+
+            <div className="space-y-2">
+              <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                Requirements:
+              </div>
+              {Object.entries(result.checks).map(([key, value]) => (
+                <div key={key} className="flex items-center gap-2 text-sm">
+                  {value ? (
+                    <Check size={16} className="text-green-500" />
+                  ) : (
+                    <X size={16} className="text-red-500" />
+                  )}
+                  <span style={{ color: value ? 'var(--text-primary)' : 'var(--text-muted)' }}>
+                    {key === 'length' && 'At least 8 characters'}
+                    {key === 'lowercase' && 'Contains lowercase letters'}
+                    {key === 'uppercase' && 'Contains uppercase letters'}
+                    {key === 'numbers' && 'Contains numbers'}
+                    {key === 'special' && 'Contains special characters'}
+                    {key === 'long' && 'At least 12 characters (recommended)'}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
-          {result.feedback.length > 0 && (
-            <div>
-              <label className="label">Suggestions</label>
-              <ul className="list-disc list-inside space-y-1 text-sm" style={{ color: 'var(--text-muted)' }}>
-                {result.feedback.map((item, i) => (
-                  <li key={i}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
-

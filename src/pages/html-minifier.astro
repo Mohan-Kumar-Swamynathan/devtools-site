@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HtmlMinifier from '@/components/tools/HtmlMinifier.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('html-minifier')!;
+const relatedTools = getToolsByCategory('formatters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <HtmlMinifier client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is HTML Minifier?</h2>
+    <p>
+      HTML Minifier is a free online tool that minifies HTML code by removing whitespace, comments, 
+      and unnecessary characters to reduce file size.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Remove comments and whitespace</li>
+      <li>Remove empty attributes</li>
+      <li>Optional tag removal</li>
+      <li>See file size savings</li>
+      <li>Copy or download minified HTML</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

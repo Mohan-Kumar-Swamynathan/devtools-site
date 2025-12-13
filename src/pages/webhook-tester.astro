@@ -12,10 +12,20 @@ const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id)
   <WebhookTester client:load />
 
   <Fragment slot="seo-content">
-    <h2>What is Webhook Tester?</h2>
+    <h2>What is Webhook Payload Tester?</h2>
     <p>
-      Test webhook endpoints with custom HTTP methods, headers, and body. See response details and debug webhook issues.
+      Webhook Payload Tester is a free online tool that allows you to test and validate webhook payloads. 
+      Simulate webhook requests and view responses.
     </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Test webhook endpoints</li>
+      <li>Support for multiple HTTP methods</li>
+      <li>Custom headers and payloads</li>
+      <li>View response status and body</li>
+      <li>100% client-side</li>
+    </ul>
   </Fragment>
 
   <Fragment slot="related-tools">
@@ -24,4 +34,3 @@ const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id)
     </div>
   </Fragment>
 </ToolLayout>
-

@@ -1,116 +1,165 @@
-import { useState, useCallback } from 'react';
-import CodeEditor from '@/components/common/CodeEditor';
-import OutputPanel from '@/components/common/OutputPanel';
+import { useState, useCallback, useEffect } from 'react';
+import { Copy, Info } from 'lucide-react';
+import { useToast } from '@/hooks/useToast';
 
 export default function UserAgentParser() {
-  const [input, setInput] = useState('');
-  const [result, setResult] = useState<any>(null);
+  const [userAgent, setUserAgent] = useState('');
+  const [parsed, setParsed] = useState<any>(null);
+  const { showToast } = useToast();
 
-  const parse = useCallback(() => {
-    const ua = input.trim();
-    if (!ua) {
-      setResult(null);
-      return;
-    }
+  useEffect(() => {
+    setUserAgent(navigator.userAgent);
+    parseUserAgent(navigator.userAgent);
+  }, []);
 
-    const parsed: any = {
-      raw: ua
+  const parseUserAgent = useCallback((ua: string) => {
+    const info: any = {
+      raw: ua,
+      browser: 'Unknown',
+      browserVersion: 'Unknown',
+      os: 'Unknown',
+      device: 'Desktop',
+      engine: 'Unknown',
     };
 
-    // Browser detection
     if (ua.includes('Chrome') && !ua.includes('Edg')) {
-      parsed.browser = 'Chrome';
-      const match = ua.match(/Chrome\/(\d+)/);
-      if (match) parsed.browserVersion = match[1];
+      const match = ua.match(/Chrome\/([\d.]+)/);
+      info.browser = 'Chrome';
+      info.browserVersion = match ? match[1] : 'Unknown';
+      info.engine = 'Blink';
     } else if (ua.includes('Firefox')) {
-      parsed.browser = 'Firefox';
-      const match = ua.match(/Firefox\/(\d+)/);
-      if (match) parsed.browserVersion = match[1];
+      const match = ua.match(/Firefox\/([\d.]+)/);
+      info.browser = 'Firefox';
+      info.browserVersion = match ? match[1] : 'Unknown';
+      info.engine = 'Gecko';
     } else if (ua.includes('Safari') && !ua.includes('Chrome')) {
-      parsed.browser = 'Safari';
-      const match = ua.match(/Version\/(\d+)/);
-      if (match) parsed.browserVersion = match[1];
+      const match = ua.match(/Version\/([\d.]+)/);
+      info.browser = 'Safari';
+      info.browserVersion = match ? match[1] : 'Unknown';
+      info.engine = 'WebKit';
     } else if (ua.includes('Edg')) {
-      parsed.browser = 'Edge';
-      const match = ua.match(/Edg\/(\d+)/);
-      if (match) parsed.browserVersion = match[1];
+      const match = ua.match(/Edg\/([\d.]+)/);
+      info.browser = 'Edge';
+      info.browserVersion = match ? match[1] : 'Unknown';
+      info.engine = 'Blink';
     }
 
-    // OS detection
-    if (ua.includes('Windows')) {
-      parsed.os = 'Windows';
-      if (ua.includes('Windows NT 10.0')) parsed.osVersion = '10/11';
-      else if (ua.includes('Windows NT 6.3')) parsed.osVersion = '8.1';
-      else if (ua.includes('Windows NT 6.2')) parsed.osVersion = '8';
-    } else if (ua.includes('Mac OS X')) {
-      parsed.os = 'macOS';
-      const match = ua.match(/Mac OS X (\d+[._]\d+)/);
-      if (match) parsed.osVersion = match[1].replace('_', '.');
-    } else if (ua.includes('Linux')) {
-      parsed.os = 'Linux';
-    } else if (ua.includes('Android')) {
-      parsed.os = 'Android';
-      const match = ua.match(/Android (\d+[.\d]*)/);
-      if (match) parsed.osVersion = match[1];
+    if (ua.includes('Windows')) info.os = 'Windows';
+    else if (ua.includes('Mac OS')) info.os = 'macOS';
+    else if (ua.includes('Linux')) info.os = 'Linux';
+    else if (ua.includes('Android')) {
+      info.os = 'Android';
+      info.device = 'Mobile';
     } else if (ua.includes('iPhone') || ua.includes('iPad')) {
-      parsed.os = 'iOS';
-      const match = ua.match(/OS (\d+[._]\d+)/);
-      if (match) parsed.osVersion = match[1].replace('_', '.');
+      info.os = 'iOS';
+      info.device = ua.includes('iPad') ? 'Tablet' : 'Mobile';
     }
 
-    // Device type
-    if (ua.includes('Mobile')) {
-      parsed.device = 'Mobile';
-    } else if (ua.includes('Tablet') || ua.includes('iPad')) {
-      parsed.device = 'Tablet';
-    } else {
-      parsed.device = 'Desktop';
-    }
+    setParsed(info);
+  }, []);
 
-    setResult(parsed);
-  }, [input]);
+  const handleParse = useCallback(() => {
+    if (!userAgent.trim()) {
+      showToast('Please enter a user agent string', 'error');
+      return;
+    }
+    parseUserAgent(userAgent);
+  }, [userAgent, parseUserAgent, showToast]);
+
+  const handleCopy = useCallback(() => {
+    if (parsed) {
+      const text = JSON.stringify(parsed, null, 2);
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied to clipboard!', 'success');
+      });
+    }
+  }, [parsed, showToast]);
 
   return (
     <div className="space-y-6">
-      <CodeEditor
-        value={input}
-        onChange={(v) => { setInput(v); parse(); }}
-        language="text"
-        label="User-Agent String"
-        placeholder="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-      />
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          onClick={handleParse}
+          className="btn-primary flex items-center gap-2"
+        >
+          <Info size={18} />
+          Parse User Agent
+        </button>
+        {parsed && (
+          <button
+            onClick={handleCopy}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <Copy size={18} />
+            Copy JSON
+          </button>
+        )}
+      </div>
 
-      {result && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {result.browser && (
-              <div className="p-3 rounded-lg border" style={{ borderColor: 'var(--border-primary)' }}>
-                <div className="text-sm" style={{ color: 'var(--text-muted)' }}>Browser</div>
-                <div className="font-medium">{result.browser} {result.browserVersion || ''}</div>
-              </div>
-            )}
-            {result.os && (
-              <div className="p-3 rounded-lg border" style={{ borderColor: 'var(--border-primary)' }}>
-                <div className="text-sm" style={{ color: 'var(--text-muted)' }}>Operating System</div>
-                <div className="font-medium">{result.os} {result.osVersion || ''}</div>
-              </div>
-            )}
-            {result.device && (
-              <div className="p-3 rounded-lg border" style={{ borderColor: 'var(--border-primary)' }}>
-                <div className="text-sm" style={{ color: 'var(--text-muted)' }}>Device</div>
-                <div className="font-medium">{result.device}</div>
-              </div>
-            )}
-          </div>
-          <OutputPanel
-            value={JSON.stringify(result, null, 2)}
-            label="Parsed Details"
-            language="json"
-            showLineNumbers
+      <div className="space-y-4">
+        <div>
+          <label className="label">User Agent String</label>
+          <textarea
+            value={userAgent}
+            onChange={(e) => setUserAgent(e.target.value)}
+            className="input w-full h-24 font-mono text-sm"
+            placeholder="Enter user agent string..."
           />
         </div>
-      )}
+
+        {parsed && (
+          <div className="p-4 rounded-xl border space-y-3" style={{
+            backgroundColor: 'var(--bg-secondary)',
+            borderColor: 'var(--border-primary)'
+          }}>
+            <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+              Parsed Information
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
+                  Browser
+                </div>
+                <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {parsed.browser} {parsed.browserVersion}
+                </div>
+              </div>
+              <div>
+                <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
+                  Operating System
+                </div>
+                <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {parsed.os}
+                </div>
+              </div>
+              <div>
+                <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
+                  Device
+                </div>
+                <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {parsed.device}
+                </div>
+              </div>
+              <div>
+                <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
+                  Engine
+                </div>
+                <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  {parsed.engine}
+                </div>
+              </div>
+            </div>
+            <div className="mt-4">
+              <div className="text-sm font-medium mb-2" style={{ color: 'var(--text-muted)' }}>
+                Raw User Agent
+              </div>
+              <pre className="text-xs p-3 rounded bg-gray-100 dark:bg-gray-800 overflow-x-auto" style={{ color: 'var(--text-primary)' }}>
+                {parsed.raw}
+              </pre>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
-

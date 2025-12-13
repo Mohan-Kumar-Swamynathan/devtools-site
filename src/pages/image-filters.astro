@@ -1,0 +1,39 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageFilters from '@/components/tools/ImageFilters.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-filters')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageFilters client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Filters?</h2>
+    <p>
+      Image Filters is a free online tool that allows you to apply various filters and effects to images 
+      including brightness, contrast, saturation, grayscale, sepia, blur, and more. See real-time preview 
+      of your changes.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Adjust brightness, contrast, saturation, and hue</li>
+      <li>Apply grayscale, sepia, and invert effects</li>
+      <li>Add blur effects</li>
+      <li>Real-time preview of all changes</li>
+      <li>Combine multiple filters for creative effects</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

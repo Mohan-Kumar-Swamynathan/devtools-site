@@ -5,7 +5,7 @@ import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
 const tool = getToolBySlug('file-extension-lookup')!;
-const relatedTools = getToolsByCategory('file').filter(t => t.id !== tool.id).slice(0, 4);
+const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
 <ToolLayout tool={tool}>
@@ -14,8 +14,18 @@ const relatedTools = getToolsByCategory('file').filter(t => t.id !== tool.id).sl
   <Fragment slot="seo-content">
     <h2>What is File Extension Lookup?</h2>
     <p>
-      Lookup file extensions and their types, descriptions, and MIME types. Quick reference for file formats.
+      File Extension Lookup is a free online tool that allows you to lookup file extensions and their descriptions. 
+      Find what file type an extension belongs to.
     </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Lookup file extensions by name</li>
+      <li>Search by extension, description, or category</li>
+      <li>Copy extensions to clipboard</li>
+      <li>Common file types included</li>
+      <li>100% client-side</li>
+    </ul>
   </Fragment>
 
   <Fragment slot="related-tools">
@@ -24,4 +34,3 @@ const relatedTools = getToolsByCategory('file').filter(t => t.id !== tool.id).sl
     </div>
   </Fragment>
 </ToolLayout>
-

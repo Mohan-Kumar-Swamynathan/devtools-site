@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import VideoFrameExtractor from '@/components/tools/VideoFrameExtractor.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('video-frame-extractor')!;
+const relatedTools = getToolsByCategory('video').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <VideoFrameExtractor client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Video Frame Extractor?</h2>
+    <p>
+      Video Frame Extractor is a free online tool that allows you to extract frames from videos at specific times. 
+      Get screenshots or extract multiple frames at intervals.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Extract frames at specific times</li>
+      <li>Extract multiple frames evenly spaced</li>
+      <li>Preview video before extracting</li>
+      <li>Download individual frames or all frames</li>
+      <li>Frames saved as PNG images</li>
+      <li>100% client-side - your videos never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

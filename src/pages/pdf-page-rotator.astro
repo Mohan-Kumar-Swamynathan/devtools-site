@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import PdfPageRotator from '@/components/tools/PdfPageRotator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('pdf-page-rotator')!;
+const relatedTools = getToolsByCategory('pdf').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <PdfPageRotator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is PDF Page Rotator?</h2>
+    <p>
+      PDF Page Rotator is a free online tool that rotates pages in PDF files. 
+      Rotate all pages or specific pages by 90, 180, or 270 degrees.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Rotate PDF pages</li>
+      <li>Support for 90°, 180°, and 270° rotations</li>
+      <li>Rotate all pages or specific pages</li>
+      <li>Download rotated PDF</li>
+      <li>100% client-side - your files never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

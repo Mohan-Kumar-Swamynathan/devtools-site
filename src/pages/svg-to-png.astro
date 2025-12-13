@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import SvgToPng from '@/components/tools/SvgToPng.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('svg-to-png')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <SvgToPng client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is SVG to PNG/JPEG Converter?</h2>
+    <p>
+      SVG to PNG/JPEG Converter is a free online tool that converts SVG images to PNG or JPEG format. 
+      Adjust quality and dimensions.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert SVG to PNG or JPEG</li>
+      <li>Adjust output dimensions</li>
+      <li>Control quality for JPEG</li>
+      <li>Real-time preview</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

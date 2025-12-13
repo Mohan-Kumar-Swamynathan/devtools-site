@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import BmiCalculator from '@/components/tools/BmiCalculator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('bmi-calculator')!;
+const relatedTools = getToolsByCategory('calculators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <BmiCalculator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is BMI Calculator?</h2>
+    <p>
+      BMI Calculator is a free online tool that calculates Body Mass Index (BMI) with health categories. 
+      Track your health metrics.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Calculate BMI in metric or imperial units</li>
+      <li>Health category classification</li>
+      <li>Color-coded results</li>
+      <li>BMI range reference</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

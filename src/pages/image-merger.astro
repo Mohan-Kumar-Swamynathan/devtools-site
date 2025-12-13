@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageMerger from '@/components/tools/ImageMerger.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-merger')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageMerger client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Merger?</h2>
+    <p>
+      Image Merger is a free online tool that allows you to merge multiple images into one. 
+      Choose from horizontal, vertical, or grid layouts. Perfect for creating collages.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Merge multiple images at once</li>
+      <li>Choose from horizontal, vertical, or grid layouts</li>
+      <li>Adjust spacing between images</li>
+      <li>Set custom background color</li>
+      <li>Remove or reorder images before merging</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

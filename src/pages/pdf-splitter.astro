@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import PdfSplitter from '@/components/tools/PdfSplitter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('pdf-splitter')!;
+const relatedTools = getToolsByCategory('pdf').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <PdfSplitter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is PDF Splitter?</h2>
+    <p>
+      PDF Splitter is a free online tool that allows you to split PDF files into multiple smaller PDFs. 
+      Extract specific pages or split by page ranges.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Split PDF into individual pages</li>
+      <li>Extract page ranges</li>
+      <li>Select specific pages</li>
+      <li>Download split PDFs</li>
+      <li>100% client-side - your files never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

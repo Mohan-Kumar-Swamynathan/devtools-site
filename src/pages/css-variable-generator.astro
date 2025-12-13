@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CssVariableGenerator from '@/components/tools/CssVariableGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('css-variable-generator')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CssVariableGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is CSS Variable Generator?</h2>
+    <p>
+      CSS Variable Generator is a free online tool that generates CSS custom properties (variables) 
+      with color palettes and design tokens.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Generate CSS custom properties</li>
+      <li>Support for colors, sizes, and spacing</li>
+      <li>Visual color preview</li>
+      <li>Copy generated CSS</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import VideoMetadataExtractor from '@/components/tools/VideoMetadataExtractor.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('video-metadata-extractor')!;
+const relatedTools = getToolsByCategory('video').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <VideoMetadataExtractor client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Video Metadata Extractor?</h2>
+    <p>
+      Video Metadata Extractor is a free online tool that extracts detailed metadata from video files 
+      including duration, dimensions, file size, codec information, and more.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Extract video duration, dimensions, and file size</li>
+      <li>View file type and format information</li>
+      <li>Display codec information when available</li>
+      <li>Preview video before extracting metadata</li>
+      <li>100% client-side - your videos never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

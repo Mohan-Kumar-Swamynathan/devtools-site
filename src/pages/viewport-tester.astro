@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ViewportTester from '@/components/tools/ViewportTester.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('viewport-tester')!;
+const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ViewportTester client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Viewport/Responsive Design Tester?</h2>
+    <p>
+      Viewport Tester is a free online tool that allows you to test your website at different viewport sizes. 
+      Simulate mobile, tablet, and desktop screens to ensure your designs are responsive.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Test at custom viewport sizes</li>
+      <li>Preset device sizes (iPhone, iPad, Desktop)</li>
+      <li>Preview any URL in the viewport</li>
+      <li>Fullscreen mode for better testing</li>
+      <li>Real-time size adjustment</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

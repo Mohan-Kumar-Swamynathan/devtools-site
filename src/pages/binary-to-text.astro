@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import BinaryToText from '@/components/tools/BinaryToText.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('binary-to-text')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <BinaryToText client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Binary to Text?</h2>
+    <p>
+      Binary to Text is a free online tool that converts binary code to text. 
+      Decode binary strings to readable text.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert binary to text</li>
+      <li>Automatic validation</li>
+      <li>Spaces are ignored</li>
+      <li>Character and byte statistics</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageToAscii from '@/components/tools/ImageToAscii.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-to-ascii')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageToAscii client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image to ASCII Art?</h2>
+    <p>
+      Image to ASCII Art is a free online tool that converts images to ASCII art text. 
+      Adjust character density and choose between color or grayscale output.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert images to ASCII art text</li>
+      <li>Adjustable character density</li>
+      <li>Color or grayscale output</li>
+      <li>Copy as plain text or download as file</li>
+      <li>Real-time preview</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

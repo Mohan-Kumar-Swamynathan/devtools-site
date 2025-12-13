@@ -1,0 +1,36 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import BackdropFilterGenerator from '@/components/tools/BackdropFilterGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('backdrop-filter-generator')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <BackdropFilterGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Backdrop Filter Generator?</h2>
+    <p>
+      Backdrop Filter Generator is a free online tool that creates CSS backdrop-filter effects. 
+      Create glass morphism and frosted glass effects with visual preview.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Blur, brightness, contrast, and saturation controls</li>
+      <li>Real-time preview of glass morphism effects</li>
+      <li>Copy generated CSS code</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

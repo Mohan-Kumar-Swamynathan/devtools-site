@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import RgbToHex from '@/components/tools/RgbToHex.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('rgb-to-hex')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <RgbToHex client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is RGB to Hex Converter?</h2>
+    <p>
+      RGB to Hex Converter is a free online tool that converts RGB color values to hex codes. 
+      Input RGB and get hex color code.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert RGB to hex</li>
+      <li>Slider controls for RGB values</li>
+      <li>Alpha channel support</li>
+      <li>Color preview</li>
+      <li>CSS values output</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

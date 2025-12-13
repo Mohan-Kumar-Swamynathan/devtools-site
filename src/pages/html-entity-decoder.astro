@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HtmlEntityDecoder from '@/components/tools/HtmlEntityDecoder.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('html-entity-decoder')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <HtmlEntityDecoder client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is HTML Entity Decoder?</h2>
+    <p>
+      HTML Entity Decoder is a free online tool that decodes HTML entities to their actual characters. 
+      Convert &amp; to &, &lt; to &lt;, etc.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Decode HTML entities</li>
+      <li>Real-time decoding</li>
+      <li>Copy or download decoded text</li>
+      <li>Support for all HTML entities</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

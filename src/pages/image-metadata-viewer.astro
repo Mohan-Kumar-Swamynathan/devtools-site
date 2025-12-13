@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageMetadataViewer from '@/components/tools/ImageMetadataViewer.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-metadata-viewer')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageMetadataViewer client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Metadata Viewer?</h2>
+    <p>
+      Image Metadata Viewer is a free online tool that displays detailed EXIF data and metadata from images. 
+      See camera settings, dimensions, file size, and more.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>View image dimensions and file size</li>
+      <li>See MIME type and file information</li>
+      <li>Calculate aspect ratio</li>
+      <li>View last modified date</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

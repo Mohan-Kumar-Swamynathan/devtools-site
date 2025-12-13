@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageRotator from '@/components/tools/ImageRotator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-rotator')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageRotator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Rotator & Flipper?</h2>
+    <p>
+      Image Rotator & Flipper is a free online tool that allows you to rotate images 90°, 180°, 270° 
+      or flip them horizontally or vertically. Batch process multiple images at once.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Rotate images 90°, 180°, or 270° clockwise or counter-clockwise</li>
+      <li>Flip images horizontally or vertically</li>
+      <li>Combine multiple rotations and flips</li>
+      <li>Reset to original orientation</li>
+      <li>Batch process multiple images</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

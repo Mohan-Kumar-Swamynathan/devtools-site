@@ -1,0 +1,36 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CsvViewer from '@/components/tools/CsvViewer.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('csv-viewer')!;
+const relatedTools = getToolsByCategory('file').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CsvViewer client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is CSV Viewer/Editor?</h2>
+    <p>
+      CSV Viewer/Editor is a free online tool that allows you to view, edit, and format CSV files. 
+      Sort, filter, and export CSV data.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>View CSV files in a table</li>
+      <li>Upload and parse CSV</li>
+      <li>Copy or download CSV</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

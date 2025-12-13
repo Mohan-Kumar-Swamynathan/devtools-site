@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageWatermarker from '@/components/tools/ImageWatermarker.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-watermarker')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageWatermarker client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Watermarker?</h2>
+    <p>
+      Image Watermarker is a free online tool that allows you to add text or image watermarks to your images. 
+      Control position, opacity, size, and style to protect your images with custom watermarks.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Add text watermarks with customizable font, size, and color</li>
+      <li>Add image watermarks (logos, signatures, etc.)</li>
+      <li>Control watermark position (9 preset positions)</li>
+      <li>Adjust opacity for subtle or prominent watermarks</li>
+      <li>Real-time preview of watermarked image</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

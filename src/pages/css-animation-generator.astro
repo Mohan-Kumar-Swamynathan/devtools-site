@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CssAnimationGenerator from '@/components/tools/CssAnimationGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('css-animation-generator')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CssAnimationGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is CSS Animation Generator?</h2>
+    <p>
+      CSS Animation Generator is a free online tool that allows you to create CSS keyframe animations 
+      with a visual timeline. Generate @keyframes rules with ease-in, ease-out, and custom timing functions.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Create custom keyframe animations</li>
+      <li>Adjust duration, delay, and iteration count</li>
+      <li>Choose from preset animations</li>
+      <li>Real-time preview of animations</li>
+      <li>Copy generated CSS code</li>
+      <li>100% client-side - all processing in your browser</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

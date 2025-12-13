@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import Base64ToImage from '@/components/tools/Base64ToImage.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('base64-to-image')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <Base64ToImage client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Base64 to Image?</h2>
+    <p>
+      Base64 to Image is a free online tool that converts base64 encoded strings to images. 
+      Decode and download base64 images.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert base64 to image</li>
+      <li>Image preview</li>
+      <li>Download decoded image</li>
+      <li>Automatic validation</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

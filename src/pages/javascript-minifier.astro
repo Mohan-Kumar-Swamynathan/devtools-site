@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JavascriptMinifier from '@/components/tools/JavascriptMinifier.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('javascript-minifier')!;
+const relatedTools = getToolsByCategory('formatters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <JavascriptMinifier client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is JavaScript Minifier?</h2>
+    <p>
+      JavaScript Minifier is a free online tool that minifies JavaScript code to reduce file size. 
+      Remove whitespace, comments, and optimize code.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Remove comments and whitespace</li>
+      <li>Remove line breaks</li>
+      <li>See file size savings</li>
+      <li>Copy or download minified code</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

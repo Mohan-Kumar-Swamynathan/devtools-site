@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import PdfToImages from '@/components/tools/PdfToImages.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('pdf-to-images')!;
+const relatedTools = getToolsByCategory('pdf').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <PdfToImages client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is PDF to Images?</h2>
+    <p>
+      PDF to Images is a free online tool that converts PDF pages to PNG or JPEG images. 
+      Extract all pages or specific pages.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert PDF pages to images</li>
+      <li>Support for PNG and JPEG formats</li>
+      <li>Adjustable quality for JPEG</li>
+      <li>Download individual or all images</li>
+      <li>100% client-side - your files never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

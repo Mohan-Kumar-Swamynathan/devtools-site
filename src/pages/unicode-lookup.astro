@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import UnicodeLookup from '@/components/tools/UnicodeLookup.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('unicode-lookup')!;
+const relatedTools = getToolsByCategory('text').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <UnicodeLookup client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Unicode Lookup?</h2>
+    <p>
+      Unicode Lookup is a free online tool that allows you to lookup Unicode characters by name, code point, or search. 
+      Find emoji, symbols, and special characters.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Browse Unicode characters by range</li>
+      <li>Search by character or code point</li>
+      <li>Copy characters with one click</li>
+      <li>View code points in hex and decimal</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

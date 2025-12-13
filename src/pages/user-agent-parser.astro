@@ -5,17 +5,27 @@ import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
 const tool = getToolBySlug('user-agent-parser')!;
-const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id).slice(0, 4);
+const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
 <ToolLayout tool={tool}>
   <UserAgentParser client:load />
 
   <Fragment slot="seo-content">
-    <h2>What is User-Agent Parser?</h2>
+    <h2>What is User Agent Parser?</h2>
     <p>
-      Parse user-agent strings to extract browser, OS, device type, and version information.
+      User Agent Parser is a free online tool that parses and displays browser, device, and OS information 
+      from user agent strings.
     </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Parse user agent strings</li>
+      <li>Detect browser and version</li>
+      <li>Identify operating system</li>
+      <li>Detect device type</li>
+      <li>View rendering engine</li>
+    </ul>
   </Fragment>
 
   <Fragment slot="related-tools">
@@ -24,4 +34,3 @@ const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id)
     </div>
   </Fragment>
 </ToolLayout>
-

@@ -5,7 +5,7 @@ import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
 const tool = getToolBySlug('http-headers-parser')!;
-const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).slice(0, 4);
+const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
 <ToolLayout tool={tool}>
@@ -14,9 +14,17 @@ const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).sli
   <Fragment slot="seo-content">
     <h2>What is HTTP Headers Parser?</h2>
     <p>
-      Parse raw HTTP headers into structured JSON format. Useful for debugging API requests 
-      and analyzing HTTP responses.
+      HTTP Headers Parser is a free online tool that parses and formats HTTP request and response headers. 
+      View headers in a readable format.
     </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Parse HTTP headers</li>
+      <li>Format headers for readability</li>
+      <li>Export as JSON</li>
+      <li>100% client-side</li>
+    </ul>
   </Fragment>
 
   <Fragment slot="related-tools">
@@ -25,4 +33,3 @@ const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).sli
     </div>
   </Fragment>
 </ToolLayout>
-

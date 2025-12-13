@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import SqlQueryBuilder from '@/components/tools/SqlQueryBuilder.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('sql-query-builder')!;
+const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <SqlQueryBuilder client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is SQL Query Builder?</h2>
+    <p>
+      SQL Query Builder is a free online tool that builds SQL queries visually. 
+      Select tables, columns, and conditions to generate SQL.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Visual SQL query builder</li>
+      <li>Support for SELECT, INSERT, UPDATE, DELETE</li>
+      <li>Table and column selection</li>
+      <li>WHERE, ORDER BY, LIMIT clauses</li>
+      <li>Copy generated SQL</li>
+      <li>100% client-side</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import VideoThumbnailGenerator from '@/components/tools/VideoThumbnailGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('video-thumbnail-generator')!;
+const relatedTools = getToolsByCategory('video').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <VideoThumbnailGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Video Thumbnail Generator?</h2>
+    <p>
+      Video Thumbnail Generator is a free online tool that generates thumbnails from videos at specific times. 
+      Create single thumbnails or multiple thumbnails in a grid layout.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Generate thumbnails at specific times</li>
+      <li>Generate a grid of 9 thumbnails evenly spaced</li>
+      <li>Adjustable thumbnail size</li>
+      <li>Download individual thumbnails or all at once</li>
+      <li>100% client-side - your videos never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

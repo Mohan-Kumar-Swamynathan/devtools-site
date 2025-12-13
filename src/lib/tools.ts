@@ -97,6 +97,12 @@ export const categories: Record<string, Category> = {
     icon: '🖼️',
     description: 'Image manipulation and analysis tools'
   },
+  video: {
+    id: 'video',
+    name: 'Video Tools',
+    icon: '🎬',
+    description: 'Video processing and manipulation tools'
+  },
   time: {
     id: 'time',
     name: 'Time & Date',
@@ -120,6 +126,18 @@ export const categories: Record<string, Category> = {
     name: 'Documentation',
     icon: '📚',
     description: 'Documentation generators and formatters'
+  },
+  pdf: {
+    id: 'pdf',
+    name: 'PDF Tools',
+    icon: '📄',
+    description: 'PDF manipulation, conversion, and analysis tools'
+  },
+  calculators: {
+    id: 'calculators',
+    name: 'Calculators',
+    icon: '🧮',
+    description: 'Financial, health, and utility calculators'
   }
 };
 
@@ -752,16 +770,6 @@ export const tools: Tool[] = [
     category: categories.web,
     icon: '🔍'
   },
-  {
-    id: 'http-headers-parser',
-    name: 'HTTP Headers Parser',
-    slug: 'http-headers-parser',
-    tagline: 'Parse HTTP headers',
-    description: 'Parse raw HTTP headers into structured JSON format.',
-    keywords: ['http headers parser', 'parse headers', 'http headers'],
-    category: categories.web,
-    icon: '📋'
-  },
   // Additional Validators
   {
     id: 'ip-address-validator',
@@ -999,16 +1007,6 @@ export const tools: Tool[] = [
     icon: '📄'
   },
   {
-    id: 'code-comment-remover',
-    name: 'Code Comment Remover',
-    slug: 'code-comment-remover',
-    tagline: 'Remove comments from code',
-    description: 'Remove comments from code in JavaScript, Python, Java, CSS, and HTML.',
-    keywords: ['comment remover', 'remove comments', 'strip comments'],
-    category: categories.code,
-    icon: '🗑️'
-  },
-  {
     id: 'code-indentation-fixer',
     name: 'Code Indentation Fixer',
     slug: 'code-indentation-fixer',
@@ -1059,28 +1057,7 @@ export const tools: Tool[] = [
     category: categories.network,
     icon: '🌐'
   },
-  {
-    id: 'user-agent-parser',
-    name: 'User-Agent Parser',
-    slug: 'user-agent-parser',
-    tagline: 'Parse user-agent strings',
-    description: 'Parse user-agent strings to extract browser, OS, device type, and version information.',
-    keywords: ['user agent parser', 'parse user agent', 'ua parser'],
-    category: categories.network,
-    icon: '🔍'
-  },
   // Security Tools
-  {
-    id: 'password-strength-checker',
-    name: 'Password Strength Checker',
-    slug: 'password-strength-checker',
-    tagline: 'Check password strength',
-    description: 'Check password strength and get suggestions for improvement. Analyzes length, character types, and complexity.',
-    keywords: ['password strength', 'password checker', 'password validator'],
-    category: categories.security,
-    icon: '🔒',
-    isPopular: true
-  },
   {
     id: 'hmac-generator',
     name: 'HMAC Generator',
@@ -1761,6 +1738,843 @@ export const tools: Tool[] = [
     keywords: ['ip lookup', 'ip address lookup', 'ip geolocation', 'ip info', 'ip address finder', 'ip location'],
     category: categories.network,
     icon: '🌍',
+    isNew: true,
+    isPopular: true
+  },
+  // Image Manipulation Tools
+  {
+    id: 'image-cropper',
+    name: 'Image Cropper',
+    slug: 'image-cropper',
+    tagline: 'Crop images with interactive selection',
+    description: 'Crop images with an interactive selection tool. Choose aspect ratios or free-form cropping. All processing happens in your browser.',
+    keywords: ['image cropper', 'crop image', 'image crop tool', 'photo cropper', 'crop photo'],
+    category: categories.image,
+    icon: '✂️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'image-rotator',
+    name: 'Image Rotator & Flipper',
+    slug: 'image-rotator',
+    tagline: 'Rotate and flip images',
+    description: 'Rotate images 90°, 180°, 270° or flip them horizontally/vertically. Batch process multiple images.',
+    keywords: ['image rotator', 'rotate image', 'flip image', 'image flip', 'rotate photo'],
+    category: categories.image,
+    icon: '🔄',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'image-filters',
+    name: 'Image Filters',
+    slug: 'image-filters',
+    tagline: 'Apply filters and effects to images',
+    description: 'Apply various filters and effects to images including brightness, contrast, saturation, grayscale, sepia, blur, and more.',
+    keywords: ['image filters', 'photo filters', 'image effects', 'photo editor', 'image brightness', 'image contrast'],
+    category: categories.image,
+    icon: '🎨',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'image-watermarker',
+    name: 'Image Watermarker',
+    slug: 'image-watermarker',
+    tagline: 'Add watermarks to images',
+    description: 'Add text or image watermarks to your images. Control position, opacity, size, and style. Protect your images with custom watermarks.',
+    keywords: ['image watermark', 'watermark tool', 'add watermark', 'photo watermark', 'image watermarker'],
+    category: categories.image,
+    icon: '💧',
+    isNew: true
+  },
+  {
+    id: 'image-merger',
+    name: 'Image Merger',
+    slug: 'image-merger',
+    tagline: 'Merge multiple images together',
+    description: 'Merge multiple images into one. Choose from horizontal, vertical, or grid layouts. Perfect for creating collages.',
+    keywords: ['image merger', 'merge images', 'combine images', 'image collage', 'merge photos'],
+    category: categories.image,
+    icon: '🖼️',
+    isNew: true
+  },
+  {
+    id: 'gif-frame-extractor',
+    name: 'GIF Frame Extractor',
+    slug: 'gif-frame-extractor',
+    tagline: 'Extract frames from GIF images',
+    description: 'Extract individual frames from animated GIFs. Preview and download all frames or select specific ones.',
+    keywords: ['gif frame extractor', 'extract gif frames', 'gif to images', 'gif frames', 'split gif'],
+    category: categories.image,
+    icon: '🎞️',
+    isNew: true
+  },
+  {
+    id: 'gif-creator',
+    name: 'GIF Creator',
+    slug: 'gif-creator',
+    tagline: 'Create GIFs from images',
+    description: 'Create animated GIFs from multiple images. Set frame delay, preview, and download your GIF.',
+    keywords: ['gif creator', 'create gif', 'image to gif', 'gif maker', 'animated gif'],
+    category: categories.image,
+    icon: '🎬',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'image-to-ascii',
+    name: 'Image to ASCII Art',
+    slug: 'image-to-ascii',
+    tagline: 'Convert images to ASCII art',
+    description: 'Convert images to ASCII art text. Adjust character density and choose between color or grayscale output.',
+    keywords: ['image to ascii', 'ascii art', 'ascii converter', 'text art', 'ascii generator'],
+    category: categories.image,
+    icon: '🎭',
+    isNew: true
+  },
+  // Video Tools
+  {
+    id: 'video-frame-extractor',
+    name: 'Video Frame Extractor',
+    slug: 'video-frame-extractor',
+    tagline: 'Extract frames from videos',
+    description: 'Extract frames from videos at specific times. Get screenshots or extract multiple frames at intervals.',
+    keywords: ['video frame extractor', 'extract video frames', 'video screenshot', 'video frames', 'video to images'],
+    category: categories.video,
+    icon: '📸',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'video-to-gif',
+    name: 'Video to GIF',
+    slug: 'video-to-gif',
+    tagline: 'Convert video segments to GIF',
+    description: 'Convert video segments to animated GIFs. Select time range, set frame rate, and create GIFs from videos.',
+    keywords: ['video to gif', 'convert video to gif', 'video gif converter', 'mp4 to gif', 'video to animated gif'],
+    category: categories.video,
+    icon: '🎥',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'video-metadata-extractor',
+    name: 'Video Metadata Extractor',
+    slug: 'video-metadata-extractor',
+    tagline: 'Extract metadata from videos',
+    description: 'Extract detailed metadata from video files including duration, dimensions, file size, codec information, and more.',
+    keywords: ['video metadata', 'video info', 'video properties', 'video details', 'video codec'],
+    category: categories.video,
+    icon: '📊',
+    isNew: true
+  },
+  {
+    id: 'video-thumbnail-generator',
+    name: 'Video Thumbnail Generator',
+    slug: 'video-thumbnail-generator',
+    tagline: 'Generate thumbnails from videos',
+    description: 'Generate thumbnails from videos at specific times. Create single thumbnails or multiple thumbnails in a grid layout.',
+    keywords: ['video thumbnail', 'thumbnail generator', 'video thumbnail maker', 'video preview', 'video screenshot'],
+    category: categories.video,
+    icon: '🖼️',
+    isNew: true
+  },
+  // Additional CSS Tools
+  {
+    id: 'css-animation-generator',
+    name: 'CSS Animation Generator',
+    slug: 'css-animation-generator',
+    tagline: 'Generate CSS keyframe animations',
+    description: 'Create CSS keyframe animations with visual timeline. Generate @keyframes rules with ease-in, ease-out, and custom timing functions.',
+    keywords: ['css animation', 'keyframes generator', 'css animation maker', 'animation generator', 'keyframes'],
+    category: categories.css,
+    icon: '🎬',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'text-shadow-generator',
+    name: 'Text Shadow Generator',
+    slug: 'text-shadow-generator',
+    tagline: 'Generate CSS text shadows',
+    description: 'Visual CSS text shadow generator. Create multiple text shadows with color, blur, and offset controls.',
+    keywords: ['text shadow generator', 'css text shadow', 'text shadow', 'text effect'],
+    category: categories.css,
+    icon: '✨',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'css-transform-generator',
+    name: 'CSS Transform Generator',
+    slug: 'css-transform-generator',
+    tagline: 'Generate CSS transforms',
+    description: 'Visual CSS transform generator. Create rotate, scale, translate, and skew transforms with interactive preview.',
+    keywords: ['css transform', 'transform generator', 'css rotate', 'css scale', 'transform tool'],
+    category: categories.css,
+    icon: '🔄',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'css-grid-playground',
+    name: 'CSS Grid Playground',
+    slug: 'css-grid-playground',
+    tagline: 'Learn CSS Grid interactively',
+    description: 'Interactive CSS Grid playground. Learn CSS Grid with visual examples and real-time preview.',
+    keywords: ['css grid', 'grid playground', 'css grid tutorial', 'learn grid', 'grid generator'],
+    category: categories.css,
+    icon: '📐',
+    isNew: true,
+    isPopular: true
+  },
+  // Data Generators
+  {
+    id: 'fake-data-generator',
+    name: 'Fake Data Generator',
+    slug: 'fake-data-generator',
+    tagline: 'Generate fake test data',
+    description: 'Generate fake JSON data, names, emails, addresses, phone numbers, and more for testing purposes.',
+    keywords: ['fake data', 'test data generator', 'mock data', 'fake json', 'data generator'],
+    category: categories.generators,
+    icon: '🎲',
+    isNew: true,
+    isPopular: true
+  },
+  // Network & Web Tools
+  {
+    id: 'user-agent-parser',
+    name: 'User Agent Parser',
+    slug: 'user-agent-parser',
+    tagline: 'Parse user agent strings',
+    description: 'Parse and display browser, device, and OS information from user agent strings.',
+    keywords: ['user agent parser', 'browser detector', 'user agent analyzer', 'device info'],
+    category: categories.web,
+    icon: '🔍',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'http-headers-parser',
+    name: 'HTTP Headers Parser',
+    slug: 'http-headers-parser',
+    tagline: 'Parse HTTP headers',
+    description: 'Parse and format HTTP request and response headers. View headers in a readable format.',
+    keywords: ['http headers', 'headers parser', 'http parser', 'request headers', 'response headers'],
+    category: categories.network,
+    icon: '📋',
+    isNew: true
+  },
+  // Security Tools
+  {
+    id: 'password-strength-checker',
+    name: 'Password Strength Checker',
+    slug: 'password-strength-checker',
+    tagline: 'Check password strength',
+    description: 'Check password strength with visual feedback. Analyze password complexity and security.',
+    keywords: ['password strength', 'password checker', 'password analyzer', 'password security'],
+    category: categories.security,
+    icon: '🔐',
+    isNew: true,
+    isPopular: true
+  },
+  // Image Tools
+  {
+    id: 'svg-to-png',
+    name: 'SVG to PNG/JPEG',
+    slug: 'svg-to-png',
+    tagline: 'Convert SVG to raster formats',
+    description: 'Convert SVG images to PNG or JPEG format. Adjust quality and dimensions.',
+    keywords: ['svg to png', 'svg to jpeg', 'svg converter', 'convert svg'],
+    category: categories.image,
+    icon: '🖼️',
+    isNew: true
+  },
+  // File Tools
+  {
+    id: 'csv-viewer',
+    name: 'CSV Viewer/Editor',
+    slug: 'csv-viewer',
+    tagline: 'View and edit CSV files',
+    description: 'View, edit, and format CSV files. Sort, filter, and export CSV data.',
+    keywords: ['csv viewer', 'csv editor', 'csv viewer online', 'csv reader', 'csv tool'],
+    category: categories.file,
+    icon: '📊',
+    isNew: true,
+    isPopular: true
+  },
+  // Code Tools
+  {
+    id: 'code-comment-remover',
+    name: 'Code Comment Remover',
+    slug: 'code-comment-remover',
+    tagline: 'Remove comments from code',
+    description: 'Remove comments from code files. Supports JavaScript, CSS, HTML, Python, and more.',
+    keywords: ['comment remover', 'remove comments', 'code cleaner', 'strip comments'],
+    category: categories.code,
+    icon: '🧹',
+    isNew: true
+  },
+  {
+    id: 'multi-language-formatter',
+    name: 'Multi-language Code Formatter',
+    slug: 'multi-language-formatter',
+    tagline: 'Format code in multiple languages',
+    description: 'Format code in Python, Go, Rust, PHP, Java, and more. Beautify and indent code automatically.',
+    keywords: ['code formatter', 'python formatter', 'go formatter', 'rust formatter', 'php formatter'],
+    category: categories.formatters,
+    icon: '💻',
+    isNew: true
+  },
+  // Additional Developer Tools
+  {
+    id: 'viewport-tester',
+    name: 'Viewport/Responsive Design Tester',
+    slug: 'viewport-tester',
+    tagline: 'Test responsive designs',
+    description: 'Test your website at different viewport sizes. Simulate mobile, tablet, and desktop screens.',
+    keywords: ['viewport tester', 'responsive tester', 'screen size tester', 'mobile tester', 'device simulator'],
+    category: categories.web,
+    icon: '📱',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'clip-path-generator',
+    name: 'Clip Path Generator',
+    slug: 'clip-path-generator',
+    tagline: 'Generate CSS clip-path',
+    description: 'Visual CSS clip-path generator. Create custom shapes with interactive polygon editor.',
+    keywords: ['clip path', 'css clip path', 'clip path generator', 'css shapes'],
+    category: categories.css,
+    icon: '✂️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'backdrop-filter-generator',
+    name: 'Backdrop Filter Generator',
+    slug: 'backdrop-filter-generator',
+    tagline: 'Generate CSS backdrop filters',
+    description: 'Create CSS backdrop-filter effects. Blur, brightness, contrast, and more with visual preview.',
+    keywords: ['backdrop filter', 'css backdrop filter', 'glass morphism', 'frosted glass'],
+    category: categories.css,
+    icon: '🔮',
+    isNew: true
+  },
+  {
+    id: 'text-to-slug',
+    name: 'Text to Slug Converter',
+    slug: 'text-to-slug',
+    tagline: 'Convert text to URL-friendly slugs',
+    description: 'Convert any text to URL-friendly slugs. Remove special characters, lowercase, and replace spaces.',
+    keywords: ['text to slug', 'slug converter', 'url slug', 'seo friendly url'],
+    category: categories.text,
+    icon: '🔗',
+    isNew: true
+  },
+  {
+    id: 'image-metadata-viewer',
+    name: 'Image Metadata Viewer',
+    slug: 'image-metadata-viewer',
+    tagline: 'View EXIF and image metadata',
+    description: 'View detailed EXIF data and metadata from images. See camera settings, location, and more.',
+    keywords: ['image metadata', 'exif viewer', 'image info', 'photo metadata'],
+    category: categories.image,
+    icon: '📸',
+    isNew: true
+  },
+  {
+    id: 'text-statistics',
+    name: 'Text Statistics Analyzer',
+    slug: 'text-statistics',
+    tagline: 'Analyze text statistics',
+    description: 'Get detailed text statistics including word count, character count, reading time, and more.',
+    keywords: ['text statistics', 'word counter', 'character counter', 'reading time', 'text analyzer'],
+    category: categories.text,
+    icon: '📊',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'json-path-builder',
+    name: 'JSON Path Builder',
+    slug: 'json-path-builder',
+    tagline: 'Visual JSON path builder',
+    description: 'Build and test JSON paths visually. Explore JSON structures and generate path expressions.',
+    keywords: ['json path', 'jsonpath builder', 'json explorer', 'json path generator'],
+    category: categories.json,
+    icon: '🗺️',
+    isNew: true
+  },
+  {
+    id: 'api-mock-builder',
+    name: 'API Mock Response Builder',
+    slug: 'api-mock-builder',
+    tagline: 'Build mock API responses',
+    description: 'Build mock API responses for testing. Create realistic JSON responses with customizable data.',
+    keywords: ['api mock', 'mock api', 'api builder', 'mock response', 'api testing'],
+    category: categories.network,
+    icon: '🔌',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'html-minifier',
+    name: 'HTML Minifier',
+    slug: 'html-minifier',
+    tagline: 'Minify HTML code',
+    description: 'Minify HTML code by removing whitespace, comments, and unnecessary characters.',
+    keywords: ['html minifier', 'minify html', 'html compressor', 'html optimizer'],
+    category: categories.formatters,
+    icon: '🗜️',
+    isNew: true
+  },
+  {
+    id: 'javascript-minifier',
+    name: 'JavaScript Minifier',
+    slug: 'javascript-minifier',
+    tagline: 'Minify JavaScript code',
+    description: 'Minify JavaScript code to reduce file size. Remove whitespace and optimize code.',
+    keywords: ['javascript minifier', 'js minifier', 'minify js', 'js compressor'],
+    category: categories.formatters,
+    icon: '🗜️',
+    isNew: true
+  },
+  {
+    id: 'browser-compatibility',
+    name: 'Browser Compatibility Checker',
+    slug: 'browser-compatibility',
+    tagline: 'Check CSS/JS browser support',
+    description: 'Check browser compatibility for CSS properties and JavaScript features.',
+    keywords: ['browser compatibility', 'caniuse', 'browser support', 'css support', 'js support'],
+    category: categories.web,
+    icon: '🌐',
+    isNew: true
+  },
+  {
+    id: 'webhook-tester',
+    name: 'Webhook Payload Tester',
+    slug: 'webhook-tester',
+    tagline: 'Test webhook payloads',
+    description: 'Test and validate webhook payloads. Simulate webhook requests and view responses.',
+    keywords: ['webhook tester', 'webhook payload', 'webhook simulator', 'api webhook'],
+    category: categories.network,
+    icon: '🔔',
+    isNew: true
+  },
+  {
+    id: 'css-variable-generator',
+    name: 'CSS Variable Generator',
+    slug: 'css-variable-generator',
+    tagline: 'Generate CSS custom properties',
+    description: 'Generate CSS custom properties (variables) with color palettes and design tokens.',
+    keywords: ['css variables', 'css custom properties', 'css vars', 'design tokens'],
+    category: categories.css,
+    icon: '🎨',
+    isNew: true
+  },
+  {
+    id: 'font-pairing-generator',
+    name: 'Font Pairing Generator',
+    slug: 'font-pairing-generator',
+    tagline: 'Generate font pairings',
+    description: 'Generate beautiful font pairings for your designs. Get suggestions for heading and body fonts.',
+    keywords: ['font pairing', 'typography', 'font combinations', 'font suggestions'],
+    category: categories.css,
+    icon: '🔤',
+    isNew: true
+  },
+  // Additional Popular Tools
+  {
+    id: 'mime-type-lookup',
+    name: 'MIME Type Lookup',
+    slug: 'mime-type-lookup',
+    tagline: 'Lookup MIME types',
+    description: 'Lookup MIME types for file extensions. Find the correct Content-Type for any file extension.',
+    keywords: ['mime type', 'content type', 'file mime type', 'mime type lookup'],
+    category: categories.web,
+    icon: '📋',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'file-extension-lookup',
+    name: 'File Extension Lookup',
+    slug: 'file-extension-lookup',
+    tagline: 'Lookup file extensions',
+    description: 'Lookup file extensions and their descriptions. Find what file type a extension belongs to.',
+    keywords: ['file extension', 'file type', 'extension lookup', 'file extension finder'],
+    category: categories.misc,
+    icon: '📁',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'emoji-picker',
+    name: 'Emoji Picker',
+    slug: 'emoji-picker',
+    tagline: 'Copy emojis easily',
+    description: 'Browse and copy emojis easily. Search emojis by name or category.',
+    keywords: ['emoji picker', 'emoji copy', 'emoji finder', 'emoji search'],
+    category: categories.text,
+    icon: '😀',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'unicode-lookup',
+    name: 'Unicode Lookup',
+    slug: 'unicode-lookup',
+    tagline: 'Lookup Unicode characters',
+    description: 'Lookup Unicode characters by name, code point, or search. Find emoji, symbols, and special characters.',
+    keywords: ['unicode lookup', 'unicode character', 'unicode finder', 'character lookup'],
+    category: categories.text,
+    icon: '🔤',
+    isNew: true
+  },
+  {
+    id: 'html-entity-decoder',
+    name: 'HTML Entity Decoder',
+    slug: 'html-entity-decoder',
+    tagline: 'Decode HTML entities',
+    description: 'Decode HTML entities to their actual characters. Convert &amp; to &, &lt; to <, etc.',
+    keywords: ['html entity decoder', 'decode html entities', 'html decode', 'entity decoder'],
+    category: categories.encoders,
+    icon: '🔓',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'color-palette-generator',
+    name: 'Color Palette Generator',
+    slug: 'color-palette-generator',
+    tagline: 'Generate color palettes',
+    description: 'Generate beautiful color palettes for your designs. Create harmonious color schemes.',
+    keywords: ['color palette', 'color scheme', 'palette generator', 'color combinations'],
+    category: categories.css,
+    icon: '🎨',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'word-frequency-counter',
+    name: 'Word Frequency Counter',
+    slug: 'word-frequency-counter',
+    tagline: 'Count word frequencies',
+    description: 'Count word frequencies in text. Analyze which words appear most often.',
+    keywords: ['word frequency', 'word counter', 'frequency analysis', 'word count'],
+    category: categories.text,
+    icon: '📊',
+    isNew: true
+  },
+  {
+    id: 'line-counter',
+    name: 'Line Counter',
+    slug: 'line-counter',
+    tagline: 'Count lines in text',
+    description: 'Count lines, words, and characters in text. Get detailed statistics about your text.',
+    keywords: ['line counter', 'line count', 'text statistics', 'code line counter'],
+    category: categories.text,
+    icon: '📏',
+    isNew: true
+  },
+  // PDF Tools
+  {
+    id: 'pdf-merger',
+    name: 'PDF Merger',
+    slug: 'pdf-merger',
+    tagline: 'Merge multiple PDFs',
+    description: 'Merge multiple PDF files into one. Combine PDFs in any order you want.',
+    keywords: ['pdf merger', 'merge pdf', 'combine pdf', 'pdf combine', 'join pdf'],
+    category: categories.pdf,
+    icon: '📄',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'pdf-splitter',
+    name: 'PDF Splitter',
+    slug: 'pdf-splitter',
+    tagline: 'Split PDF into multiple files',
+    description: 'Split PDF files into multiple smaller PDFs. Extract specific pages or split by page ranges.',
+    keywords: ['pdf splitter', 'split pdf', 'extract pdf pages', 'pdf extractor'],
+    category: categories.pdf,
+    icon: '✂️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'pdf-metadata-extractor',
+    name: 'PDF Metadata Extractor',
+    slug: 'pdf-metadata-extractor',
+    tagline: 'Extract PDF metadata',
+    description: 'Extract metadata from PDF files. View title, author, creation date, and more.',
+    keywords: ['pdf metadata', 'pdf info', 'pdf properties', 'pdf extractor'],
+    category: categories.pdf,
+    icon: '📋',
+    isNew: true
+  },
+  {
+    id: 'pdf-to-images',
+    name: 'PDF to Images',
+    slug: 'pdf-to-images',
+    tagline: 'Convert PDF pages to images',
+    description: 'Convert PDF pages to PNG or JPEG images. Extract all pages or specific pages.',
+    keywords: ['pdf to image', 'pdf to png', 'pdf to jpeg', 'pdf converter'],
+    category: categories.pdf,
+    icon: '🖼️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'pdf-page-rotator',
+    name: 'PDF Page Rotator',
+    slug: 'pdf-page-rotator',
+    tagline: 'Rotate PDF pages',
+    description: 'Rotate pages in PDF files. Rotate all pages or specific pages by 90, 180, or 270 degrees.',
+    keywords: ['pdf rotate', 'rotate pdf pages', 'pdf page rotation'],
+    category: categories.pdf,
+    icon: '🔄',
+    isNew: true
+  },
+  {
+    id: 'pdf-page-deleter',
+    name: 'PDF Page Deleter',
+    slug: 'pdf-page-deleter',
+    tagline: 'Delete pages from PDF',
+    description: 'Remove pages from PDF files. Delete specific pages or page ranges.',
+    keywords: ['pdf delete pages', 'remove pdf pages', 'pdf page remover'],
+    category: categories.pdf,
+    icon: '🗑️',
+    isNew: true
+  },
+  {
+    id: 'pdf-to-text',
+    name: 'PDF to Text',
+    slug: 'pdf-to-text',
+    tagline: 'Extract text from PDF',
+    description: 'Extract text content from PDF files. Copy or download extracted text.',
+    keywords: ['pdf to text', 'extract text from pdf', 'pdf text extractor', 'pdf reader'],
+    category: categories.pdf,
+    icon: '📝',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'pdf-compressor',
+    name: 'PDF Compressor',
+    slug: 'pdf-compressor',
+    tagline: 'Compress PDF files',
+    description: 'Compress PDF files to reduce file size. Optimize PDFs for web or email.',
+    keywords: ['pdf compressor', 'compress pdf', 'pdf optimizer', 'reduce pdf size'],
+    category: categories.pdf,
+    icon: '🗜️',
+    isNew: true,
+    isPopular: true
+  },
+  // Financial Calculators
+  {
+    id: 'tip-calculator',
+    name: 'Tip Calculator',
+    slug: 'tip-calculator',
+    tagline: 'Calculate restaurant tips',
+    description: 'Calculate restaurant tips with percentage and split bill functionality. Perfect for dining out.',
+    keywords: ['tip calculator', 'restaurant tip', 'bill splitter', 'tip calculator online'],
+    category: categories.calculators,
+    icon: '💰',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'loan-calculator',
+    name: 'Loan/EMI Calculator',
+    slug: 'loan-calculator',
+    tagline: 'Calculate loan EMI',
+    description: 'Calculate monthly EMI, interest, and total amount for loans. View amortization schedule.',
+    keywords: ['loan calculator', 'emi calculator', 'loan emi', 'mortgage calculator', 'loan payment'],
+    category: categories.calculators,
+    icon: '💳',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'mortgage-calculator',
+    name: 'Mortgage Calculator',
+    slug: 'mortgage-calculator',
+    tagline: 'Calculate mortgage payments',
+    description: 'Calculate monthly mortgage payments with principal, interest, taxes, and insurance.',
+    keywords: ['mortgage calculator', 'home loan calculator', 'mortgage payment', 'house loan'],
+    category: categories.calculators,
+    icon: '🏠',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'compound-interest-calculator',
+    name: 'Compound Interest Calculator',
+    slug: 'compound-interest-calculator',
+    tagline: 'Calculate compound interest',
+    description: 'Calculate compound interest over time. See how your investments grow with compounding.',
+    keywords: ['compound interest', 'interest calculator', 'investment calculator', 'compound interest calculator'],
+    category: categories.calculators,
+    icon: '📈',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'percentage-calculator',
+    name: 'Percentage Calculator',
+    slug: 'percentage-calculator',
+    tagline: 'Calculate percentages',
+    description: 'Calculate percentages, discounts, markups, and percentage changes. Multiple calculation modes.',
+    keywords: ['percentage calculator', 'discount calculator', 'percentage increase', 'percentage decrease'],
+    category: categories.calculators,
+    icon: '📊',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'bmi-calculator',
+    name: 'BMI Calculator',
+    slug: 'bmi-calculator',
+    tagline: 'Calculate Body Mass Index',
+    description: 'Calculate Body Mass Index (BMI) with health categories. Track your health metrics.',
+    keywords: ['bmi calculator', 'body mass index', 'bmi calculator online', 'health calculator'],
+    category: categories.calculators,
+    icon: '⚖️',
+    isNew: true,
+    isPopular: true
+  },
+  // Productivity Tools
+  {
+    id: 'pomodoro-timer',
+    name: 'Pomodoro Timer',
+    slug: 'pomodoro-timer',
+    tagline: 'Focus timer with breaks',
+    description: '25-minute focus timer with breaks. Boost productivity with the Pomodoro Technique.',
+    keywords: ['pomodoro timer', 'focus timer', 'productivity timer', 'pomodoro technique'],
+    category: categories.misc,
+    icon: '🍅',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'stopwatch',
+    name: 'Stopwatch',
+    slug: 'stopwatch',
+    tagline: 'Simple stopwatch with laps',
+    description: 'Simple stopwatch with lap times. Track time accurately for any activity.',
+    keywords: ['stopwatch', 'timer', 'lap timer', 'stopwatch online'],
+    category: categories.misc,
+    icon: '⏱️',
+    isNew: true,
+    isPopular: true
+  },
+  // Color Converters
+  {
+    id: 'hex-to-rgb',
+    name: 'Hex to RGB Converter',
+    slug: 'hex-to-rgb',
+    tagline: 'Convert hex to RGB',
+    description: 'Convert hex color codes to RGB values. Get RGB, RGBA, and HSL values.',
+    keywords: ['hex to rgb', 'color converter', 'hex color', 'rgb converter'],
+    category: categories.css,
+    icon: '🎨',
+    isNew: true
+  },
+  {
+    id: 'rgb-to-hex',
+    name: 'RGB to Hex Converter',
+    slug: 'rgb-to-hex',
+    tagline: 'Convert RGB to hex',
+    description: 'Convert RGB color values to hex codes. Input RGB and get hex color code.',
+    keywords: ['rgb to hex', 'color converter', 'rgb color', 'hex converter'],
+    category: categories.css,
+    icon: '🎨',
+    isNew: true
+  },
+  {
+    id: 'hsl-to-rgb',
+    name: 'HSL to RGB Converter',
+    slug: 'hsl-to-rgb',
+    tagline: 'Convert HSL to RGB',
+    description: 'Convert HSL color values to RGB and vice versa. Complete color conversion tool.',
+    keywords: ['hsl to rgb', 'rgb to hsl', 'color converter', 'hsl converter'],
+    category: categories.css,
+    icon: '🌈',
+    isNew: true
+  },
+  // Utility Tools
+  {
+    id: 'binary-to-text',
+    name: 'Binary to Text',
+    slug: 'binary-to-text',
+    tagline: 'Decode binary to text',
+    description: 'Convert binary code to text. Decode binary strings to readable text.',
+    keywords: ['binary to text', 'binary decoder', 'decode binary', 'binary converter'],
+    category: categories.encoders,
+    icon: '🔢',
+    isNew: true
+  },
+  {
+    id: 'base64-to-image',
+    name: 'Base64 to Image',
+    slug: 'base64-to-image',
+    tagline: 'Decode base64 to image',
+    description: 'Convert base64 encoded strings to images. Decode and download base64 images.',
+    keywords: ['base64 to image', 'base64 decoder', 'decode base64 image', 'base64 image converter'],
+    category: categories.encoders,
+    icon: '🖼️',
+    isNew: true
+  },
+  {
+    id: 'json-to-table',
+    name: 'JSON to Table',
+    slug: 'json-to-table',
+    tagline: 'Visual JSON table viewer',
+    description: 'Convert JSON data to a sortable and filterable table. Visual JSON data viewer.',
+    keywords: ['json to table', 'json viewer', 'json table', 'json data viewer'],
+    category: categories.json,
+    icon: '📋',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'sql-query-builder',
+    name: 'SQL Query Builder',
+    slug: 'sql-query-builder',
+    tagline: 'Visual SQL query builder',
+    description: 'Build SQL queries visually. Select tables, columns, and conditions to generate SQL.',
+    keywords: ['sql query builder', 'sql generator', 'visual sql', 'sql builder online'],
+    category: categories.misc,
+    icon: '🗄️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'barcode-generator',
+    name: 'Barcode Generator',
+    slug: 'barcode-generator',
+    tagline: 'Generate barcodes',
+    description: 'Generate barcodes in multiple formats (Code128, EAN, UPC). Download as image.',
+    keywords: ['barcode generator', 'barcode maker', 'generate barcode', 'barcode creator'],
+    category: categories.generators,
+    icon: '📊',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'responsive-design-tester',
+    name: 'Responsive Design Tester',
+    slug: 'responsive-design-tester',
+    tagline: 'Test website on different devices',
+    description: 'Preview how your website looks on different devices and screen sizes. Test responsive design with mobile, tablet, and desktop views.',
+    keywords: ['responsive design', 'viewport tester', 'mobile view', 'tablet view', 'device preview', 'screen size tester'],
+    category: categories.web,
+    icon: '📱',
     isNew: true,
     isPopular: true
   }
