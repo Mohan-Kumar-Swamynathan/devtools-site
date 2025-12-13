@@ -13,9 +13,10 @@ const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
 
 <a 
   href={`/${slug}`} 
-  class="card-hover group block relative overflow-hidden transition-all duration-300"
+  class="card-hover group block relative overflow-hidden transition-all duration-300 animate-fade-in-scale"
   aria-label={`${name} - ${tagline}`}
   data-tool-slug={slug}
+  style="animation-fill-mode: both;"
 >
   <!-- Hover gradient effect -->
   <div 
@@ -26,8 +27,9 @@ const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
   <div class="relative z-10">
     <div class="flex items-start justify-between mb-3">
       <span 
-        class="text-3xl sm:text-4xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+        class="text-3xl sm:text-4xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 group-hover:animate-float"
         aria-hidden="true"
+        style="transform-origin: center;"
       >
         {icon}
       </span>

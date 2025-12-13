@@ -148,19 +148,29 @@ export default function SearchBox({ tools }: Props) {
       {/* Results Dropdown */}
       {isOpen && results.length > 0 && (
         <div 
-          className="absolute top-full left-0 right-0 mt-2 rounded-xl border overflow-hidden z-50 animate-fade-in"
+          className="absolute top-full left-0 right-0 mt-2 rounded-xl border overflow-hidden z-50 animate-fade-in-scale"
           style={{ 
             backgroundColor: 'var(--bg-elevated)',
             borderColor: 'var(--border-primary)',
-            boxShadow: 'var(--shadow-lg)'
+            boxShadow: 'var(--shadow-lg)',
+            transformOrigin: 'top'
           }}
         >
           <ul className="py-2" role="listbox" aria-label="Search results">
             {results.map((tool, index) => (
-              <li key={tool.id} role="option" aria-selected={index === selectedIndex}>
+              <li 
+                key={tool.id} 
+                role="option" 
+                aria-selected={index === selectedIndex}
+                className="animate-slide-up"
+                style={{
+                  animationDelay: `${index * 30}ms`,
+                  animationFillMode: 'both'
+                }}
+              >
                 <a
                   href={`/${tool.slug}`}
-                  className="flex items-center gap-3 px-4 py-3 transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 transition-all duration-200 hover:translate-x-1"
                   style={{ 
                     backgroundColor: index === selectedIndex ? 'var(--bg-secondary)' : 'transparent'
                   }}

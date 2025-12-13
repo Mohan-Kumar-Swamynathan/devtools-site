@@ -49,12 +49,14 @@ const popularTools = getPopularTools();
 
   <!-- Popular Tools -->
   <section class="mb-12 sm:mb-16" id="popular">
-    <h2 class="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2" style="color: var(--text-primary);">
-      <span>⭐</span> Popular Tools
+    <h2 class="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2 animate-slide-up" style="color: var(--text-primary);">
+      <span class="animate-bounce">⭐</span> Popular Tools
     </h2>
     <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {popularTools.slice(0, 8).map(tool => (
-        <ToolCard {...tool} />
+      {popularTools.slice(0, 8).map((tool, index) => (
+        <div class="animate-fade-in-scale" style={`animation-delay: ${index * 50}ms; animation-fill-mode: both;`}>
+          <ToolCard {...tool} />
+        </div>
       ))}
     </div>
   </section>
@@ -63,17 +65,19 @@ const popularTools = getPopularTools();
   <AdSlot slot="in-article" class="mb-12 sm:mb-16" />
 
   <!-- All Categories -->
-  {Object.values(categories).map((category) => {
+  {Object.values(categories).map((category, catIndex) => {
     const categoryTools = getToolsByCategory(category.id);
     if (categoryTools.length === 0) return null;
     return (
-      <section class="mb-12 sm:mb-16" id={category.id}>
+      <section class="mb-12 sm:mb-16 animate-slide-up" id={category.id} style={`animation-delay: ${catIndex * 100}ms; animation-fill-mode: both;`}>
         <h2 class="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2" style="color: var(--text-primary);">
-          <span>{category.icon}</span> {category.name}
+          <span class="transition-transform duration-300 hover:scale-110 hover:rotate-12 inline-block">{category.icon}</span> {category.name}
         </h2>
         <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {categoryTools.map(tool => (
-            <ToolCard {...tool} />
+          {categoryTools.map((tool, toolIndex) => (
+            <div class="animate-fade-in-scale" style={`animation-delay: ${(catIndex * 50) + (toolIndex * 30)}ms; animation-fill-mode: both;`}>
+              <ToolCard {...tool} />
+            </div>
           ))}
         </div>
       </section>

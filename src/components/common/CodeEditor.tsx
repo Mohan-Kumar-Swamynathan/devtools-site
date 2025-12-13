@@ -145,10 +145,10 @@ export default function CodeEditor({
       )}
 
       {/* Editor */}
-      <div className="relative">
+      <div className="relative animate-fade-in">
         {showLineNumbers && (
           <div 
-            className="absolute left-0 top-0 bottom-0 w-12 flex flex-col items-end pr-3 pt-4 text-xs font-mono select-none overflow-hidden"
+            className="absolute left-0 top-0 bottom-0 w-12 flex flex-col items-end pr-3 pt-4 text-xs font-mono select-none overflow-hidden animate-slide-in-left"
             style={{ 
               color: 'var(--text-muted)', 
               backgroundColor: 'var(--bg-tertiary)',
@@ -171,7 +171,7 @@ export default function CodeEditor({
           rows={rows}
           spellCheck={false}
           className={clsx(
-            'code-editor w-full',
+            'code-editor w-full transition-all duration-200',
             showLineNumbers && 'pl-14',
             isExpanded && 'h-[80vh]'
           )}

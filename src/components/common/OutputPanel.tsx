@@ -85,8 +85,11 @@ export default function OutputPanel({
 
       {/* Output Area */}
       <div 
-        className="relative rounded-xl border overflow-hidden"
-        style={{ backgroundColor: 'var(--syntax-bg)' }}
+        className="relative rounded-xl border overflow-hidden animate-fade-in-scale"
+        style={{ 
+          backgroundColor: 'var(--syntax-bg)',
+          transformOrigin: 'top'
+        }}
       >
         {showLineNumbers && (
           <div 
