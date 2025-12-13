@@ -5,8 +5,8 @@ export const generateToolMeta = (tool: Tool) => {
     title: `${tool.name} | DevTools`,
     description: tool.description,
     keywords: tool.keywords.join(', '),
-    canonical: `https://devtools.site/${tool.slug}`,
-    ogImage: `https://devtools.site/og-image.png`
+    canonical: `https://devtool.site/${tool.slug}`,
+    ogImage: `https://devtool.site/og-image.png`
   };
 };
 
@@ -15,8 +15,8 @@ export const generateHomeMeta = () => {
     title: 'DevTools - Free Online Developer Tools',
     description: 'Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, timestamp converter, and 50+ more tools. Fast, free, and private.',
     keywords: ['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'jwt decoder', 'free tools'],
-    canonical: 'https://devtools.site/',
-    ogImage: 'https://devtools.site/og-image.png'
+    canonical: 'https://devtool.site/',
+    ogImage: 'https://devtool.site/og-image.png'
   };
 };
 

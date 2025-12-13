@@ -4,7 +4,7 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://devtools.site',
+  site: 'https://devtool.site',
   integrations: [
     react(),
     tailwind(),
@@ -14,7 +14,7 @@ export default defineConfig({
       lastmod: new Date(),
       filter: (page) => !page.includes('/404'),
       serialize: (item) => {
-        if (item.url === 'https://devtools.site/') {
+        if (item.url === 'https://devtool.site/') {
           return { ...item, priority: 1.0, changefreq: 'daily' };
         }
         return { ...item, priority: 0.8, changefreq: 'weekly' };

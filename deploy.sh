@@ -55,5 +55,5 @@ echo "✅ Deployment complete!"
 echo "🌐 Your site should be live at: https://devtools-site.pages.dev"
 echo ""
 echo "💡 To add a custom domain:"
-echo "   wrangler pages domain add devtools.site --project-name=devtools-site"
+echo "   wrangler pages domain add devtool.site --project-name=devtools-site"
 
