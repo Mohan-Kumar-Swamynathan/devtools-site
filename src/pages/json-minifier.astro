@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonMinifier from '@/components/tools/JsonMinifier.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('json-minifier')!;
+const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <JsonMinifier client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is JSON Minifier?</h2>
+    <p>
+      Remove all whitespace from JSON to create a minified version. Perfect for reducing file size in production.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

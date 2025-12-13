@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import FlexboxPlayground from '@/components/tools/FlexboxPlayground.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('flexbox-playground')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <FlexboxPlayground client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Flexbox Playground?</h2>
+    <p>
+      Interactive flexbox playground. Learn CSS flexbox with visual examples.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

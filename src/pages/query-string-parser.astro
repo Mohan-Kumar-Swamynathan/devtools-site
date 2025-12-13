@@ -1,0 +1,28 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import QueryStringParser from '@/components/tools/QueryStringParser.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('query-string-parser')!;
+const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <QueryStringParser client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Query String Parser?</h2>
+    <p>
+      Parse query strings to JSON format or build query strings from JSON objects. 
+      Perfect for working with URL parameters and API query strings.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

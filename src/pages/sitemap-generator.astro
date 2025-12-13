@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import SitemapGenerator from '@/components/tools/SitemapGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('sitemap-generator')!;
+const relatedTools = getToolsByCategory('generators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <SitemapGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Sitemap Generator?</h2>
+    <p>
+      Generate XML sitemaps from a list of URLs. Perfect for SEO and helping search engines index your site.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

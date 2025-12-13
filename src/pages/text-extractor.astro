@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TextExtractor from '@/components/tools/TextExtractor.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('text-extractor')!;
+const relatedTools = getToolsByCategory('text').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <TextExtractor client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Text Extractor?</h2>
+    <p>
+      Extract specific patterns from text using regular expressions or simple search.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

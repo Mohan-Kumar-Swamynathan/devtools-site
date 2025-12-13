@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import GitignoreGenerator from '@/components/tools/GitignoreGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('gitignore-generator')!;
+const relatedTools = getToolsByCategory('generators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <GitignoreGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is .gitignore Generator?</h2>
+    <p>
+      Generate .gitignore files by selecting technologies. Supports Node.js, Python, Java, PHP, Go, Rust, Ruby, and more.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

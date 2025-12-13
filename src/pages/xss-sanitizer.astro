@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import XssSanitizer from '@/components/tools/XssSanitizer.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('xss-sanitizer')!;
+const relatedTools = getToolsByCategory('security').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <XssSanitizer client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is XSS Sanitizer?</h2>
+    <p>
+      Sanitize HTML content to prevent XSS attacks. Remove or escape dangerous HTML tags and attributes.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

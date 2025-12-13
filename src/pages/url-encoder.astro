@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import UrlEncoder from '@/components/tools/UrlEncoder.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('url-encoder')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <UrlEncoder client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is URL Encoder/Decoder?</h2>
+    <p>
+      Encode or decode URL strings. Convert special characters for URLs and decode percent-encoded strings.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

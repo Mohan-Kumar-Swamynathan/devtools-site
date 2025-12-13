@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HttpStatusCodes from '@/components/tools/HttpStatusCodes.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('http-status-codes')!;
+const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <HttpStatusCodes client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is HTTP Status Codes Reference?</h2>
+    <p>
+      Complete HTTP status codes reference with descriptions and examples.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

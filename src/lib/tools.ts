@@ -72,6 +72,54 @@ export const categories: Record<string, Category> = {
     name: 'Misc Tools',
     icon: '🧰',
     description: 'Other useful developer tools'
+  },
+  web: {
+    id: 'web',
+    name: 'Web Tools',
+    icon: '🌐',
+    description: 'URL parsing, query strings, and web utilities'
+  },
+  network: {
+    id: 'network',
+    name: 'Network & API',
+    icon: '📡',
+    description: 'Network tools, API testing, and HTTP utilities'
+  },
+  security: {
+    id: 'security',
+    name: 'Security Tools',
+    icon: '🔒',
+    description: 'Security, cryptography, and validation tools'
+  },
+  image: {
+    id: 'image',
+    name: 'Image Tools',
+    icon: '🖼️',
+    description: 'Image manipulation and analysis tools'
+  },
+  time: {
+    id: 'time',
+    name: 'Time & Date',
+    icon: '🕐',
+    description: 'Time zone conversion, date calculations, and formatting'
+  },
+  file: {
+    id: 'file',
+    name: 'File Tools',
+    icon: '📁',
+    description: 'File system utilities and path manipulation'
+  },
+  code: {
+    id: 'code',
+    name: 'Code Analysis',
+    icon: '💻',
+    description: 'Code analysis, complexity, and quality tools'
+  },
+  documentation: {
+    id: 'documentation',
+    name: 'Documentation',
+    icon: '📚',
+    description: 'Documentation generators and formatters'
   }
 };
 
@@ -681,6 +729,591 @@ export const tools: Tool[] = [
     keywords: ['htaccess generator', 'apache config', 'htaccess maker'],
     category: categories.misc,
     icon: '⚙️'
+  },
+  // Web Tools
+  {
+    id: 'url-parser',
+    name: 'URL Parser',
+    slug: 'url-parser',
+    tagline: 'Parse URLs into components',
+    description: 'Parse URLs into protocol, hostname, port, pathname, query parameters, and hash components.',
+    keywords: ['url parser', 'parse url', 'url components', 'url breakdown'],
+    category: categories.web,
+    icon: '🔗',
+    isPopular: true
+  },
+  {
+    id: 'query-string-parser',
+    name: 'Query String Parser',
+    slug: 'query-string-parser',
+    tagline: 'Parse and build query strings',
+    description: 'Parse query strings to JSON or build query strings from JSON objects.',
+    keywords: ['query string parser', 'url params', 'query params', 'parse query string'],
+    category: categories.web,
+    icon: '🔍'
+  },
+  {
+    id: 'http-headers-parser',
+    name: 'HTTP Headers Parser',
+    slug: 'http-headers-parser',
+    tagline: 'Parse HTTP headers',
+    description: 'Parse raw HTTP headers into structured JSON format.',
+    keywords: ['http headers parser', 'parse headers', 'http headers'],
+    category: categories.web,
+    icon: '📋'
+  },
+  // Additional Validators
+  {
+    id: 'ip-address-validator',
+    name: 'IP Address Validator',
+    slug: 'ip-address-validator',
+    tagline: 'Validate IPv4 and IPv6 addresses',
+    description: 'Validate IP addresses. Supports both IPv4 and IPv6 formats.',
+    keywords: ['ip validator', 'ipv4 validator', 'ipv6 validator', 'validate ip address'],
+    category: categories.validators,
+    icon: '🌐'
+  },
+  {
+    id: 'uuid-validator',
+    name: 'UUID Validator',
+    slug: 'uuid-validator',
+    tagline: 'Validate UUID format',
+    description: 'Validate UUID format and detect version (v1-v5).',
+    keywords: ['uuid validator', 'validate uuid', 'uuid checker', 'guid validator'],
+    category: categories.validators,
+    icon: '🆔'
+  },
+  {
+    id: 'credit-card-validator',
+    name: 'Credit Card Validator',
+    slug: 'credit-card-validator',
+    tagline: 'Validate credit card numbers',
+    description: 'Validate credit card numbers using Luhn algorithm. Detects card type (Visa, Mastercard, etc.).',
+    keywords: ['credit card validator', 'luhn algorithm', 'card number validator'],
+    category: categories.validators,
+    icon: '💳'
+  },
+  {
+    id: 'jwt-validator',
+    name: 'JWT Validator',
+    slug: 'jwt-validator',
+    tagline: 'Validate JWT tokens',
+    description: 'Validate JWT token structure, decode header and payload, check expiration.',
+    keywords: ['jwt validator', 'validate jwt', 'jwt checker', 'token validator'],
+    category: categories.validators,
+    icon: '🎫'
+  },
+  // Additional Generators
+  {
+    id: 'gitignore-generator',
+    name: '.gitignore Generator',
+    slug: 'gitignore-generator',
+    tagline: 'Generate .gitignore files',
+    description: 'Generate .gitignore files by selecting technologies. Supports Node.js, Python, Java, PHP, Go, Rust, Ruby, and more.',
+    keywords: ['gitignore generator', 'generate gitignore', 'gitignore maker'],
+    category: categories.generators,
+    icon: '📝',
+    isPopular: true
+  },
+  {
+    id: 'robots-txt-generator',
+    name: 'robots.txt Generator',
+    slug: 'robots-txt-generator',
+    tagline: 'Generate robots.txt files',
+    description: 'Generate robots.txt files with custom rules for search engine crawlers.',
+    keywords: ['robots.txt generator', 'generate robots.txt', 'seo robots'],
+    category: categories.generators,
+    icon: '🤖'
+  },
+  {
+    id: 'sitemap-generator',
+    name: 'Sitemap Generator',
+    slug: 'sitemap-generator',
+    tagline: 'Generate XML sitemaps',
+    description: 'Generate XML sitemaps from a list of URLs. Perfect for SEO.',
+    keywords: ['sitemap generator', 'xml sitemap', 'generate sitemap', 'seo sitemap'],
+    category: categories.generators,
+    icon: '🗺️'
+  },
+  {
+    id: 'dockerfile-generator',
+    name: 'Dockerfile Generator',
+    slug: 'dockerfile-generator',
+    tagline: 'Generate Dockerfiles',
+    description: 'Generate Dockerfiles with common configurations for Node.js, Python, Go, Rust, PHP, and more.',
+    keywords: ['dockerfile generator', 'docker generator', 'generate dockerfile'],
+    category: categories.generators,
+    icon: '🐳'
+  },
+  {
+    id: 'readme-generator',
+    name: 'README Generator',
+    slug: 'readme-generator',
+    tagline: 'Generate README files',
+    description: 'Generate README.md files with standard sections and formatting.',
+    keywords: ['readme generator', 'generate readme', 'readme maker'],
+    category: categories.generators,
+    icon: '📖'
+  },
+  // Text & Encoding Tools
+  {
+    id: 'text-to-binary',
+    name: 'Text to Binary',
+    slug: 'text-to-binary',
+    tagline: 'Convert text to binary and vice versa',
+    description: 'Convert text to binary representation and binary back to text.',
+    keywords: ['text to binary', 'binary converter', 'text binary', 'binary to text'],
+    category: categories.encoders,
+    icon: '🔢'
+  },
+  {
+    id: 'ascii-art-generator',
+    name: 'ASCII Art Generator',
+    slug: 'ascii-art-generator',
+    tagline: 'Generate ASCII art from text',
+    description: 'Convert text to ASCII art with different font styles.',
+    keywords: ['ascii art generator', 'text to ascii', 'ascii art'],
+    category: categories.text,
+    icon: '🎨'
+  },
+  {
+    id: 'json-minifier',
+    name: 'JSON Minifier',
+    slug: 'json-minifier',
+    tagline: 'Minify JSON code',
+    description: 'Remove all whitespace from JSON to create a minified version.',
+    keywords: ['json minifier', 'minify json', 'compress json'],
+    category: categories.json,
+    icon: '📦'
+  },
+  {
+    id: 'base64-image-decoder',
+    name: 'Base64 Image Decoder',
+    slug: 'base64-image-decoder',
+    tagline: 'Decode base64 to images',
+    description: 'Decode base64 encoded strings back to downloadable images.',
+    keywords: ['base64 image decoder', 'decode base64 image', 'base64 to image'],
+    category: categories.encoders,
+    icon: '🖼️'
+  },
+  // Data & Format Tools
+  {
+    id: 'csv-validator',
+    name: 'CSV Validator',
+    slug: 'csv-validator',
+    tagline: 'Validate CSV structure',
+    description: 'Validate CSV structure and detect issues like missing columns, duplicate headers, and formatting errors.',
+    keywords: ['csv validator', 'validate csv', 'csv checker'],
+    category: categories.validators,
+    icon: '📊'
+  },
+  {
+    id: 'xml-validator',
+    name: 'XML Validator',
+    slug: 'xml-validator',
+    tagline: 'Validate XML syntax',
+    description: 'Validate XML syntax and structure. Check for well-formed XML documents.',
+    keywords: ['xml validator', 'validate xml', 'xml checker'],
+    category: categories.validators,
+    icon: '📰'
+  },
+  {
+    id: 'yaml-validator',
+    name: 'YAML Validator',
+    slug: 'yaml-validator',
+    tagline: 'Validate YAML syntax',
+    description: 'Validate YAML syntax and structure. Check for properly formatted YAML files.',
+    keywords: ['yaml validator', 'validate yaml', 'yaml checker'],
+    category: categories.validators,
+    icon: '📋'
+  },
+  {
+    id: 'json-escape',
+    name: 'JSON Escape/Unescape',
+    slug: 'json-escape',
+    tagline: 'Escape or unescape JSON strings',
+    description: 'Escape special characters in JSON strings or unescape escaped JSON strings.',
+    keywords: ['json escape', 'json unescape', 'escape json'],
+    category: categories.json,
+    icon: '🔤'
+  },
+  {
+    id: 'jsonl-converter',
+    name: 'JSONL Converter',
+    slug: 'jsonl-converter',
+    tagline: 'Convert JSON Lines to JSON array',
+    description: 'Convert JSON Lines (JSONL) format to JSON array and vice versa.',
+    keywords: ['jsonl converter', 'json lines', 'jsonl to json'],
+    category: categories.json,
+    icon: '📄'
+  },
+  {
+    id: 'toml-formatter',
+    name: 'TOML Formatter',
+    slug: 'toml-formatter',
+    tagline: 'Format TOML files',
+    description: 'Format and beautify TOML configuration files.',
+    keywords: ['toml formatter', 'format toml', 'toml beautifier'],
+    category: categories.formatters,
+    icon: '⚙️'
+  },
+  // Code Analysis Tools
+  {
+    id: 'code-line-counter',
+    name: 'Code Line Counter',
+    slug: 'code-line-counter',
+    tagline: 'Count lines, functions, classes in code',
+    description: 'Count total lines, code lines, blank lines, comments, functions, and classes in your code.',
+    keywords: ['line counter', 'code counter', 'count lines', 'code statistics'],
+    category: categories.code,
+    icon: '📊'
+  },
+  {
+    id: 'code-complexity-calculator',
+    name: 'Code Complexity Calculator',
+    slug: 'code-complexity-calculator',
+    tagline: 'Calculate cyclomatic complexity',
+    description: 'Calculate cyclomatic complexity of code. Identify decision points and loops.',
+    keywords: ['complexity calculator', 'cyclomatic complexity', 'code complexity'],
+    category: categories.code,
+    icon: '🧮'
+  },
+  {
+    id: 'dependency-parser',
+    name: 'Dependency Parser',
+    slug: 'dependency-parser',
+    tagline: 'Parse package dependencies',
+    description: 'Parse dependencies from package.json, requirements.txt, pom.xml, Cargo.toml, and more.',
+    keywords: ['dependency parser', 'parse dependencies', 'package parser'],
+    category: categories.code,
+    icon: '📦'
+  },
+  {
+    id: 'license-identifier',
+    name: 'License Identifier',
+    slug: 'license-identifier',
+    tagline: 'Identify software licenses',
+    description: 'Identify software licenses from license text. Supports MIT, Apache, GPL, BSD, and more.',
+    keywords: ['license identifier', 'identify license', 'license detector'],
+    category: categories.code,
+    icon: '📄'
+  },
+  {
+    id: 'code-comment-remover',
+    name: 'Code Comment Remover',
+    slug: 'code-comment-remover',
+    tagline: 'Remove comments from code',
+    description: 'Remove comments from code in JavaScript, Python, Java, CSS, and HTML.',
+    keywords: ['comment remover', 'remove comments', 'strip comments'],
+    category: categories.code,
+    icon: '🗑️'
+  },
+  {
+    id: 'code-indentation-fixer',
+    name: 'Code Indentation Fixer',
+    slug: 'code-indentation-fixer',
+    tagline: 'Fix inconsistent indentation',
+    description: 'Fix inconsistent indentation in code. Supports spaces and tabs.',
+    keywords: ['indentation fixer', 'fix indentation', 'format indentation'],
+    category: categories.code,
+    icon: '🔧'
+  },
+  // Network & API Tools
+  {
+    id: 'http-status-code-lookup',
+    name: 'HTTP Status Code Lookup',
+    slug: 'http-status-code-lookup',
+    tagline: 'Lookup HTTP status codes',
+    description: 'Lookup HTTP status codes by number. Get name, description, and category.',
+    keywords: ['http status lookup', 'status code lookup', 'http code'],
+    category: categories.network,
+    icon: '🔍'
+  },
+  {
+    id: 'api-response-formatter',
+    name: 'API Response Formatter',
+    slug: 'api-response-formatter',
+    tagline: 'Format API responses',
+    description: 'Format API responses in JSON or XML format with proper indentation.',
+    keywords: ['api formatter', 'response formatter', 'format api response'],
+    category: categories.network,
+    icon: '📡'
+  },
+  {
+    id: 'webhook-tester',
+    name: 'Webhook Tester',
+    slug: 'webhook-tester',
+    tagline: 'Test webhook endpoints',
+    description: 'Test webhook endpoints with custom HTTP methods, headers, and body. See response details.',
+    keywords: ['webhook tester', 'test webhook', 'webhook debugger'],
+    category: categories.network,
+    icon: '🔗'
+  },
+  {
+    id: 'cors-checker',
+    name: 'CORS Checker',
+    slug: 'cors-checker',
+    tagline: 'Check CORS headers',
+    description: 'Check if a URL has CORS enabled and view CORS headers.',
+    keywords: ['cors checker', 'check cors', 'cors headers'],
+    category: categories.network,
+    icon: '🌐'
+  },
+  {
+    id: 'user-agent-parser',
+    name: 'User-Agent Parser',
+    slug: 'user-agent-parser',
+    tagline: 'Parse user-agent strings',
+    description: 'Parse user-agent strings to extract browser, OS, device type, and version information.',
+    keywords: ['user agent parser', 'parse user agent', 'ua parser'],
+    category: categories.network,
+    icon: '🔍'
+  },
+  // Security Tools
+  {
+    id: 'password-strength-checker',
+    name: 'Password Strength Checker',
+    slug: 'password-strength-checker',
+    tagline: 'Check password strength',
+    description: 'Check password strength and get suggestions for improvement. Analyzes length, character types, and complexity.',
+    keywords: ['password strength', 'password checker', 'password validator'],
+    category: categories.security,
+    icon: '🔒',
+    isPopular: true
+  },
+  {
+    id: 'hmac-generator',
+    name: 'HMAC Generator',
+    slug: 'hmac-generator',
+    tagline: 'Generate HMAC signatures',
+    description: 'Generate HMAC (Hash-based Message Authentication Code) signatures using SHA-1, SHA-256, or SHA-512.',
+    keywords: ['hmac generator', 'hmac signature', 'generate hmac'],
+    category: categories.security,
+    icon: '🔐'
+  },
+  {
+    id: 'rsa-key-generator',
+    name: 'RSA Key Generator',
+    slug: 'rsa-key-generator',
+    tagline: 'Generate RSA key pairs',
+    description: 'Generate RSA public and private key pairs. Keys are generated in JWK format.',
+    keywords: ['rsa generator', 'rsa keys', 'generate rsa', 'key pair generator'],
+    category: categories.security,
+    icon: '🔑'
+  },
+  {
+    id: 'checksum-calculator',
+    name: 'Checksum Calculator',
+    slug: 'checksum-calculator',
+    tagline: 'Calculate checksums',
+    description: 'Calculate SHA-1, SHA-256, and SHA-512 checksums for text data.',
+    keywords: ['checksum calculator', 'sha checksum', 'calculate checksum'],
+    category: categories.security,
+    icon: '#️⃣'
+  },
+  {
+    id: 'xss-sanitizer',
+    name: 'XSS Sanitizer',
+    slug: 'xss-sanitizer',
+    tagline: 'Sanitize HTML to prevent XSS',
+    description: 'Sanitize HTML content to prevent XSS attacks. Remove or escape dangerous HTML tags and attributes.',
+    keywords: ['xss sanitizer', 'html sanitizer', 'xss prevention'],
+    category: categories.security,
+    icon: '🛡️'
+  },
+  // Image Tools
+  {
+    id: 'image-metadata-extractor',
+    name: 'Image Metadata Extractor',
+    slug: 'image-metadata-extractor',
+    tagline: 'Extract EXIF/metadata from images',
+    description: 'Extract metadata from images including dimensions, file size, type, and modification date.',
+    keywords: ['image metadata', 'exif extractor', 'image info'],
+    category: categories.image,
+    icon: '📷'
+  },
+  {
+    id: 'color-palette-extractor',
+    name: 'Color Palette Extractor',
+    slug: 'color-palette-extractor',
+    tagline: 'Extract color palette from images',
+    description: 'Extract dominant colors from images to create a color palette.',
+    keywords: ['color palette', 'extract colors', 'image colors'],
+    category: categories.image,
+    icon: '🎨'
+  },
+  {
+    id: 'image-resizer',
+    name: 'Image Resizer',
+    slug: 'image-resizer',
+    tagline: 'Resize images',
+    description: 'Resize images to custom dimensions. Supports maintaining aspect ratio.',
+    keywords: ['image resizer', 'resize image', 'image resize'],
+    category: categories.image,
+    icon: '📐'
+  },
+  {
+    id: 'svg-optimizer',
+    name: 'SVG Optimizer',
+    slug: 'svg-optimizer',
+    tagline: 'Optimize SVG code',
+    description: 'Optimize SVG code by removing unnecessary whitespace, comments, and attributes.',
+    keywords: ['svg optimizer', 'optimize svg', 'svg minifier'],
+    category: categories.image,
+    icon: '⚡'
+  },
+  // Time & Date Tools
+  {
+    id: 'time-zone-converter',
+    name: 'Time Zone Converter',
+    slug: 'time-zone-converter',
+    tagline: 'Convert between time zones',
+    description: 'Convert dates and times between different time zones. Supports major world time zones.',
+    keywords: ['time zone converter', 'convert timezone', 'timezone converter'],
+    category: categories.time,
+    icon: '🌍'
+  },
+  {
+    id: 'date-calculator',
+    name: 'Date Calculator',
+    slug: 'date-calculator',
+    tagline: 'Add/subtract days, weeks, months',
+    description: 'Add or subtract days, weeks, months, or years from a date.',
+    keywords: ['date calculator', 'add days', 'subtract days', 'date math'],
+    category: categories.time,
+    icon: '📅'
+  },
+  {
+    id: 'age-calculator',
+    name: 'Age Calculator',
+    slug: 'age-calculator',
+    tagline: 'Calculate age from birthdate',
+    description: 'Calculate age in years, months, and days from a birthdate.',
+    keywords: ['age calculator', 'calculate age', 'birthdate calculator'],
+    category: categories.time,
+    icon: '🎂'
+  },
+  {
+    id: 'business-days-calculator',
+    name: 'Business Days Calculator',
+    slug: 'business-days-calculator',
+    tagline: 'Calculate business days between dates',
+    description: 'Calculate the number of business days (excluding weekends) between two dates.',
+    keywords: ['business days', 'working days', 'calculate business days'],
+    category: categories.time,
+    icon: '💼'
+  },
+  {
+    id: 'iso-8601-formatter',
+    name: 'ISO 8601 Formatter',
+    slug: 'iso-8601-formatter',
+    tagline: 'Format dates in ISO 8601',
+    description: 'Format dates in ISO 8601 format or parse ISO 8601 strings.',
+    keywords: ['iso 8601', 'iso date', 'format iso date'],
+    category: categories.time,
+    icon: '📆'
+  },
+  // String Manipulation Tools
+  {
+    id: 'text-reverser',
+    name: 'Text Reverser',
+    slug: 'text-reverser',
+    tagline: 'Reverse text/strings',
+    description: 'Reverse text character by character. Simple text reversal tool.',
+    keywords: ['text reverser', 'reverse text', 'text reverse'],
+    category: categories.text,
+    icon: '↩️'
+  },
+  {
+    id: 'text-inverter',
+    name: 'Text Inverter',
+    slug: 'text-inverter',
+    tagline: 'Invert case (uppercase ↔ lowercase)',
+    description: 'Invert text case - convert uppercase to lowercase and vice versa.',
+    keywords: ['text inverter', 'invert case', 'case inverter'],
+    category: categories.text,
+    icon: '🔄'
+  },
+  {
+    id: 'text-rotator',
+    name: 'Text Rotator',
+    slug: 'text-rotator',
+    tagline: 'Rotate text (ROT13, ROT47)',
+    description: 'Apply ROT13 or ROT47 cipher to text. Simple encryption/decryption.',
+    keywords: ['text rotator', 'rot13', 'rot47', 'caesar cipher'],
+    category: categories.text,
+    icon: '🔀'
+  },
+  {
+    id: 'text-shuffler',
+    name: 'Text Shuffler',
+    slug: 'text-shuffler',
+    tagline: 'Shuffle characters/words',
+    description: 'Randomly shuffle characters, words, or lines in text.',
+    keywords: ['text shuffler', 'shuffle text', 'randomize text'],
+    category: categories.text,
+    icon: '🎲'
+  },
+  {
+    id: 'text-replacer',
+    name: 'Text Replacer',
+    slug: 'text-replacer',
+    tagline: 'Find and replace with regex',
+    description: 'Find and replace text with support for regular expressions.',
+    keywords: ['text replacer', 'find replace', 'regex replace'],
+    category: categories.text,
+    icon: '🔍'
+  },
+  {
+    id: 'text-extractor',
+    name: 'Text Extractor',
+    slug: 'text-extractor',
+    tagline: 'Extract specific patterns',
+    description: 'Extract specific patterns from text using regular expressions or simple search.',
+    keywords: ['text extractor', 'extract patterns', 'regex extract'],
+    category: categories.text,
+    icon: '📤'
+  },
+  // File & System Tools
+  {
+    id: 'file-size-converter',
+    name: 'File Size Converter',
+    slug: 'file-size-converter',
+    tagline: 'Convert between KB, MB, GB, TB',
+    description: 'Convert file sizes between bytes, KB, MB, GB, and TB.',
+    keywords: ['file size converter', 'size converter', 'bytes converter'],
+    category: categories.file,
+    icon: '📏'
+  },
+  {
+    id: 'path-normalizer',
+    name: 'Path Normalizer',
+    slug: 'path-normalizer',
+    tagline: 'Normalize file paths',
+    description: 'Normalize file paths for Windows or Unix/Linux systems.',
+    keywords: ['path normalizer', 'normalize path', 'file path'],
+    category: categories.file,
+    icon: '📂'
+  },
+  {
+    id: 'filename-sanitizer',
+    name: 'Filename Sanitizer',
+    slug: 'filename-sanitizer',
+    tagline: 'Sanitize filenames',
+    description: 'Sanitize filenames for different operating systems. Remove invalid characters.',
+    keywords: ['filename sanitizer', 'sanitize filename', 'clean filename'],
+    category: categories.file,
+    icon: '🧹'
+  },
+  {
+    id: 'file-extension-lookup',
+    name: 'File Extension Lookup',
+    slug: 'file-extension-lookup',
+    tagline: 'Lookup file extensions',
+    description: 'Lookup file extensions and their types, descriptions, and MIME types.',
+    keywords: ['file extension', 'extension lookup', 'mime type'],
+    category: categories.file,
+    icon: '🔍'
   }
 ];
 

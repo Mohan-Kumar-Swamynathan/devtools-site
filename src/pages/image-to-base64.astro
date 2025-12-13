@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageToBase64 from '@/components/tools/ImageToBase64.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-to-base64')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageToBase64 client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image to Base64 Converter?</h2>
+    <p>
+      Convert images to Base64 encoded strings. Supports PNG, JPG, GIF, SVG formats.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

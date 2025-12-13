@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CsvValidator from '@/components/tools/CsvValidator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('csv-validator')!;
+const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CsvValidator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is CSV Validator?</h2>
+    <p>
+      Validate CSV structure and detect issues like missing columns, duplicate headers, and formatting errors.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

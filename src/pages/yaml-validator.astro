@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import YamlValidator from '@/components/tools/YamlValidator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('yaml-validator')!;
+const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <YamlValidator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is YAML Validator?</h2>
+    <p>
+      Validate YAML syntax and structure. Check for properly formatted YAML files.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

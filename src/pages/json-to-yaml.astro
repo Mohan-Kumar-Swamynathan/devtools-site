@@ -1,0 +1,48 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonYamlConverter from '@/components/tools/JsonYamlConverter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('json-to-yaml')!;
+const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <JsonYamlConverter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is JSON to YAML Converter?</h2>
+    <p>
+      Convert JSON data to YAML format instantly. This tool helps you transform JSON objects 
+      into YAML syntax with proper formatting.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert JSON to YAML and vice versa</li>
+      <li>Proper indentation and formatting</li>
+      <li>Supports nested objects and arrays</li>
+      <li>Copy result with one click</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        What is YAML?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        YAML (YAML Ain't Markup Language) is a human-readable data serialization standard 
+        commonly used for configuration files.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

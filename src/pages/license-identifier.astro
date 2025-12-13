@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import LicenseIdentifier from '@/components/tools/LicenseIdentifier.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('license-identifier')!;
+const relatedTools = getToolsByCategory('code').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <LicenseIdentifier client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is License Identifier?</h2>
+    <p>
+      Identify software licenses from license text. Supports MIT, Apache, GPL, BSD, and more.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

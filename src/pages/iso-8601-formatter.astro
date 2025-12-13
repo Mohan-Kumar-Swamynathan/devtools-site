@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import Iso8601Formatter from '@/components/tools/Iso8601Formatter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('iso-8601-formatter')!;
+const relatedTools = getToolsByCategory('time').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <Iso8601Formatter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is ISO 8601 Formatter?</h2>
+    <p>
+      Format dates in ISO 8601 format or parse ISO 8601 strings. ISO 8601 is the international standard for date and time representation.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

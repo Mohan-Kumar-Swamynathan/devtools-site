@@ -1,0 +1,94 @@
+import { useState, useCallback } from 'react';
+import CodeEditor from '@/components/common/CodeEditor';
+import OutputPanel from '@/components/common/OutputPanel';
+
+export default function UnicodeConverter() {
+  const [input, setInput] = useState('');
+  const [output, setOutput] = useState('');
+  const [mode, setMode] = useState<'encode' | 'decode'>('encode');
+
+  const encode = useCallback(() => {
+    let result = '';
+    for (let i = 0; i < input.length; i++) {
+      const char = input[i];
+      const code = char.charCodeAt(0);
+      if (code > 127) {
+        result += `\\u${code.toString(16).padStart(4, '0')}`;
+      } else {
+        result += char;
+      }
+    }
+    setOutput(result);
+  }, [input]);
+
+  const decode = useCallback(() => {
+    try {
+      setOutput(input.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => 
+        String.fromCharCode(parseInt(hex, 16))
+      ));
+    } catch (e) {
+      setOutput(`Error: ${(e as Error).message}`);
+    }
+  }, [input]);
+
+  const handleModeChange = (newMode: 'encode' | 'decode') => {
+    setMode(newMode);
+    setInput('');
+    setOutput('');
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+        <button
+          onClick={() => handleModeChange('encode')}
+          className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            mode === 'encode' ? 'tab-active' : ''
+          }`}
+          style={mode === 'encode' ? { backgroundColor: 'var(--bg-primary)' } : {}}
+        >
+          Encode
+        </button>
+        <button
+          onClick={() => handleModeChange('decode')}
+          className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            mode === 'decode' ? 'tab-active' : ''
+          }`}
+          style={mode === 'decode' ? { backgroundColor: 'var(--bg-primary)' } : {}}
+        >
+          Decode
+        </button>
+      </div>
+
+      <CodeEditor
+        value={input}
+        onChange={setInput}
+        language="text"
+        label={mode === 'encode' ? 'Text to Encode' : 'Unicode to Decode'}
+        placeholder={mode === 'encode' ? 'Hello 世界' : 'Hello \\u4e16\\u754c'}
+      />
+
+      <div className="flex flex-wrap items-center gap-3">
+        <button 
+          onClick={mode === 'encode' ? encode : decode} 
+          disabled={!input} 
+          className="btn-primary"
+        >
+          {mode === 'encode' ? 'Encode' : 'Decode'}
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+
+      {output && (
+        <OutputPanel 
+          value={output} 
+          label={mode === 'encode' ? 'Unicode Escape Sequence' : 'Decoded Text'} 
+          language="text"
+        />
+      )}
+    </div>
+  );
+}
+

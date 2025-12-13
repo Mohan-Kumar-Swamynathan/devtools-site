@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TextToBinary from '@/components/tools/TextToBinary.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('text-to-binary')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <TextToBinary client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Text to Binary Converter?</h2>
+    <p>
+      Convert text to binary representation and binary back to text. Useful for encoding and decoding text data.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

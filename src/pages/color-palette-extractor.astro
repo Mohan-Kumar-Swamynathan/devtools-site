@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ColorPaletteExtractor from '@/components/tools/ColorPaletteExtractor.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('color-palette-extractor')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ColorPaletteExtractor client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Color Palette Extractor?</h2>
+    <p>
+      Extract dominant colors from images to create a color palette. Perfect for design inspiration.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

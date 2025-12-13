@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CodeCommentRemover from '@/components/tools/CodeCommentRemover.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('code-comment-remover')!;
+const relatedTools = getToolsByCategory('code').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CodeCommentRemover client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Code Comment Remover?</h2>
+    <p>
+      Remove comments from code in JavaScript, Python, Java, CSS, and HTML. Useful for minification and obfuscation.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TomlFormatter from '@/components/tools/TomlFormatter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('toml-formatter')!;
+const relatedTools = getToolsByCategory('formatters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <TomlFormatter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is TOML Formatter?</h2>
+    <p>
+      Format and beautify TOML configuration files. TOML is commonly used in Rust projects and configuration files.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,39 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonCsvConverter from '@/components/tools/JsonCsvConverter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('json-to-csv')!;
+const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <JsonCsvConverter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is JSON to CSV Converter?</h2>
+    <p>
+      Convert JSON arrays to CSV format. Perfect for exporting JSON data to spreadsheet applications.
+    </p>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        How does JSON to CSV conversion work?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        The converter takes a JSON array of objects and converts each object into a CSV row, 
+        with object keys as column headers.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonlConverter from '@/components/tools/JsonlConverter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('jsonl-converter')!;
+const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <JsonlConverter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is JSONL Converter?</h2>
+    <p>
+      Convert JSON Lines (JSONL) format to JSON array and vice versa. JSONL is useful for streaming large datasets.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

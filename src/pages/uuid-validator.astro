@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import UuidValidator from '@/components/tools/UuidValidator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('uuid-validator')!;
+const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <UuidValidator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is UUID Validator?</h2>
+    <p>
+      Validate UUID format and detect version (v1-v5). Check if a UUID string follows the correct format.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

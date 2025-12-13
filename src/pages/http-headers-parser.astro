@@ -1,0 +1,28 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HttpHeadersParser from '@/components/tools/HttpHeadersParser.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('http-headers-parser')!;
+const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <HttpHeadersParser client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is HTTP Headers Parser?</h2>
+    <p>
+      Parse raw HTTP headers into structured JSON format. Useful for debugging API requests 
+      and analyzing HTTP responses.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

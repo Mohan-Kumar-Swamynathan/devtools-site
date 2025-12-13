@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CorsChecker from '@/components/tools/CorsChecker.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('cors-checker')!;
+const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CorsChecker client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is CORS Checker?</h2>
+    <p>
+      Check if a URL has CORS enabled and view CORS headers. Useful for debugging cross-origin requests.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+
