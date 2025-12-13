@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import EnvFileGenerator from '@/components/tools/EnvFileGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('env-file-generator')!;
+const relatedTools = getToolsByCategory('generators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <EnvFileGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is .env File Generator?</h2>
+    <p>
+      .env File Generator helps you create and manage environment variable files. 
+      Add variables with keys, values, and comments to generate properly formatted .env files.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Add multiple environment variables</li>
+      <li>Include comments for documentation</li>
+      <li>Edit existing .env files</li>
+      <li>Download generated .env file</li>
+      <li>Copy to clipboard</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

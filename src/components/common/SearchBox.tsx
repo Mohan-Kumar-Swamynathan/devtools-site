@@ -1,5 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import { Search, X, ArrowRight } from 'lucide-react';
+import { Search, X, ArrowRight, Clock, TrendingUp } from 'lucide-react';
 import type { Tool } from '@/lib/tools';
 
 interface Props {
@@ -12,6 +12,15 @@ export default function SearchBox({ tools }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Recent searches
+  const [recentSearches, setRecentSearches] = useState<string[]>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('recent-searches');
+      return stored ? JSON.parse(stored) : [];
+    }
+    return [];
+  });
 
   // Debounce search for better performance
   const [debouncedQuery, setDebouncedQuery] = useState('');
@@ -70,7 +79,14 @@ export default function SearchBox({ tools }: Props) {
       case 'Enter':
         e.preventDefault();
         if (results[selectedIndex]) {
-          window.location.href = `/${results[selectedIndex].slug}`;
+          const tool = results[selectedIndex];
+          // Save to recent searches
+          if (typeof window !== 'undefined') {
+            const updated = [tool.name, ...recentSearches.filter(s => s !== tool.name)].slice(0, 5);
+            setRecentSearches(updated);
+            localStorage.setItem('recent-searches', JSON.stringify(updated));
+          }
+          window.location.href = `/${tool.slug}`;
         }
         break;
       case 'Escape':
@@ -185,15 +201,85 @@ export default function SearchBox({ tools }: Props) {
       {/* No Results */}
       {isOpen && query && results.length === 0 && (
         <div 
-          className="absolute top-full left-0 right-0 mt-2 p-4 rounded-xl border text-center text-sm"
+          className="absolute top-full left-0 right-0 mt-2 p-4 rounded-xl border animate-fade-in"
           style={{ 
             backgroundColor: 'var(--bg-elevated)',
             borderColor: 'var(--border-primary)',
-            color: 'var(--text-muted)',
             boxShadow: 'var(--shadow-lg)'
           }}
         >
-          No tools found for "{query}"
+          <p className="text-sm text-center mb-3" style={{ color: 'var(--text-muted)' }}>
+            No tools found for "{query}"
+          </p>
+          {recentSearches.length > 0 && (
+            <div>
+              <p className="text-xs font-semibold mb-2 flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
+                <Clock size={12} />
+                Recent Searches
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {recentSearches.map((search, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setQuery(search);
+                      inputRef.current?.focus();
+                    }}
+                    className="px-2 py-1 rounded text-xs transition-colors"
+                    style={{
+                      backgroundColor: 'var(--bg-secondary)',
+                      color: 'var(--text-primary)'
+                    }}
+                  >
+                    {search}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+      
+      {/* Empty State - Show recent searches */}
+      {isOpen && !query && recentSearches.length > 0 && (
+        <div 
+          className="absolute top-full left-0 right-0 mt-2 p-4 rounded-xl border animate-fade-in"
+          style={{ 
+            backgroundColor: 'var(--bg-elevated)',
+            borderColor: 'var(--border-primary)',
+            boxShadow: 'var(--shadow-lg)'
+          }}
+        >
+          <p className="text-xs font-semibold mb-2 flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
+            <Clock size={12} />
+            Recent Searches
+          </p>
+          <div className="space-y-1">
+            {recentSearches.map((search, idx) => {
+              const tool = tools.find(t => t.name.toLowerCase() === search.toLowerCase());
+              if (!tool) return null;
+              return (
+                <a
+                  key={idx}
+                  href={`/${tool.slug}`}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: 'var(--text-primary)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = 'var(--bg-secondary)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }}
+                >
+                  <span className="text-lg">{tool.icon}</span>
+                  <span className="text-sm">{tool.name}</span>
+                </a>
+              );
+            })}
+          </div>
         </div>
       )}
     </div>

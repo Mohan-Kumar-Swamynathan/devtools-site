@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CssSpecificityCalculator from '@/components/tools/CssSpecificityCalculator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('css-specificity-calculator')!;
+const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CssSpecificityCalculator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is CSS Specificity Calculator?</h2>
+    <p>
+      CSS Specificity Calculator helps you understand which CSS rules will be applied when selectors conflict. 
+      Calculate specificity scores for your CSS selectors.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Calculate specificity for multiple selectors</li>
+      <li>Breakdown of IDs, classes, and elements</li>
+      <li>Sort by specificity (highest first)</li>
+      <li>Understand CSS cascade rules</li>
+      <li>Copy results</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

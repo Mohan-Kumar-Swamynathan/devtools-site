@@ -13,32 +13,37 @@ const popularTools = getPopularTools();
   keywords={['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'jwt decoder', 'free tools']}
 >
   <!-- Hero Section -->
-  <section class="text-center py-8 sm:py-12 lg:py-16">
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style="color: var(--text-primary);">
-      Free Developer Tools
-    </h1>
-    <p class="text-lg sm:text-xl max-w-2xl mx-auto mb-6" style="color: var(--text-secondary);">
-      Fast, free, and private. All tools run locally in your browser.
-    </p>
-    <div class="flex flex-wrap justify-center gap-3 text-sm" style="color: var(--text-muted);">
-      <span class="flex items-center gap-1.5">
-        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-        </svg>
-        No registration
-      </span>
-      <span class="flex items-center gap-1.5">
-        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-        </svg>
-        100% Free
-      </span>
-      <span class="flex items-center gap-1.5">
-        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-        </svg>
-        Voice Assistant
-      </span>
+  <section class="text-center py-8 sm:py-12 lg:py-16 relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 opacity-5 pointer-events-none" style="background: radial-gradient(circle at 50% 50%, var(--brand-primary) 0%, transparent 70%);" />
+    
+    <div class="relative z-10">
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 animate-fade-in" style="color: var(--text-primary);">
+        Free Developer Tools
+      </h1>
+      <p class="text-lg sm:text-xl max-w-2xl mx-auto mb-6 animate-fade-in" style="color: var(--text-secondary); animation-delay: 100ms;">
+        Fast, free, and private. All tools run locally in your browser.
+      </p>
+      <div class="flex flex-wrap justify-center gap-3 text-sm animate-fade-in" style="color: var(--text-muted); animation-delay: 200ms;">
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style="background-color: var(--bg-secondary);">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          No registration
+        </span>
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style="background-color: var(--bg-secondary);">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          100% Free
+        </span>
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-full" style="background-color: var(--bg-secondary);">
+          <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          Voice Assistant
+        </span>
+      </div>
     </div>
   </section>
 

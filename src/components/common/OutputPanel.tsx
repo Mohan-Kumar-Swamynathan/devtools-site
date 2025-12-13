@@ -27,9 +27,13 @@ export default function OutputPanel({
   const lineCount = value.split('\n').length;
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(value);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error('Failed to copy:', e);
+    }
   };
 
   const handleDownload = () => {
@@ -55,8 +59,23 @@ export default function OutputPanel({
       <div className="flex items-center justify-between mb-2">
         <label className="label">{label}</label>
         <div className="flex items-center gap-1">
-          <button onClick={handleCopy} className="btn-icon p-1.5" title={copied ? 'Copied!' : 'Copy'}>
-            {copied ? <Check size={16} className="text-green-500" /> : <Copy size={16} />}
+          <button 
+            onClick={handleCopy} 
+            className="btn-icon p-1.5 relative" 
+            title={copied ? 'Copied!' : 'Copy'}
+            aria-label={copied ? 'Copied!' : 'Copy'}
+          >
+            {copied ? (
+              <>
+                <Check size={16} className="text-green-500 animate-fade-in" />
+                <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs whitespace-nowrap animate-fade-in" 
+                  style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-primary)', border: '1px solid var(--border-primary)' }}>
+                  Copied!
+                </span>
+              </>
+            ) : (
+              <Copy size={16} />
+            )}
           </button>
           <button onClick={handleDownload} className="btn-icon p-1.5" title="Download">
             <Download size={16} />

@@ -25,34 +25,46 @@ const sizes: Record<string, string> = {
   </span>
 </div>
 
-<script is:inline>
+<script is:inline define:vars={{ slot }}>
   // Handle Google Ads loading with error handling
   (function() {
-    const adSlotId = 'ad-slot-{slot}';
+    const adSlotId = `ad-slot-${slot}`;
     const adSlot = document.getElementById(adSlotId);
     if (!adSlot) return;
 
     // Only load Google Ads if configured (check for actual ad client ID)
     const adClient = adSlot.getAttribute('data-ad-client');
     if (!adClient || adClient.includes('XXXXXXXXXXXXXXXX')) {
-      return; // Skip if not configured - this is just a placeholder
+      // Not configured - keep placeholder visible but don't load ads
+      return;
     }
 
     // Load Google Ads script with error handling
     if (typeof window.adsbygoogle === 'undefined') {
       const script = document.createElement('script');
-      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(adClient);
       script.async = true;
       script.crossOrigin = 'anonymous';
       
+      let loadTimeout: ReturnType<typeof setTimeout>;
+      
       script.onerror = function() {
+        clearTimeout(loadTimeout);
         // Silently fail - don't show error to users, just hide the ad slot
         if (adSlot) {
           adSlot.style.display = 'none';
         }
       };
       
+      // Timeout after 10 seconds
+      loadTimeout = setTimeout(() => {
+        if (adSlot && !window.adsbygoogle) {
+          adSlot.style.display = 'none';
+        }
+      }, 10000);
+      
       script.onload = function() {
+        clearTimeout(loadTimeout);
         // Initialize ad with error handling after script loads
         try {
           if (window.adsbygoogle) {

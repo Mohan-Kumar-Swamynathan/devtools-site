@@ -187,14 +187,46 @@
   .btn-primary {
     @apply btn text-white;
     background-color: var(--brand-primary);
+    position: relative;
+    overflow: hidden;
   }
   
   .btn-primary:hover:not(:disabled) {
     background-color: var(--brand-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .btn-primary:active:not(:disabled) {
+    transform: translateY(0);
   }
   
   .btn-primary:focus-visible {
     --tw-ring-color: var(--brand-primary);
+  }
+  
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  /* Ripple effect on button click */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .btn-primary:active::after {
+    width: 300px;
+    height: 300px;
   }
   
   .btn-secondary {
@@ -220,13 +252,22 @@
   }
   
   .btn-icon {
-    @apply p-2.5 rounded-xl transition-colors duration-200;
+    @apply p-2.5 rounded-xl transition-colors duration-200
+           focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
     color: var(--text-muted);
   }
   
   .btn-icon:hover {
     background-color: var(--bg-secondary);
     color: var(--text-primary);
+  }
+  
+  .btn-icon:focus-visible {
+    --tw-ring-color: var(--brand-primary);
+  }
+  
+  .btn-icon:active {
+    transform: scale(0.95);
   }
   
   .btn-sm {
@@ -293,6 +334,10 @@
     border-color: var(--brand-primary);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
+  }
+  
+  .card-hover:active {
+    transform: translateY(0);
   }
   
   .tool-panel {
@@ -607,6 +652,88 @@
   .safe-top {
     padding-top: env(safe-area-inset-top, 0);
   }
+  
+  /* Loading skeleton */
+  .skeleton {
+    @apply animate-pulse rounded;
+    background: linear-gradient(
+      90deg,
+      var(--bg-secondary) 0%,
+      var(--bg-tertiary) 50%,
+      var(--bg-secondary) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+  }
+  
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Better scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-secondary);
+    border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+  }
+  
+  /* Selection styling */
+  ::selection {
+    background-color: var(--brand-primary-light);
+    color: var(--text-primary);
+  }
+  
+  ::-moz-selection {
+    background-color: var(--brand-primary-light);
+    color: var(--text-primary);
+  }
+  
+  /* Better text rendering */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Focus visible improvements */
+  *:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+  
+  /* Skip link styling */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+  
+  .sr-only:focus {
+    @apply static w-auto h-auto p-2 m-0 overflow-visible whitespace-normal;
+    clip: auto;
+  }
 }
 
 /* ==================== ANIMATIONS ==================== */
@@ -636,6 +763,44 @@
 
 .animate-fade-in {
   animation: fade-in 0.3s ease-out;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ==================== PRINT STYLES ==================== */

@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ColorContrastChecker from '@/components/tools/ColorContrastChecker.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('color-contrast-checker')!;
+const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ColorContrastChecker client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Color Contrast Checker?</h2>
+    <p>
+      Color Contrast Checker helps you verify that your color combinations meet WCAG accessibility standards. 
+      Check if your text is readable against background colors for both normal and large text.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Check contrast ratios for WCAG compliance</li>
+      <li>Support for normal and large text</li>
+      <li>Visual preview of color combinations</li>
+      <li>AA and AAA level indicators</li>
+      <li>Real-time calculation</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

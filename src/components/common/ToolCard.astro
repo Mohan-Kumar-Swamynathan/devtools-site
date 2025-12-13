@@ -13,30 +13,46 @@ const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
 
 <a 
   href={`/${slug}`} 
-  class="card-hover group block"
+  class="card-hover group block relative overflow-hidden transition-all duration-300"
   aria-label={`${name} - ${tagline}`}
+  data-tool-slug={slug}
 >
-  <div class="flex items-start justify-between mb-3">
-    <span 
-      class="text-3xl sm:text-4xl transition-transform group-hover:scale-110 duration-200"
-      aria-hidden="true"
+  <!-- Hover gradient effect -->
+  <div 
+    class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+    style="background: linear-gradient(135deg, var(--brand-primary-light) 0%, transparent 100%);"
+  />
+  
+  <div class="relative z-10">
+    <div class="flex items-start justify-between mb-3">
+      <span 
+        class="text-3xl sm:text-4xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+        aria-hidden="true"
+      >
+        {icon}
+      </span>
+      <div class="flex gap-1.5" aria-label={isNew && isPopular ? 'New and Popular tool' : isNew ? 'New tool' : isPopular ? 'Popular tool' : ''}>
+        {isNew && <span class="badge-primary text-[10px] animate-pulse" aria-label="New">New</span>}
+        {isPopular && <span class="badge-warning text-[10px]" aria-label="Popular">Popular</span>}
+      </div>
+    </div>
+    <h3 
+      class="font-semibold text-sm sm:text-base mb-1 transition-all duration-200 group-hover:text-[var(--brand-primary)] group-hover:translate-x-1"
+      style="color: var(--text-primary);"
     >
-      {icon}
-    </span>
-    <div class="flex gap-1.5" aria-label={isNew && isPopular ? 'New and Popular tool' : isNew ? 'New tool' : isPopular ? 'Popular tool' : ''}>
-      {isNew && <span class="badge-primary text-[10px]" aria-label="New">New</span>}
-      {isPopular && <span class="badge-warning text-[10px]" aria-label="Popular">Popular</span>}
+      {name}
+    </h3>
+    <p class="text-xs sm:text-sm line-clamp-2 transition-colors duration-200 group-hover:text-[var(--text-secondary)]" style="color: var(--text-muted);">
+      {tagline}
+    </p>
+    
+    <!-- Arrow indicator on hover -->
+    <div class="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-x-2 group-hover:translate-x-0">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--brand-primary);">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
     </div>
   </div>
-  <h3 
-    class="font-semibold text-sm sm:text-base mb-1 transition-colors group-hover:text-[var(--brand-primary)]"
-    style="color: var(--text-primary);"
-  >
-    {name}
-  </h3>
-  <p class="text-xs sm:text-sm line-clamp-2" style="color: var(--text-muted);">
-    {tagline}
-  </p>
 </a>
 
 

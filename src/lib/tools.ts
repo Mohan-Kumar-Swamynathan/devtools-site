@@ -1596,6 +1596,76 @@ export const tools: Tool[] = [
     keywords: ['percent encode', 'url encode', 'percent decode', 'url decode'],
     category: categories.encoders,
     icon: '🔗'
+  },
+  // New Tools
+  {
+    id: 'graphql-formatter',
+    name: 'GraphQL Formatter',
+    slug: 'graphql-formatter',
+    tagline: 'Format & beautify GraphQL queries',
+    description: 'Format and beautify GraphQL queries and mutations with proper indentation. Also minify GraphQL.',
+    keywords: ['graphql formatter', 'graphql beautifier', 'format graphql', 'graphql minifier'],
+    category: categories.formatters,
+    icon: '🔷',
+    isNew: true
+  },
+  {
+    id: 'env-file-generator',
+    name: '.env File Generator',
+    slug: 'env-file-generator',
+    tagline: 'Generate .env files',
+    description: 'Generate .env files with environment variables. Add, edit, and organize variables with comments.',
+    keywords: ['env generator', 'environment variables', 'generate env', 'env file maker'],
+    category: categories.generators,
+    icon: '🔐',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'git-commit-message-generator',
+    name: 'Git Commit Message Generator',
+    slug: 'git-commit-message-generator',
+    tagline: 'Generate conventional commit messages',
+    description: 'Generate Git commit messages following Conventional Commits specification. Supports types, scopes, and breaking changes.',
+    keywords: ['git commit generator', 'conventional commits', 'commit message', 'git commit'],
+    category: categories.generators,
+    icon: '📝',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'color-contrast-checker',
+    name: 'Color Contrast Checker',
+    slug: 'color-contrast-checker',
+    tagline: 'Check WCAG color contrast',
+    description: 'Check color contrast ratios for accessibility compliance. Verify WCAG AA and AAA standards for text readability.',
+    keywords: ['color contrast', 'accessibility checker', 'wcag contrast', 'color accessibility'],
+    category: categories.validators,
+    icon: '🎨',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'markdown-to-html',
+    name: 'Markdown to HTML',
+    slug: 'markdown-to-html',
+    tagline: 'Convert Markdown to HTML',
+    description: 'Convert Markdown text to HTML format. Preview rendered HTML and get clean HTML output.',
+    keywords: ['markdown to html', 'md to html', 'markdown converter', 'convert markdown'],
+    category: categories.converters,
+    icon: '📄',
+    isNew: true
+  },
+  {
+    id: 'css-specificity-calculator',
+    name: 'CSS Specificity Calculator',
+    slug: 'css-specificity-calculator',
+    tagline: 'Calculate CSS selector specificity',
+    description: 'Calculate CSS selector specificity scores. Understand which styles will be applied when selectors conflict.',
+    keywords: ['css specificity', 'specificity calculator', 'css selector', 'css priority'],
+    category: categories.css,
+    icon: '🎯',
+    isNew: true
   }
 ];
 

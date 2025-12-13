@@ -12,7 +12,7 @@ export default defineConfig({
       changefreq: 'weekly',
       priority: 0.7,
       lastmod: new Date(),
-      filter: (page) => !page.includes('/404'),
+      filter: (page) => !page.includes('/404') && !page.includes('/api/'),
       serialize: (item) => {
         if (item.url === 'https://devtool.site/') {
           return { ...item, priority: 1.0, changefreq: 'daily' };

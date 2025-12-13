@@ -1,35 +1,73 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import { marked } from 'marked';
 
 export default function MarkdownToHtml() {
-  const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
+  const [markdown, setMarkdown] = useState('# Hello World\n\nThis is **markdown** text.');
+  const [html, setHtml] = useState('');
+  const [error, setError] = useState('');
 
   const convert = useCallback(() => {
+    setError('');
     try {
-      const html = marked.parse(input);
-      setOutput(html);
+      const converted = marked(markdown);
+      setHtml(converted);
     } catch (e) {
-      setOutput(`Error: ${(e as Error).message}`);
+      setError(`Conversion error: ${(e as Error).message}`);
+      setHtml('');
     }
-  }, [input]);
+  }, [markdown]);
+
+  useEffect(() => {
+    convert();
+  }, [convert]);
 
   return (
     <div className="space-y-6">
-      <CodeEditor
-        value={input}
-        onChange={(v) => { setInput(v); convert(); }}
-        language="markdown"
-        label="Markdown Input"
-        placeholder="# Hello World\n\nThis is **bold** text."
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div>
+          <CodeEditor
+            value={markdown}
+            onChange={setMarkdown}
+            language="markdown"
+            label="Markdown Input"
+            placeholder="# Your markdown here..."
+          />
+        </div>
+        <div>
+          <label className="label">HTML Output</label>
+          {html && (
+            <div
+              className="p-4 rounded-xl border overflow-auto max-h-[500px]"
+              style={{
+                backgroundColor: 'var(--bg-primary)',
+                borderColor: 'var(--border-primary)',
+                minHeight: '200px'
+              }}
+              dangerouslySetInnerHTML={{ __html: html }}
+            />
+          )}
+          {!html && (
+            <div
+              className="p-4 rounded-xl border"
+              style={{
+                backgroundColor: 'var(--bg-primary)',
+                borderColor: 'var(--border-primary)',
+                minHeight: '200px',
+                color: 'var(--text-muted)'
+              }}
+            >
+              HTML will appear here...
+            </div>
+          )}
+        </div>
+      </div>
 
-      {output && (
+      {html && (
         <OutputPanel
-          value={output}
-          label="HTML Output"
+          value={html}
+          label="HTML Code"
           language="html"
           showLineNumbers
         />
@@ -37,4 +75,3 @@ export default function MarkdownToHtml() {
     </div>
   );
 }
-

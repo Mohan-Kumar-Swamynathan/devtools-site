@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import GraphqlFormatter from '@/components/tools/GraphqlFormatter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('graphql-formatter')!;
+const relatedTools = getToolsByCategory('formatters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <GraphqlFormatter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is GraphQL Formatter?</h2>
+    <p>
+      GraphQL Formatter is a free online tool that formats and beautifies GraphQL queries and mutations. 
+      It makes your GraphQL code readable with proper indentation and structure.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Format GraphQL queries with proper indentation</li>
+      <li>Minify GraphQL for production use</li>
+      <li>Support for queries, mutations, and subscriptions</li>
+      <li>Copy formatted output with one click</li>
+      <li>Dark mode support</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

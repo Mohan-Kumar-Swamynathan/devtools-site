@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Sun, Moon, Monitor } from 'lucide-react';
 
 type Theme = 'light' | 'dark' | 'system';
@@ -29,14 +29,28 @@ export default function ThemeToggle() {
     }
   }, [theme, mounted]);
 
-  const cycleTheme = () => {
-    const next: Record<Theme, Theme> = {
-      'light': 'dark',
-      'dark': 'system',
-      'system': 'light'
+  const cycleTheme = useCallback(() => {
+    setTheme((current) => {
+      const next: Record<Theme, Theme> = {
+        'light': 'dark',
+        'dark': 'system',
+        'system': 'light'
+      };
+      return next[current];
+    });
+  }, []);
+
+  // Keyboard shortcut for theme toggle
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'd') {
+        e.preventDefault();
+        cycleTheme();
+      }
     };
-    setTheme(next[theme]);
-  };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [cycleTheme]);
 
   if (!mounted) {
     return <div className="w-10 h-10" />;

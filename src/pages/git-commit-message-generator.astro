@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import GitCommitMessageGenerator from '@/components/tools/GitCommitMessageGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('git-commit-message-generator')!;
+const relatedTools = getToolsByCategory('generators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <GitCommitMessageGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Git Commit Message Generator?</h2>
+    <p>
+      Generate Git commit messages following the Conventional Commits specification. 
+      Create properly formatted commit messages with types, scopes, and breaking change indicators.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Follows Conventional Commits specification</li>
+      <li>Support for all commit types (feat, fix, docs, etc.)</li>
+      <li>Optional scope and breaking change support</li>
+      <li>Body and footer sections</li>
+      <li>Copy generated message</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

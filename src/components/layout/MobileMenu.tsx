@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import type { Tool, Category } from '@/lib/tools';
 
@@ -9,6 +9,33 @@ interface Props {
 
 export default function MobileMenu({ tools, categories }: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen]);
+
+  // Trap focus when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      closeButtonRef.current?.focus();
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   return (
     <>
@@ -29,9 +56,13 @@ export default function MobileMenu({ tools, categories }: Props) {
         >
           {/* Menu Panel */}
           <div
+            ref={menuRef}
             className="absolute right-0 top-0 h-full w-80 max-w-[85vw] animate-slide-in-right overflow-y-auto"
             style={{ backgroundColor: 'var(--bg-primary)' }}
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: 'var(--border-primary)' }}>
@@ -39,8 +70,9 @@ export default function MobileMenu({ tools, categories }: Props) {
                 Menu
               </span>
               <button
+                ref={closeButtonRef}
                 onClick={() => setIsOpen(false)}
-                className="btn-icon"
+                className="btn-icon touch-target"
                 aria-label="Close menu"
               >
                 <X size={22} />

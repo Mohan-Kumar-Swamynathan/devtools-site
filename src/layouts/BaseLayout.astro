@@ -3,6 +3,7 @@ import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import Assistant from '@/components/assistant/Assistant.tsx';
 import OnboardingManager from '@/components/onboarding/OnboardingManager.tsx';
+import KeyboardShortcuts from '@/components/common/KeyboardShortcuts.tsx';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import '@/styles/global.css';
 
@@ -39,6 +40,15 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <!-- Performance -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Accessibility -->
+  <meta name="color-scheme" content="light dark" />
   
   <!-- SEO Meta -->
   <title>{siteTitle}</title>
@@ -143,13 +153,17 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <!-- Onboarding (Welcome Modal & Tour) -->
   <OnboardingManager client:load />
   
-  <!-- Scroll to Top (Mobile) -->
+  <!-- Keyboard Shortcuts -->
+  <KeyboardShortcuts client:load />
+  
+  <!-- Scroll to Top Button -->
   <div id="scroll-top" class="fixed bottom-24 right-6 z-40 hidden">
     <button 
       onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-      class="btn-icon p-3 rounded-full shadow-lg"
+      class="btn-icon p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
       style="background-color: var(--bg-elevated); border: 1px solid var(--border-primary);"
       aria-label="Scroll to top"
+      title="Scroll to top"
     >
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
@@ -158,15 +172,37 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   </div>
   
   <script is:inline>
-    // Show/hide scroll to top button
+    // Show/hide scroll to top button with smooth animation
     const scrollBtn = document.getElementById('scroll-top');
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+    
+    function updateScrollButton() {
       if (window.scrollY > 500) {
         scrollBtn.classList.remove('hidden');
+        scrollBtn.style.opacity = '1';
+        scrollBtn.style.transform = 'translateY(0)';
       } else {
-        scrollBtn.classList.add('hidden');
+        scrollBtn.style.opacity = '0';
+        scrollBtn.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+          if (window.scrollY <= 500) {
+            scrollBtn.classList.add('hidden');
+          }
+        }, 300);
+      }
+      ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollButton);
+        ticking = true;
       }
     });
+    
+    // Initialize
+    scrollBtn.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+    updateScrollButton();
   </script>
 </body>
 </html>
