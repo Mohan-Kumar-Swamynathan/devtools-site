@@ -48,8 +48,21 @@ export default function WebhookTester() {
         body: parsed
       });
     } catch (e) {
+      const error = e as Error;
+      let errorMessage = error.message;
+      
+      // Provide user-friendly error messages
+      if (errorMessage.includes('Failed to fetch') || errorMessage.includes('NetworkError')) {
+        errorMessage = 'Network error: Could not connect to the server. Please check your internet connection and the URL.';
+      } else if (errorMessage.includes('CORS')) {
+        errorMessage = 'CORS error: The server blocked the request. This might be due to CORS policy restrictions.';
+      } else if (errorMessage.includes('Invalid URL')) {
+        errorMessage = 'Invalid URL: Please enter a valid URL (e.g., https://api.example.com/webhook)';
+      }
+      
       setResponse({
-        error: (e as Error).message
+        error: errorMessage,
+        errorType: error.name
       });
     } finally {
       setLoading(false);
@@ -122,7 +135,13 @@ Authorization: Bearer token"
       {response && (
         <div className="space-y-4">
           {response.error ? (
-            <div className="alert-error">{response.error}</div>
+            <div className="alert-error">
+              <div className="font-semibold mb-1">Error</div>
+              <div>{response.error}</div>
+              {response.errorType && (
+                <div className="text-xs mt-2 opacity-75">Type: {response.errorType}</div>
+              )}
+            </div>
           ) : (
             <>
               <div className={`p-4 rounded-xl border ${

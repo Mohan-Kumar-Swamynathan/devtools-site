@@ -11,14 +11,21 @@ interface Props {
 const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
 ---
 
-<a href={`/${slug}`} class="card-hover group block">
+<a 
+  href={`/${slug}`} 
+  class="card-hover group block"
+  aria-label={`${name} - ${tagline}`}
+>
   <div class="flex items-start justify-between mb-3">
-    <span class="text-3xl sm:text-4xl transition-transform group-hover:scale-110 duration-200">
+    <span 
+      class="text-3xl sm:text-4xl transition-transform group-hover:scale-110 duration-200"
+      aria-hidden="true"
+    >
       {icon}
     </span>
-    <div class="flex gap-1.5">
-      {isNew && <span class="badge-primary text-[10px]">New</span>}
-      {isPopular && <span class="badge-warning text-[10px]">Popular</span>}
+    <div class="flex gap-1.5" aria-label={isNew && isPopular ? 'New and Popular tool' : isNew ? 'New tool' : isPopular ? 'Popular tool' : ''}>
+      {isNew && <span class="badge-primary text-[10px]" aria-label="New">New</span>}
+      {isPopular && <span class="badge-warning text-[10px]" aria-label="Popular">Popular</span>}
     </div>
   </div>
   <h3 

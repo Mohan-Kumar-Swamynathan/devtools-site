@@ -13,9 +13,20 @@ export default function SearchBox({ tools }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Debounce search for better performance
+  const [debouncedQuery, setDebouncedQuery] = useState('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 150); // 150ms debounce
+
+    return () => clearTimeout(timer);
+  }, [query]);
+
   const results = useMemo(() => {
-    if (!query.trim()) return [];
-    const q = query.toLowerCase();
+    if (!debouncedQuery.trim()) return [];
+    const q = debouncedQuery.toLowerCase();
     return tools
       .filter(t => 
         t.name.toLowerCase().includes(q) || 
@@ -23,11 +34,30 @@ export default function SearchBox({ tools }: Props) {
         t.tagline.toLowerCase().includes(q)
       )
       .slice(0, 8);
-  }, [query, tools]);
+  }, [debouncedQuery, tools]);
+
+  // Handle keyboard shortcuts (Cmd/Ctrl + K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isOpen || results.length === 0) return;
+    if (!isOpen || results.length === 0) {
+      // Allow Cmd/Ctrl+K to focus even when closed
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+      return;
+    }
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault();
@@ -84,6 +114,10 @@ export default function SearchBox({ tools }: Props) {
           onKeyDown={handleKeyDown}
           placeholder="Search tools... (⌘K)"
           className="w-full pl-10 pr-10 py-2.5 rounded-xl text-sm input-base"
+          aria-label="Search tools"
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          role="combobox"
         />
         {query && (
           <button
@@ -105,9 +139,9 @@ export default function SearchBox({ tools }: Props) {
             boxShadow: 'var(--shadow-lg)'
           }}
         >
-          <ul className="py-2">
+          <ul className="py-2" role="listbox" aria-label="Search results">
             {results.map((tool, index) => (
-              <li key={tool.id}>
+              <li key={tool.id} role="option" aria-selected={index === selectedIndex}>
                 <a
                   href={`/${tool.slug}`}
                   className="flex items-center gap-3 px-4 py-3 transition-colors"
@@ -115,8 +149,9 @@ export default function SearchBox({ tools }: Props) {
                     backgroundColor: index === selectedIndex ? 'var(--bg-secondary)' : 'transparent'
                   }}
                   onMouseEnter={() => setSelectedIndex(index)}
+                  aria-label={`${tool.name} - ${tool.tagline}`}
                 >
-                  <span className="text-xl flex-shrink-0">{tool.icon}</span>
+                  <span className="text-xl flex-shrink-0" aria-hidden="true">{tool.icon}</span>
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-sm truncate" style={{ color: 'var(--text-primary)' }}>
                       {tool.name}
@@ -125,7 +160,7 @@ export default function SearchBox({ tools }: Props) {
                       {tool.tagline}
                     </div>
                   </div>
-                  <ArrowRight size={16} style={{ color: 'var(--text-muted)' }} />
+                  <ArrowRight size={16} style={{ color: 'var(--text-muted)' }} aria-hidden="true" />
                 </a>
               </li>
             ))}

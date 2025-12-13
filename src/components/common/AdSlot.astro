@@ -13,8 +13,9 @@ const sizes: Record<string, string> = {
 };
 ---
 
-<!-- Ad Placeholder - Replace with real AdSense code later -->
+<!-- Ad Placeholder with Error Handling -->
 <div 
+  id={`ad-slot-${slot}`}
   class={`rounded-xl border-2 border-dashed flex items-center justify-center ${sizes[slot]} ${className}`}
   style="border-color: var(--border-primary); background-color: var(--bg-secondary);"
   data-ad-slot={slot}
@@ -23,6 +24,61 @@ const sizes: Record<string, string> = {
     Advertisement
   </span>
 </div>
+
+<script is:inline>
+  // Handle Google Ads loading with error handling
+  (function() {
+    const adSlotId = 'ad-slot-{slot}';
+    const adSlot = document.getElementById(adSlotId);
+    if (!adSlot) return;
+
+    // Only load Google Ads if configured (check for actual ad client ID)
+    const adClient = adSlot.getAttribute('data-ad-client');
+    if (!adClient || adClient.includes('XXXXXXXXXXXXXXXX')) {
+      return; // Skip if not configured - this is just a placeholder
+    }
+
+    // Load Google Ads script with error handling
+    if (typeof window.adsbygoogle === 'undefined') {
+      const script = document.createElement('script');
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+      script.async = true;
+      script.crossOrigin = 'anonymous';
+      
+      script.onerror = function() {
+        // Silently fail - don't show error to users, just hide the ad slot
+        if (adSlot) {
+          adSlot.style.display = 'none';
+        }
+      };
+      
+      script.onload = function() {
+        // Initialize ad with error handling after script loads
+        try {
+          if (window.adsbygoogle) {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          }
+        } catch (e) {
+          // Silently handle initialization errors
+          if (adSlot) {
+            adSlot.style.display = 'none';
+          }
+        }
+      };
+      
+      document.head.appendChild(script);
+    } else {
+      // Script already loaded, just initialize
+      try {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (e) {
+        if (adSlot) {
+          adSlot.style.display = 'none';
+        }
+      }
+    }
+  })();
+</script>
 
 <!--
 PRODUCTION: Replace above with:
