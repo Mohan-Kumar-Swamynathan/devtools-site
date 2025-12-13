@@ -1,0 +1,33 @@
+---
+interface Props {
+  type: string;
+  name?: string;
+  url?: string;
+  description?: string;
+  applicationCategory?: string;
+  operatingSystem?: string;
+  offers?: { price: string; priceCurrency: string };
+}
+
+const { type, name, url, description, applicationCategory, operatingSystem, offers } = Astro.props;
+
+let jsonLd: any = {
+  "@context": "https://schema.org",
+  "@type": type
+};
+
+if (name) jsonLd.name = name;
+if (url) jsonLd.url = url;
+if (description) jsonLd.description = description;
+if (applicationCategory) jsonLd.applicationCategory = applicationCategory;
+if (operatingSystem) jsonLd.operatingSystem = operatingSystem;
+if (offers) jsonLd.offers = {
+  "@type": "Offer",
+  price: offers.price,
+  priceCurrency: offers.priceCurrency
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+

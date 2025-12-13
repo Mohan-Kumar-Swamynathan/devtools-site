@@ -1,0 +1,79 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+import AdSlot from '@/components/common/AdSlot.astro';
+import { tools, categories, getPopularTools, getToolsByCategory } from '@/lib/tools';
+
+const popularTools = getPopularTools();
+---
+
+<BaseLayout 
+  title="Home"
+  description="Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, timestamp converter, and 50+ more tools. Fast, free, and private."
+  keywords={['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'jwt decoder', 'free tools']}
+>
+  <!-- Hero Section -->
+  <section class="text-center py-8 sm:py-12 lg:py-16">
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4" style="color: var(--text-primary);">
+      Free Developer Tools
+    </h1>
+    <p class="text-lg sm:text-xl max-w-2xl mx-auto mb-6" style="color: var(--text-secondary);">
+      Fast, free, and private. All tools run locally in your browser.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3 text-sm" style="color: var(--text-muted);">
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        No registration
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        100% Free
+      </span>
+      <span class="flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+        </svg>
+        Voice Assistant
+      </span>
+    </div>
+  </section>
+
+  <!-- Popular Tools -->
+  <section class="mb-12 sm:mb-16" id="popular">
+    <h2 class="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2" style="color: var(--text-primary);">
+      <span>⭐</span> Popular Tools
+    </h2>
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {popularTools.slice(0, 8).map(tool => (
+        <ToolCard {...tool} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Ad -->
+  <AdSlot slot="in-article" class="mb-12 sm:mb-16" />
+
+  <!-- All Categories -->
+  {Object.values(categories).map((category) => {
+    const categoryTools = getToolsByCategory(category.id);
+    if (categoryTools.length === 0) return null;
+    return (
+      <section class="mb-12 sm:mb-16" id={category.id}>
+        <h2 class="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2" style="color: var(--text-primary);">
+          <span>{category.icon}</span> {category.name}
+        </h2>
+        <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {categoryTools.map(tool => (
+            <ToolCard {...tool} />
+          ))}
+        </div>
+      </section>
+    );
+  })}
+</BaseLayout>
+
+

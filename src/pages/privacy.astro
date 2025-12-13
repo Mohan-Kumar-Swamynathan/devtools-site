@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Privacy Policy"
+  description="Privacy policy for DevTools - Your data stays in your browser."
+>
+  <article class="prose prose-slate dark:prose-invert max-w-3xl mx-auto">
+    <h1>Privacy Policy</h1>
+    
+    <p><strong>Last updated:</strong> {new Date().toLocaleDateString()}</p>
+    
+    <h2>Data Collection</h2>
+    <p>
+      DevTools does not collect, store, or transmit any user data. All processing happens entirely 
+      in your browser using client-side JavaScript.
+    </p>
+    
+    <h2>Analytics</h2>
+    <p>
+      We may use analytics services (like Cloudflare Analytics or Google Analytics) to understand 
+      how visitors use our site. This data is anonymized and does not include personal information.
+    </p>
+    
+    <h2>Cookies</h2>
+    <p>
+      We use local storage to remember your theme preference (light/dark mode). This data stays 
+      on your device and is never transmitted.
+    </p>
+    
+    <h2>Third-Party Services</h2>
+    <p>
+      We may display advertisements through third-party ad networks. These services may use 
+      cookies and tracking technologies. Please review their privacy policies.
+    </p>
+    
+    <h2>Contact</h2>
+    <p>
+      If you have questions about this privacy policy, please contact us through our GitHub repository.
+    </p>
+  </article>
+</BaseLayout>
+
+

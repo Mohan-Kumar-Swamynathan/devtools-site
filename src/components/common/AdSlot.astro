@@ -1,0 +1,38 @@
+---
+interface Props {
+  slot?: 'header' | 'sidebar' | 'footer' | 'in-article';
+  class?: string;
+}
+
+const { slot = 'footer', class: className = '' } = Astro.props;
+const sizes: Record<string, string> = {
+  header: 'h-[90px]',
+  sidebar: 'h-[250px] w-full max-w-[300px]',
+  footer: 'h-[90px]',
+  'in-article': 'h-[250px]'
+};
+---
+
+<!-- Ad Placeholder - Replace with real AdSense code later -->
+<div 
+  class={`rounded-xl border-2 border-dashed flex items-center justify-center ${sizes[slot]} ${className}`}
+  style="border-color: var(--border-primary); background-color: var(--bg-secondary);"
+  data-ad-slot={slot}
+>
+  <span class="text-xs" style="color: var(--text-muted);">
+    Advertisement
+  </span>
+</div>
+
+<!--
+PRODUCTION: Replace above with:
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+     data-ad-slot="XXXXXXXXXX"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+-->
+
+

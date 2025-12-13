@@ -1,0 +1,27 @@
+{
+  "name": "DevTools - Free Developer Tools",
+  "short_name": "DevTools",
+  "description": "Free online developer tools - JSON formatter, Base64, JWT decoder, and 50+ more tools",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["developer", "utilities", "productivity"]
+}
+
+

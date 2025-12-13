@@ -1,0 +1,155 @@
+---
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import Assistant from '@/components/assistant/Assistant.tsx';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string[];
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { 
+  title, 
+  description, 
+  keywords = [], 
+  canonical,
+  ogImage = '/og-image.png',
+  noindex = false
+} = Astro.props;
+
+const siteTitle = title === 'Home' 
+  ? 'DevTools - Free Online Developer Tools' 
+  : `${title} | DevTools`;
+
+const siteUrl = 'https://devtools.site';
+const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <!-- Essential Meta -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <!-- SEO Meta -->
+  <title>{siteTitle}</title>
+  <meta name="description" content={description} />
+  {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+  <meta name="author" content="DevTools" />
+  <link rel="canonical" href={canonicalUrl} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={siteTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={new URL(ogImage, siteUrl).href} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="DevTools" />
+  <meta property="og:locale" content="en_US" />
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalUrl} />
+  <meta name="twitter:title" content={siteTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={new URL(ogImage, siteUrl).href} />
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0ea5e9" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="DevTools" />
+  
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Theme Script (Prevents Flash) -->
+  <script is:inline>
+    (function() {
+      const theme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (theme === 'dark' || (!theme && prefersDark)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+  
+  <!-- Structured Data -->
+  <JsonLd 
+    type="WebSite"
+    name="DevTools"
+    url={siteUrl}
+    description="Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, and 50+ more tools"
+  />
+  
+  <!-- Additional head content -->
+  <slot name="head" />
+</head>
+<body class="min-h-screen flex flex-col safe-top">
+  <!-- Skip to main content (Accessibility) -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 btn-primary z-50">
+    Skip to main content
+  </a>
+  
+  <Header />
+  
+  <main id="main-content" class="flex-1 w-full">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-7xl">
+      <slot />
+    </div>
+  </main>
+  
+  <Footer />
+  
+  <!-- Voice & Text Assistant -->
+  <Assistant client:load />
+  
+  <!-- Scroll to Top (Mobile) -->
+  <div id="scroll-top" class="fixed bottom-24 right-6 z-40 hidden">
+    <button 
+      onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+      class="btn-icon p-3 rounded-full shadow-lg"
+      style="background-color: var(--bg-elevated); border: 1px solid var(--border-primary);"
+      aria-label="Scroll to top"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+  </div>
+  
+  <script is:inline>
+    // Show/hide scroll to top button
+    const scrollBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 500) {
+        scrollBtn.classList.remove('hidden');
+      } else {
+        scrollBtn.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
+
+

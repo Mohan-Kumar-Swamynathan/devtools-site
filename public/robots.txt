@@ -1,0 +1,13 @@
+# DevTools.site Robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+# Sitemaps
+Sitemap: https://devtools.site/sitemap-index.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1
+
+

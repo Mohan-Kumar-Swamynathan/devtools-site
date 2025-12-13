@@ -1,0 +1,105 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import AdSlot from '@/components/common/AdSlot.astro';
+import JsonLd from '@/components/seo/JsonLd.astro';
+import type { Tool } from '@/lib/tools';
+
+interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+---
+
+<BaseLayout 
+  title={tool.name}
+  description={tool.description}
+  keywords={tool.keywords}
+>
+  <Fragment slot="head">
+    <JsonLd 
+      type="SoftwareApplication"
+      name={tool.name}
+      description={tool.description}
+      url={`https://devtools.site/${tool.slug}`}
+      applicationCategory="DeveloperApplication"
+      operatingSystem="Any"
+      offers={{ price: "0", priceCurrency: "USD" }}
+    />
+  </Fragment>
+  
+  <!-- Breadcrumb -->
+  <Breadcrumb items={[
+    { label: 'Home', href: '/' },
+    { label: tool.category.name, href: `/#${tool.category.id}` },
+    { label: tool.name }
+  ]} />
+  
+  <!-- Tool Header -->
+  <header class="mb-6 sm:mb-8">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
+      <span class="text-4xl sm:text-5xl">{tool.icon}</span>
+      <div>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold" style="color: var(--text-primary);">
+          {tool.name}
+        </h1>
+        <p class="text-sm sm:text-base mt-1" style="color: var(--text-secondary);">
+          {tool.tagline}
+        </p>
+      </div>
+    </div>
+    {tool.isNew && <span class="badge-primary">New</span>}
+    {tool.isPopular && <span class="badge-warning ml-2">Popular</span>}
+  </header>
+  
+  <!-- Tool Component -->
+  <div class="tool-panel mb-8">
+    <slot />
+  </div>
+  
+  <!-- Ad Slot -->
+  <AdSlot slot="footer" class="mb-8" />
+  
+  <!-- SEO Content -->
+  <section class="prose prose-slate dark:prose-invert max-w-none">
+    <slot name="seo-content" />
+    
+    <!-- Default FAQ if none provided -->
+    <div class="mt-8 p-6 rounded-2xl" style="background-color: var(--bg-secondary);">
+      <h2 class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
+        Frequently Asked Questions
+      </h2>
+      <slot name="faq">
+        <div class="space-y-4">
+          <details class="group">
+            <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+              Is this tool free to use?
+            </summary>
+            <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+              Yes, {tool.name} is completely free. No registration required.
+            </p>
+          </details>
+          <details class="group">
+            <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+              Is my data secure?
+            </summary>
+            <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+              All processing happens in your browser. Your data never leaves your device.
+            </p>
+          </details>
+        </div>
+      </slot>
+    </div>
+  </section>
+  
+  <!-- Related Tools -->
+  <section class="mt-12">
+    <h2 class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
+      Related Tools
+    </h2>
+    <slot name="related-tools" />
+  </section>
+</BaseLayout>
+
+

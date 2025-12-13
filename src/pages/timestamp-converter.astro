@@ -1,0 +1,28 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TimestampConverter from '@/components/tools/TimestampConverter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('timestamp-converter')!;
+const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <TimestampConverter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Timestamp Converter?</h2>
+    <p>
+      Convert Unix timestamps to human-readable dates and vice versa. Supports both seconds and milliseconds.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+
+

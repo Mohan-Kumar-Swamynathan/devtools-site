@@ -1,0 +1,67 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonFormatter from '@/components/tools/JsonFormatter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('json-formatter')!;
+const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <JsonFormatter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is JSON Formatter?</h2>
+    <p>
+      JSON Formatter is a free online tool that helps you format, validate, and beautify JSON data. 
+      It makes your JSON readable with proper indentation and syntax highlighting.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Format JSON with customizable indentation (2 or 4 spaces)</li>
+      <li>Validate JSON syntax and show detailed error messages</li>
+      <li>Minify JSON for production use</li>
+      <li>Copy formatted output with one click</li>
+      <li>Download as .json file</li>
+      <li>Dark mode support</li>
+    </ul>
+    
+    <h2>How to Use</h2>
+    <ol>
+      <li>Paste your JSON data in the input area</li>
+      <li>Click "Format" to beautify or "Minify" to compress</li>
+      <li>Copy the result or download it as a file</li>
+    </ol>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        What is JSON?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        JSON (JavaScript Object Notation) is a lightweight data-interchange format that is easy 
+        for humans to read and write and easy for machines to parse and generate.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Why format JSON?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Formatting JSON makes it easier to read, debug, and understand the data structure. 
+        It adds proper indentation and line breaks.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+
+

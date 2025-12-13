@@ -1,0 +1,35 @@
+---
+interface Props {
+  name: string;
+  slug: string;
+  tagline: string;
+  icon: string;
+  isPopular?: boolean;
+  isNew?: boolean;
+}
+
+const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
+---
+
+<a href={`/${slug}`} class="card-hover group block">
+  <div class="flex items-start justify-between mb-3">
+    <span class="text-3xl sm:text-4xl transition-transform group-hover:scale-110 duration-200">
+      {icon}
+    </span>
+    <div class="flex gap-1.5">
+      {isNew && <span class="badge-primary text-[10px]">New</span>}
+      {isPopular && <span class="badge-warning text-[10px]">Popular</span>}
+    </div>
+  </div>
+  <h3 
+    class="font-semibold text-sm sm:text-base mb-1 transition-colors group-hover:text-[var(--brand-primary)]"
+    style="color: var(--text-primary);"
+  >
+    {name}
+  </h3>
+  <p class="text-xs sm:text-sm line-clamp-2" style="color: var(--text-muted);">
+    {tagline}
+  </p>
+</a>
+
+

@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Terms of Service"
+  description="Terms of service for DevTools."
+>
+  <article class="prose prose-slate dark:prose-invert max-w-3xl mx-auto">
+    <h1>Terms of Service</h1>
+    
+    <p><strong>Last updated:</strong> {new Date().toLocaleDateString()}</p>
+    
+    <h2>Acceptance of Terms</h2>
+    <p>
+      By accessing and using DevTools, you accept and agree to be bound by these Terms of Service.
+    </p>
+    
+    <h2>Use of Service</h2>
+    <p>
+      DevTools is provided "as is" for free use. You may use the tools for any legal purpose. 
+      We reserve the right to modify or discontinue any tool at any time.
+    </p>
+    
+    <h2>No Warranty</h2>
+    <p>
+      DevTools is provided without warranty of any kind. We are not responsible for any damages 
+      resulting from the use of our tools.
+    </p>
+    
+    <h2>Limitation of Liability</h2>
+    <p>
+      In no event shall DevTools be liable for any indirect, incidental, or consequential damages 
+      arising from the use of our services.
+    </p>
+  </article>
+</BaseLayout>
+
+
