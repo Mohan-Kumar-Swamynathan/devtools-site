@@ -1,20 +1,20 @@
 ---
 import ToolLayout from '@/layouts/ToolLayout.astro';
-import CsvToMarkdown from '@/components/tools/CsvToMarkdown.tsx';
+import CodeCommentGenerator from '@/components/tools/CodeCommentGenerator.tsx';
 import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
-const tool = getToolBySlug('csv-to-markdown')!;
-const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.id).slice(0, 4);
+const tool = getToolBySlug('code-comment-generator')!;
+const relatedTools = getToolsByCategory('documentation').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
 <ToolLayout tool={tool}>
-  <CsvToMarkdown client:load />
+  <CodeCommentGenerator client:load />
 
   <Fragment slot="seo-content">
-    <h2>What is CSV to Markdown Table Converter?</h2>
+    <h2>What is Code Comment Generator?</h2>
     <p>
-      Convert CSV data to Markdown table format. Perfect for documentation and README files.
+      Generate code comments in JSDoc, inline, or block style for multiple languages. Improve code documentation.
     </p>
   </Fragment>
 
@@ -24,3 +24,4 @@ const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.
     </div>
   </Fragment>
 </ToolLayout>
+

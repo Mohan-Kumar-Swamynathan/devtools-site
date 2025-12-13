@@ -1,20 +1,20 @@
 ---
 import ToolLayout from '@/layouts/ToolLayout.astro';
-import CsvToMarkdown from '@/components/tools/CsvToMarkdown.tsx';
+import ChangelogGenerator from '@/components/tools/ChangelogGenerator.tsx';
 import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
-const tool = getToolBySlug('csv-to-markdown')!;
-const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.id).slice(0, 4);
+const tool = getToolBySlug('changelog-generator')!;
+const relatedTools = getToolsByCategory('documentation').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
 <ToolLayout tool={tool}>
-  <CsvToMarkdown client:load />
+  <ChangelogGenerator client:load />
 
   <Fragment slot="seo-content">
-    <h2>What is CSV to Markdown Table Converter?</h2>
+    <h2>What is Changelog Generator?</h2>
     <p>
-      Convert CSV data to Markdown table format. Perfect for documentation and README files.
+      Generate CHANGELOG.md files following Keep a Changelog format. Organize changes by type (Added, Changed, Fixed, etc.).
     </p>
   </Fragment>
 
@@ -24,3 +24,4 @@ const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.
     </div>
   </Fragment>
 </ToolLayout>
+

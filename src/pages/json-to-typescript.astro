@@ -1,6 +1,6 @@
 ---
 import ToolLayout from '@/layouts/ToolLayout.astro';
-import JsonTypescript from '@/components/tools/JsonTypescript.tsx';
+import JsonToTypescript from '@/components/tools/JsonToTypescript.tsx';
 import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
@@ -9,13 +9,12 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
 ---
 
 <ToolLayout tool={tool}>
-  <JsonTypescript client:load />
+  <JsonToTypescript client:load />
 
   <Fragment slot="seo-content">
-    <h2>What is JSON to TypeScript Generator?</h2>
+    <h2>What is JSON to TypeScript Converter?</h2>
     <p>
-      Generate TypeScript interfaces and types from JSON data automatically. 
-      Perfect for creating type definitions from API responses.
+      Convert JSON objects to TypeScript interface definitions automatically. Perfect for generating type definitions.
     </p>
   </Fragment>
 
@@ -25,4 +24,3 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
     </div>
   </Fragment>
 </ToolLayout>
-

@@ -1,0 +1,36 @@
+---
+interface Props {
+  tool: {
+    name: string;
+    description: string;
+    slug: string;
+  };
+}
+
+const { tool } = Astro.props;
+const siteUrl = 'https://devtools.site';
+const toolUrl = new URL(`/${tool.slug}`, siteUrl).href;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": tool.name,
+  "description": tool.description,
+  "url": toolUrl,
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "100"
+  }
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+

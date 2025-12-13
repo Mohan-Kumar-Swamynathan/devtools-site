@@ -5,64 +5,55 @@ import OutputPanel from '@/components/common/OutputPanel';
 export default function CsvToMarkdown() {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
-  const [error, setError] = useState('');
 
   const convert = useCallback(() => {
-    setError('');
-    try {
-      const lines = input.trim().split('\n');
-      if (lines.length === 0) {
-        throw new Error('CSV is empty');
-      }
-
-      const markdownLines: string[] = [];
-      
-      // Header row
-      const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-      markdownLines.push('| ' + headers.join(' | ') + ' |');
-      markdownLines.push('| ' + headers.map(() => '---').join(' | ') + ' |');
-      
-      // Data rows
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, '').replace(/""/g, '"'));
-        markdownLines.push('| ' + values.join(' | ') + ' |');
-      }
-      
-      setOutput(markdownLines.join('\n'));
-    } catch (e) {
-      setError(`Error: ${(e as Error).message}`);
+    const lines = input.trim().split('\n');
+    if (lines.length === 0) {
       setOutput('');
+      return;
     }
+
+    const rows = lines.map(line => line.split(',').map(cell => cell.trim()));
+    if (rows.length === 0) {
+      setOutput('');
+      return;
+    }
+
+    // Header row
+    const header = rows[0];
+    const separator = header.map(() => '---').join(' | ');
+    
+    let markdown = `| ${header.join(' | ')} |\n`;
+    markdown += `| ${separator} |\n`;
+    
+    // Data rows
+    for (let i = 1; i < rows.length; i++) {
+      markdown += `| ${rows[i].join(' | ')} |\n`;
+    }
+
+    setOutput(markdown.trim());
   }, [input]);
 
   return (
     <div className="space-y-6">
       <CodeEditor
         value={input}
-        onChange={setInput}
+        onChange={(v) => { setInput(v); convert(); }}
         language="text"
         label="CSV Input"
-        placeholder="name,age,city\nJohn,30,NYC\nJane,25,LA"
+        placeholder="name,age,city
+John,30,NYC
+Jane,25,LA"
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={convert} disabled={!input} className="btn-primary">
-          Convert to Markdown
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
-
-      {error && <div className="alert-error">{error}</div>}
       {output && (
         <OutputPanel
           value={output}
           label="Markdown Table"
           language="markdown"
+          showLineNumbers
         />
       )}
     </div>
   );
 }
-

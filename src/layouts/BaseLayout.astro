@@ -99,8 +99,23 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     type="WebSite"
     name="DevTools"
     url={siteUrl}
-    description="Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, and 50+ more tools"
+    description="Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, and 130+ more tools"
   />
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "DevTools",
+    "url": siteUrl,
+    "description": "Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, and 130+ more tools",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${siteUrl}/?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    }
+  })} />
   
   <!-- Additional head content -->
   <slot name="head" />

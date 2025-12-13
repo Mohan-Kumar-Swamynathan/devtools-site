@@ -5,7 +5,7 @@ import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
 const tool = getToolBySlug('regex-tester')!;
-const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.id).slice(0, 4);
+const relatedTools = getToolsByCategory('code').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
 <ToolLayout tool={tool}>
@@ -14,7 +14,7 @@ const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.
   <Fragment slot="seo-content">
     <h2>What is Regex Tester?</h2>
     <p>
-      Test and debug regular expressions with real-time matching and highlighting. See all matches, groups, and positions.
+      Test regular expressions with live matching. Supports flags (g, i, m, s) and shows real-time results.
     </p>
   </Fragment>
 
@@ -24,5 +24,3 @@ const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.
     </div>
   </Fragment>
 </ToolLayout>
-
-

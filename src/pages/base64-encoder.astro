@@ -1,20 +1,20 @@
 ---
 import ToolLayout from '@/layouts/ToolLayout.astro';
-import CsvToMarkdown from '@/components/tools/CsvToMarkdown.tsx';
+import Base64Encoder from '@/components/tools/Base64Encoder.tsx';
 import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
-const tool = getToolBySlug('csv-to-markdown')!;
-const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.id).slice(0, 4);
+const tool = getToolBySlug('base64-encoder')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
 <ToolLayout tool={tool}>
-  <CsvToMarkdown client:load />
+  <Base64Encoder client:load />
 
   <Fragment slot="seo-content">
-    <h2>What is CSV to Markdown Table Converter?</h2>
+    <h2>What is Base64 Encoder/Decoder?</h2>
     <p>
-      Convert CSV data to Markdown table format. Perfect for documentation and README files.
+      Encode text to Base64 or decode Base64 to text. Fast and secure encoding/decoding.
     </p>
   </Fragment>
 
@@ -24,3 +24,4 @@ const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.
     </div>
   </Fragment>
 </ToolLayout>
+

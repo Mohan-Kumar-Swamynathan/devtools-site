@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import Breadcrumb from '@/components/common/Breadcrumb.astro';
 import AdSlot from '@/components/common/AdSlot.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
+import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
 import type { Tool } from '@/lib/tools';
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const { tool } = Astro.props;
+const siteUrl = 'https://devtools.site';
 ---
 
 <BaseLayout 
@@ -22,11 +24,16 @@ const { tool } = Astro.props;
       type="SoftwareApplication"
       name={tool.name}
       description={tool.description}
-      url={`https://devtools.site/${tool.slug}`}
+      url={`${siteUrl}/${tool.slug}`}
       applicationCategory="DeveloperApplication"
       operatingSystem="Any"
       offers={{ price: "0", priceCurrency: "USD" }}
     />
+    <Breadcrumbs items={[
+      { name: 'Home', url: '/' },
+      { name: tool.category.name, url: `/#${tool.category.id}` },
+      { name: tool.name, url: `/${tool.slug}` }
+    ]} />
   </Fragment>
   
   <!-- Breadcrumb -->

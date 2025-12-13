@@ -1314,6 +1314,183 @@ export const tools: Tool[] = [
     keywords: ['file extension', 'extension lookup', 'mime type'],
     category: categories.file,
     icon: '🔍'
+  },
+  // Developer Productivity Tools
+  {
+    id: 'regex-tester',
+    name: 'Regex Tester',
+    slug: 'regex-tester',
+    tagline: 'Test regular expressions',
+    description: 'Test regular expressions with live matching. Supports flags and real-time results.',
+    keywords: ['regex tester', 'regular expression tester', 'regex test'],
+    category: categories.code,
+    icon: '🔍',
+    isPopular: true
+  },
+  {
+    id: 'regex-cheat-sheet',
+    name: 'Regex Cheat Sheet',
+    slug: 'regex-cheat-sheet',
+    tagline: 'Regular expression reference',
+    description: 'Quick reference for regular expression patterns, quantifiers, and flags.',
+    keywords: ['regex cheat sheet', 'regex reference', 'regular expression guide'],
+    category: categories.code,
+    icon: '📚'
+  },
+  {
+    id: 'code-snippet-generator',
+    name: 'Code Snippet Generator',
+    slug: 'code-snippet-generator',
+    tagline: 'Generate code snippets',
+    description: 'Generate common code snippets for JavaScript, Python, HTML, and CSS.',
+    keywords: ['code snippet generator', 'snippet generator', 'code templates'],
+    category: categories.code,
+    icon: '💻'
+  },
+  {
+    id: 'color-picker',
+    name: 'Color Picker',
+    slug: 'color-picker',
+    tagline: 'Pick colors and get formats',
+    description: 'Pick colors and get them in multiple formats: HEX, RGB, RGBA, HSL, HSLA.',
+    keywords: ['color picker', 'color converter', 'hex to rgb'],
+    category: categories.css,
+    icon: '🎨'
+  },
+  {
+    id: 'base64-encoder',
+    name: 'Base64 Encoder/Decoder',
+    slug: 'base64-encoder',
+    tagline: 'Encode/decode Base64',
+    description: 'Encode text to Base64 or decode Base64 to text. Fast and secure.',
+    keywords: ['base64 encoder', 'base64 decoder', 'base64 encode decode'],
+    category: categories.encoders,
+    icon: '🔐',
+    isPopular: true
+  },
+  // Specialized Converters
+  {
+    id: 'json-to-typescript',
+    name: 'JSON to TypeScript',
+    slug: 'json-to-typescript',
+    tagline: 'Convert JSON to TypeScript interface',
+    description: 'Convert JSON objects to TypeScript interface definitions automatically.',
+    keywords: ['json to typescript', 'json to interface', 'typescript generator'],
+    category: categories.json,
+    icon: '📘'
+  },
+  {
+    id: 'markdown-to-html',
+    name: 'Markdown to HTML',
+    slug: 'markdown-to-html',
+    tagline: 'Convert Markdown to HTML',
+    description: 'Convert Markdown text to HTML format. Supports all Markdown features.',
+    keywords: ['markdown to html', 'md to html', 'markdown converter'],
+    category: categories.converters,
+    icon: '📝'
+  },
+  {
+    id: 'html-to-markdown',
+    name: 'HTML to Markdown',
+    slug: 'html-to-markdown',
+    tagline: 'Convert HTML to Markdown',
+    description: 'Convert HTML to Markdown format. Preserves structure and formatting.',
+    keywords: ['html to markdown', 'html to md', 'html converter'],
+    category: categories.converters,
+    icon: '📄'
+  },
+  {
+    id: 'csv-to-markdown',
+    name: 'CSV to Markdown Table',
+    slug: 'csv-to-markdown',
+    tagline: 'Convert CSV to Markdown table',
+    description: 'Convert CSV data to Markdown table format. Perfect for documentation.',
+    keywords: ['csv to markdown', 'csv to table', 'markdown table'],
+    category: categories.converters,
+    icon: '📊'
+  },
+  // Testing & Debugging Tools
+  {
+    id: 'json-linter',
+    name: 'JSON Linter',
+    slug: 'json-linter',
+    tagline: 'Lint and format JSON',
+    description: 'Lint JSON code for errors, format it, and detect common issues like duplicate keys.',
+    keywords: ['json linter', 'lint json', 'json validator', 'json formatter'],
+    category: categories.json,
+    icon: '🔍'
+  },
+  {
+    id: 'api-tester',
+    name: 'API Tester',
+    slug: 'api-tester',
+    tagline: 'Test REST APIs',
+    description: 'Test REST APIs with different HTTP methods. View responses, headers, and timing information.',
+    keywords: ['api tester', 'rest api tester', 'http client', 'api debugger'],
+    category: categories.network,
+    icon: '🧪',
+    isPopular: true
+  },
+  {
+    id: 'error-decoder',
+    name: 'Error Decoder',
+    slug: 'error-decoder',
+    tagline: 'Decode and analyze errors',
+    description: 'Decode error messages and stack traces. Extract useful information from error logs.',
+    keywords: ['error decoder', 'error analyzer', 'stack trace parser'],
+    category: categories.code,
+    icon: '🐛'
+  },
+  {
+    id: 'performance-monitor',
+    name: 'Performance Monitor',
+    slug: 'performance-monitor',
+    tagline: 'Monitor browser performance',
+    description: 'Monitor browser performance metrics including memory usage, navigation timing, and resource loading.',
+    keywords: ['performance monitor', 'browser performance', 'performance metrics'],
+    category: categories.code,
+    icon: '⚡'
+  },
+  // Documentation Tools
+  {
+    id: 'api-documentation-generator',
+    name: 'API Documentation Generator',
+    slug: 'api-documentation-generator',
+    tagline: 'Generate API docs',
+    description: 'Generate API documentation in Markdown format. Includes endpoints, parameters, and examples.',
+    keywords: ['api docs generator', 'api documentation', 'generate api docs'],
+    category: categories.documentation,
+    icon: '📚'
+  },
+  {
+    id: 'changelog-generator',
+    name: 'Changelog Generator',
+    slug: 'changelog-generator',
+    tagline: 'Generate changelogs',
+    description: 'Generate CHANGELOG.md files following Keep a Changelog format. Organize changes by type.',
+    keywords: ['changelog generator', 'generate changelog', 'changelog maker'],
+    category: categories.documentation,
+    icon: '📝'
+  },
+  {
+    id: 'code-comment-generator',
+    name: 'Code Comment Generator',
+    slug: 'code-comment-generator',
+    tagline: 'Generate code comments',
+    description: 'Generate code comments in JSDoc, inline, or block style for multiple languages.',
+    keywords: ['comment generator', 'code comments', 'jsdoc generator'],
+    category: categories.documentation,
+    icon: '💬'
+  },
+  {
+    id: 'contributing-guide-generator',
+    name: 'Contributing Guide Generator',
+    slug: 'contributing-guide-generator',
+    tagline: 'Generate CONTRIBUTING.md',
+    description: 'Generate CONTRIBUTING.md files with setup instructions, code style guidelines, and testing requirements.',
+    keywords: ['contributing guide', 'generate contributing', 'contributing.md'],
+    category: categories.documentation,
+    icon: '🤝'
   }
 ];
 
