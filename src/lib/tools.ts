@@ -1666,6 +1666,103 @@ export const tools: Tool[] = [
     category: categories.css,
     icon: '🎯',
     isNew: true
+  },
+  // New Popular Tools
+  {
+    id: 'image-compressor',
+    name: 'Image Compressor',
+    slug: 'image-compressor',
+    tagline: 'Compress images to reduce file size',
+    description: 'Compress PNG, JPG, and WebP images to reduce file size while maintaining quality. Adjust quality and dimensions.',
+    keywords: ['image compressor', 'compress image', 'image optimizer', 'reduce image size', 'jpg compressor', 'png compressor'],
+    category: categories.image,
+    icon: '🗜️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'image-format-converter',
+    name: 'Image Format Converter',
+    slug: 'image-format-converter',
+    tagline: 'Convert between image formats',
+    description: 'Convert images between PNG, JPG, WebP, and BMP formats. Adjust quality settings for optimal results.',
+    keywords: ['image converter', 'png to jpg', 'jpg to png', 'webp converter', 'image format converter', 'convert image'],
+    category: categories.converters,
+    icon: '🖼️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'code-minifier',
+    name: 'Code Minifier',
+    slug: 'code-minifier',
+    tagline: 'Minify HTML, CSS, and JavaScript',
+    description: 'Minify HTML, CSS, and JavaScript code by removing whitespace, comments, and unnecessary characters.',
+    keywords: ['code minifier', 'html minifier', 'css minifier', 'js minifier', 'javascript minifier', 'minify code'],
+    category: categories.formatters,
+    icon: '📦',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'url-shortener',
+    name: 'URL Shortener',
+    slug: 'url-shortener',
+    tagline: 'Shorten URLs instantly',
+    description: 'Create short URLs from long links. Client-side shortening with hash-based generation.',
+    keywords: ['url shortener', 'shorten url', 'url shortener free', 'link shortener', 'tiny url'],
+    category: categories.web,
+    icon: '🔗',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'favicon-generator',
+    name: 'Favicon Generator',
+    slug: 'favicon-generator',
+    tagline: 'Generate favicons in all sizes',
+    description: 'Generate favicons in multiple sizes (16x16, 32x32, 180x180, etc.) from a single image. Perfect for websites and PWAs.',
+    keywords: ['favicon generator', 'generate favicon', 'favicon maker', 'icon generator', 'apple touch icon'],
+    category: categories.generators,
+    icon: '⭐',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'qr-code-reader',
+    name: 'QR Code Reader',
+    slug: 'qr-code-reader',
+    tagline: 'Decode QR codes from images',
+    description: 'Scan and decode QR codes from images or using your camera. Extract text, URLs, and other data from QR codes.',
+    keywords: ['qr code reader', 'qr code scanner', 'qr decoder', 'scan qr code', 'qr code decoder'],
+    category: categories.generators,
+    icon: '📷',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'regex-pattern-generator',
+    name: 'Regex Pattern Generator',
+    slug: 'regex-pattern-generator',
+    tagline: 'Generate and test regex patterns',
+    description: 'Generate regular expression patterns with common templates. Test patterns against text and see matches in real-time.',
+    keywords: ['regex generator', 'regex builder', 'regular expression generator', 'regex pattern', 'regex maker'],
+    category: categories.validators,
+    icon: '.*',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'ip-address-lookup',
+    name: 'IP Address Lookup',
+    slug: 'ip-address-lookup',
+    tagline: 'Lookup IP address information',
+    description: 'Get detailed information about any IP address including location, ISP, organization, and geolocation data.',
+    keywords: ['ip lookup', 'ip address lookup', 'ip geolocation', 'ip info', 'ip address finder', 'ip location'],
+    category: categories.network,
+    icon: '🌍',
+    isNew: true,
+    isPopular: true
   }
 ];
 

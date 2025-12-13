@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import QrCodeReader from '@/components/tools/QrCodeReader.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('qr-code-reader')!;
+const relatedTools = getToolsByCategory('generators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <QrCodeReader client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is QR Code Reader?</h2>
+    <p>
+      QR Code Reader decodes QR codes from images or using your device camera. 
+      Extract text, URLs, and other data encoded in QR codes.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Upload QR code images to decode</li>
+      <li>Scan QR codes using device camera</li>
+      <li>Extract text and URLs from QR codes</li>
+      <li>Copy decoded content</li>
+      <li>Open URLs directly from decoded QR codes</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageFormatConverter from '@/components/tools/ImageFormatConverter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-format-converter')!;
+const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageFormatConverter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Format Converter?</h2>
+    <p>
+      Convert images between different formats including PNG, JPG, WebP, and BMP. 
+      Adjust quality settings for optimal file size and image quality.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Convert between PNG, JPG, WebP, and BMP formats</li>
+      <li>Batch conversion support</li>
+      <li>Quality adjustment for lossy formats</li>
+      <li>Preserve image dimensions</li>
+      <li>Download converted images instantly</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

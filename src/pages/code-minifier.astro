@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CodeMinifier from '@/components/tools/CodeMinifier.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('code-minifier')!;
+const relatedTools = getToolsByCategory('formatters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <CodeMinifier client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Code Minifier?</h2>
+    <p>
+      Code Minifier reduces file sizes by removing whitespace, comments, and unnecessary characters 
+      from HTML, CSS, and JavaScript code. Perfect for production deployments.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Minify HTML, CSS, and JavaScript</li>
+      <li>Remove comments and whitespace</li>
+      <li>See compression ratio and savings</li>
+      <li>Copy or download minified code</li>
+      <li>All processing happens in your browser</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

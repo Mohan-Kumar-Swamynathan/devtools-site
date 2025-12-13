@@ -1,0 +1,37 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import UrlShortener from '@/components/tools/UrlShortener.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('url-shortener')!;
+const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <UrlShortener client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is URL Shortener?</h2>
+    <p>
+      URL Shortener creates short, shareable links from long URLs. 
+      This client-side version generates hash-based short URLs that work while the page is open.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Shorten any URL instantly</li>
+      <li>Copy short URLs with one click</li>
+      <li>View original and short URLs side-by-side</li>
+      <li>Manage multiple shortened URLs</li>
+      <li>Client-side only - no backend required</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

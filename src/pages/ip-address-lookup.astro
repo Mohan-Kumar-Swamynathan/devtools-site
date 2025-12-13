@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import IpAddressLookup from '@/components/tools/IpAddressLookup.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('ip-address-lookup')!;
+const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <IpAddressLookup client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is IP Address Lookup?</h2>
+    <p>
+      IP Address Lookup provides detailed information about any IP address including location, 
+      ISP, organization, and geolocation data. Get your own IP or lookup any IP address.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Lookup any IP address</li>
+      <li>Get your own IP address</li>
+      <li>View location and geolocation data</li>
+      <li>See ISP and organization information</li>
+      <li>View on Google Maps</li>
+      <li>Export data as JSON</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

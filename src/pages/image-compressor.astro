@@ -1,0 +1,38 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageCompressor from '@/components/tools/ImageCompressor.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('image-compressor')!;
+const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ImageCompressor client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Image Compressor?</h2>
+    <p>
+      Image Compressor is a free online tool that reduces image file sizes without significant quality loss. 
+      Compress PNG, JPG, and WebP images to improve website performance and save storage space.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Compress multiple images at once</li>
+      <li>Adjustable quality settings</li>
+      <li>Resize images to maximum dimensions</li>
+      <li>See compression ratio and file size savings</li>
+      <li>Download individual or all compressed images</li>
+      <li>100% client-side - your images never leave your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+
