@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HtmlEntityEncoder from '@/components/tools/HtmlEntityEncoder.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('html-entity-encoder')!;
+const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <HtmlEntityEncoder client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is HTML Entity Encoder/Decoder?</h2>
+    <p>
+      Encode special characters to HTML entities (like &amp;, &lt;, &gt;) or decode HTML entities back to text.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

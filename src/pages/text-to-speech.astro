@@ -1,0 +1,28 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TextToSpeech from '@/components/tools/TextToSpeech.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('text-to-speech')!;
+const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <TextToSpeech client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Text to Speech?</h2>
+    <p>
+      Convert text to speech using browser-native Web Speech API. Adjust voice, rate, pitch, and volume. 
+      Perfect for accessibility, proofreading, or listening to content.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

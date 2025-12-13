@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import RomanNumeralConverter from '@/components/tools/RomanNumeralConverter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('roman-numeral-converter')!;
+const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <RomanNumeralConverter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Roman Numeral Converter?</h2>
+    <p>
+      Convert Arabic numbers to Roman numerals and vice versa. Supports numbers from 1 to 3999.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import WordFrequencyCounter from '@/components/tools/WordFrequencyCounter.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('word-frequency-counter')!;
+const relatedTools = getToolsByCategory('text').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <WordFrequencyCounter client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Word Frequency Counter?</h2>
+    <p>
+      Count how often each word appears in text. Sorted by frequency with customizable options like minimum word length and case sensitivity.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

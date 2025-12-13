@@ -1,0 +1,27 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import PalindromeChecker from '@/components/tools/PalindromeChecker.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('palindrome-checker')!;
+const relatedTools = getToolsByCategory('text').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <PalindromeChecker client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is Palindrome Checker?</h2>
+    <p>
+      Check if text is a palindrome (reads the same forwards and backwards). Supports multiple lines for batch checking.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

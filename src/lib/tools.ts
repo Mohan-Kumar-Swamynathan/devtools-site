@@ -1491,6 +1491,111 @@ export const tools: Tool[] = [
     keywords: ['contributing guide', 'generate contributing', 'contributing.md'],
     category: categories.documentation,
     icon: '🤝'
+  },
+  // Audio & Voice Tools
+  {
+    id: 'text-to-speech',
+    name: 'Text to Speech',
+    slug: 'text-to-speech',
+    tagline: 'Convert text to speech',
+    description: 'Convert text to speech using browser-native Web Speech API. Adjust voice, rate, pitch, and volume.',
+    keywords: ['text to speech', 'tts', 'speech synthesis', 'voice generator'],
+    category: categories.misc,
+    icon: '🔊',
+    isPopular: true
+  },
+  {
+    id: 'speech-to-text',
+    name: 'Speech to Text',
+    slug: 'speech-to-text',
+    tagline: 'Convert speech to text',
+    description: 'Convert speech to text using browser-native Web Speech API. Real-time transcription.',
+    keywords: ['speech to text', 'stt', 'voice recognition', 'transcription'],
+    category: categories.misc,
+    icon: '🎤',
+    isPopular: true
+  },
+  // Additional Easy Tools
+  {
+    id: 'morse-code-converter',
+    name: 'Morse Code Converter',
+    slug: 'morse-code-converter',
+    tagline: 'Convert text to/from Morse code',
+    description: 'Convert text to Morse code and decode Morse code back to text.',
+    keywords: ['morse code', 'morse code converter', 'morse code decoder'],
+    category: categories.encoders,
+    icon: '📡'
+  },
+  {
+    id: 'roman-numeral-converter',
+    name: 'Roman Numeral Converter',
+    slug: 'roman-numeral-converter',
+    tagline: 'Convert numbers to/from Roman numerals',
+    description: 'Convert Arabic numbers to Roman numerals and vice versa. Supports 1-3999.',
+    keywords: ['roman numeral', 'roman number', 'roman converter'],
+    category: categories.converters,
+    icon: '🔢'
+  },
+  {
+    id: 'word-frequency-counter',
+    name: 'Word Frequency Counter',
+    slug: 'word-frequency-counter',
+    tagline: 'Count word frequency in text',
+    description: 'Count how often each word appears in text. Sorted by frequency with customizable options.',
+    keywords: ['word frequency', 'word count', 'frequency analysis'],
+    category: categories.text,
+    icon: '📊'
+  },
+  {
+    id: 'palindrome-checker',
+    name: 'Palindrome Checker',
+    slug: 'palindrome-checker',
+    tagline: 'Check if text is a palindrome',
+    description: 'Check if text is a palindrome (reads the same forwards and backwards).',
+    keywords: ['palindrome checker', 'palindrome', 'check palindrome'],
+    category: categories.text,
+    icon: '🔄'
+  },
+  {
+    id: 'anagram-generator',
+    name: 'Anagram Generator',
+    slug: 'anagram-generator',
+    tagline: 'Generate anagrams from words',
+    description: 'Generate anagrams (rearrangements of letters) from a word.',
+    keywords: ['anagram generator', 'anagram', 'word scramble'],
+    category: categories.text,
+    icon: '🔀'
+  },
+  {
+    id: 'epoch-converter',
+    name: 'Epoch Converter',
+    slug: 'epoch-converter',
+    tagline: 'Convert Unix timestamps',
+    description: 'Convert Unix epoch timestamps (seconds or milliseconds) to human-readable dates and vice versa.',
+    keywords: ['epoch converter', 'unix timestamp', 'timestamp converter'],
+    category: categories.time,
+    icon: '⏰',
+    isPopular: true
+  },
+  {
+    id: 'html-entity-encoder',
+    name: 'HTML Entity Encoder/Decoder',
+    slug: 'html-entity-encoder',
+    tagline: 'Encode/decode HTML entities',
+    description: 'Encode special characters to HTML entities or decode HTML entities back to text.',
+    keywords: ['html entity', 'html encode', 'html decode', 'entity encoder'],
+    category: categories.encoders,
+    icon: '🔤'
+  },
+  {
+    id: 'percent-encoder',
+    name: 'Percent Encoder/Decoder',
+    slug: 'percent-encoder',
+    tagline: 'Encode/decode percent encoding',
+    description: 'Encode text to percent-encoded format (URL encoding) or decode percent-encoded strings.',
+    keywords: ['percent encode', 'url encode', 'percent decode', 'url decode'],
+    category: categories.encoders,
+    icon: '🔗'
   }
 ];
 
