@@ -72,15 +72,41 @@ export default function AssistantPanel({ onClose }: Props) {
           </div>
         )}
         
-        {messages.map((msg, i) => (
-          <MessageBubble 
-            key={i} 
-            role={msg.role} 
-            content={msg.content}
-            tool={msg.tool}
-            onToolClick={msg.tool ? () => handleToolClick(msg.tool) : undefined}
-          />
-        ))}
+        {messages.map((msg, i) => {
+          // If message has multiple tools, show all as clickable chips
+          const allTools = (msg as any).tools || (msg.tool ? [msg.tool] : []);
+          
+          return (
+            <div key={i}>
+              <MessageBubble 
+                role={msg.role} 
+                content={msg.content}
+                tool={msg.tool}
+                onToolClick={msg.tool ? () => handleToolClick(msg.tool) : undefined}
+              />
+              {allTools.length > 1 && (
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {allTools.map((tool: any, idx: number) => (
+                    <button
+                      key={idx}
+                      onClick={() => handleToolClick(tool)}
+                      className="px-3 py-1.5 text-xs rounded-lg border transition-all hover:scale-105 flex items-center gap-1.5"
+                      style={{
+                        borderColor: 'var(--brand-primary)',
+                        backgroundColor: 'var(--bg-primary)',
+                        color: 'var(--brand-primary)'
+                      }}
+                    >
+                      <span>{tool.icon}</span>
+                      <span>{tool.name}</span>
+                      <ArrowRight size={12} />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
         
         {isProcessing && (
           <div className="flex items-center gap-2" style={{ color: 'var(--text-muted)' }}>

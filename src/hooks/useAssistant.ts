@@ -8,6 +8,7 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   tool?: any;
+  tools?: any[];
 }
 
 interface UseAssistantReturn {
@@ -61,13 +62,15 @@ export function useAssistant(): UseAssistantReturn {
         return;
       }
       
-      // Multiple matches - show options
-      if (toolMatches.length <= 3) {
-        const toolList = toolMatches.map(t => t).slice(0, 3);
+      // Multiple matches - show options with all tools
+      if (toolMatches.length > 1 && toolMatches.length <= 5) {
+        const toolList = toolMatches.slice(0, 3);
+        const toolNames = toolList.map(t => `${t.icon} ${t.name}`).join(', ');
         setMessages(prev => [...prev, { 
           role: 'assistant', 
-          content: `I found ${toolList.length} matching tool${toolList.length > 1 ? 's' : ''}. Click to go:`,
-          tool: toolList[0] // Show first as primary
+          content: `I found ${toolMatches.length} matching tools: ${toolNames}. Click below to open one!`,
+          tool: toolList[0], // Show first as primary
+          tools: toolList // All tools for chips
         }]);
         setMood('happy');
         setIsProcessing(false);

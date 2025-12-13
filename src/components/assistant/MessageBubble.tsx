@@ -12,7 +12,13 @@ export default function MessageBubble({ role, content, tool, onToolClick }: Prop
   const isUser = role === 'user';
   
   // Simple markdown to HTML conversion
-  const htmlContent = marked.parse(content);
+  // marked.parse is synchronous in v14
+  let htmlContent = '';
+  try {
+    htmlContent = marked.parse(content, { breaks: true, gfm: true });
+  } catch {
+    htmlContent = content.replace(/\n/g, '<br>');
+  }
 
   return (
     <div className={`flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`}>
