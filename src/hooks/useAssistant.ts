@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
-import { getResponse } from '@/lib/assistant/brain';
+import { getRuleBasedResponse } from '@/lib/assistant/ruleBasedBrain';
+import { generateResponse, isModelReady, getToolsListForPrompt } from '@/lib/assistant/browserLLM';
 import { getToolBySlug, searchTools } from '@/lib/tools';
 
-type Mood = 'idle' | 'thinking' | 'happy' | 'confused';
+type Mood = 'idle' | 'thinking' | 'happy' | 'confused' | 'listening' | 'speaking';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -14,7 +15,7 @@ interface Message {
 interface UseAssistantReturn {
   messages: Message[];
   mood: Mood;
-  sendMessage: (text: string) => Promise<void>;
+  sendMessage: (text: string, useLLM?: boolean) => Promise<void>;
   isProcessing: boolean;
   redirectToTool: (slug: string) => void;
 }
@@ -30,89 +31,81 @@ export function useAssistant(): UseAssistantReturn {
     }
   }, []);
 
-  const sendMessage = useCallback(async (text: string) => {
+  const sendMessage = useCallback(async (text: string, useLLM: boolean = false) => {
     // Add user message
     setMessages(prev => [...prev, { role: 'user', content: text }]);
     setMood('thinking');
     setIsProcessing(true);
 
-    // Quick tool search first
-    const toolMatches = searchTools(text);
-    if (toolMatches.length > 0) {
-      // If exact match or single strong match, redirect immediately
-      const exactMatch = toolMatches.find(t => 
-        t.name.toLowerCase() === text.toLowerCase() ||
-        t.slug === text.toLowerCase().replace(/\s+/g, '-')
-      );
+    try {
+      // If smart mode is enabled and model is ready, try LLM first for better responses
+      if (useLLM && isModelReady()) {
+        try {
+          const toolsList = getToolsListForPrompt(30);
+          const llmResponse = await generateResponse(text, toolsList);
+          
+          // Check if LLM response mentions a tool
+          const toolMatches = searchTools(llmResponse);
+          const toolMatch = toolMatches.length > 0 ? toolMatches[0] : null;
+          
+          // Also check rule-based for tool slug if LLM didn't find one
+          const ruleResponse = getRuleBasedResponse(text);
+          const finalToolMatch = toolMatch || (ruleResponse.toolSlug ? getToolBySlug(ruleResponse.toolSlug) : null);
+          
+          setMessages(prev => [...prev, { 
+            role: 'assistant', 
+            content: llmResponse,
+            tool: finalToolMatch
+          }]);
+          setMood('happy');
+          setIsProcessing(false);
+          
+          // Reset mood after delay
+          setTimeout(() => setMood('idle'), 3000);
+          return;
+        } catch (error) {
+          console.error('LLM error, falling back to rule-based:', error);
+          // Fall through to rule-based
+        }
+      }
       
-      if (exactMatch || (toolMatches.length === 1 && toolMatches[0])) {
-        const tool = exactMatch || toolMatches[0];
-        setMessages(prev => [...prev, { 
-          role: 'assistant', 
-          content: `Found ${tool.icon} **${tool.name}**! Taking you there...`,
-          tool
-        }]);
-        setMood('happy');
-        setIsProcessing(false);
-        
-        // Redirect after short delay
+      // Rule-based response (default or fallback)
+      const ruleResponse = getRuleBasedResponse(text);
+      const toolMatch = ruleResponse.toolSlug ? getToolBySlug(ruleResponse.toolSlug) : null;
+      
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: ruleResponse.text,
+        tool: toolMatch,
+        tools: toolMatch ? [toolMatch] : undefined
+      }]);
+      setMood(ruleResponse.mood || 'happy');
+      setIsProcessing(false);
+      
+      // Auto-redirect if single tool match
+      if (toolMatch && ruleResponse.autoRedirect) {
         setTimeout(() => {
-          redirectToTool(tool.slug);
-        }, 800);
-        return;
+          redirectToTool(toolMatch.slug);
+        }, 1500);
       }
-      
-      // Multiple matches - show options with all tools
-      if (toolMatches.length > 1 && toolMatches.length <= 5) {
-        const toolList = toolMatches.slice(0, 3);
-        const toolNames = toolList.map(t => `${t.icon} ${t.name}`).join(', ');
-        setMessages(prev => [...prev, { 
-          role: 'assistant', 
-          content: `I found ${toolMatches.length} matching tools: ${toolNames}. Click below to open one!`,
-          tool: toolList[0], // Show first as primary
-          tools: toolList // All tools for chips
-        }]);
-        setMood('happy');
-        setIsProcessing(false);
-        return;
-      }
-    }
 
-    // Simulate processing delay for better UX
-    await new Promise(r => setTimeout(r, 300 + Math.random() * 400));
+      // Reset mood after delay
+      setTimeout(() => setMood('idle'), 3000);
 
-    // Get response from brain
-    const response = getResponse(text);
-    
-    // Check if response includes a tool match
-    let toolMatch = null;
-    if (response.toolSlug) {
-      toolMatch = getToolBySlug(response.toolSlug);
-    } else {
-      // Try to find tool from response text
-      const toolMatches = searchTools(text);
-      if (toolMatches.length === 1) {
-        toolMatch = toolMatches[0];
-      }
-    }
-    
+      setIsProcessing(false);
+
+      // Reset mood after delay
+      setTimeout(() => setMood('idle'), 3000);
+    } catch (error) {
+      console.error('Error processing message:', error);
     setMessages(prev => [...prev, { 
       role: 'assistant', 
-      content: response.text,
-      tool: toolMatch
+        content: "Sorry, I encountered an error. Please try again."
     }]);
-    setMood(response.mood || 'happy');
+      setMood('confused');
     setIsProcessing(false);
-
-    // Auto-redirect if single tool match
-    if (toolMatch && response.autoRedirect) {
-      setTimeout(() => {
-        redirectToTool(toolMatch.slug);
-      }, 1500);
+      setTimeout(() => setMood('idle'), 3000);
     }
-
-    // Reset mood after delay
-    setTimeout(() => setMood('idle'), 3000);
   }, [redirectToTool]);
 
   return { messages, mood, sendMessage, isProcessing, redirectToTool };

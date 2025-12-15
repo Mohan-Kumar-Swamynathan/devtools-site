@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, Search, ArrowRight } from 'lucide-react';
+import { X, Send, Search, ArrowRight, Mic, MicOff, Sparkles, Loader } from 'lucide-react';
 import AssistantAvatar from './AssistantAvatar';
 import MessageBubble from './MessageBubble';
 import SuggestionChips from './SuggestionChips';
 import { useAssistant } from '@/hooks/useAssistant';
+import { useSpeechRecognition } from '@/hooks/useSpeechRecognition';
+import { useSpeechSynthesis } from '@/hooks/useSpeechSynthesis';
 import { searchTools } from '@/lib/tools';
+import { initModel, isModelReady, isModelLoading, getLoadError } from '@/lib/assistant/browserLLM';
 
 interface Props {
   onClose: () => void;
@@ -13,14 +16,73 @@ interface Props {
 export default function AssistantPanel({ onClose }: Props) {
   const [input, setInput] = useState('');
   const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [smartMode, setSmartMode] = useState(false);
+  const [modelProgress, setModelProgress] = useState(0);
+  const [isLoadingModel, setIsLoadingModel] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const lastSpokenIndexRef = useRef<number>(-1);
   
   const { messages, mood, sendMessage, isProcessing, redirectToTool } = useAssistant();
+  const { isListening, transcript, startListening, stopListening, isSupported: speechRecognitionSupported } = useSpeechRecognition();
+  const { speak, stop, isSpeaking, isSupported: speechSynthesisSupported } = useSpeechSynthesis();
 
   // Auto-scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Handle voice transcript
+  useEffect(() => {
+    if (transcript && !isProcessing && !isListening) {
+      setInput(transcript);
+      // Use a small delay to ensure state is updated
+      setTimeout(() => {
+        handleSend(transcript);
+      }, 100);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [transcript, isProcessing, isListening]);
+
+  // Initialize model when smart mode is enabled
+  useEffect(() => {
+    if (smartMode && !isModelReady() && !isModelLoading() && !isLoadingModel) {
+      setIsLoadingModel(true);
+      initModel((progress) => {
+        setModelProgress(progress);
+      })
+        .then(() => {
+          setIsLoadingModel(false);
+          setModelProgress(100);
+        })
+        .catch((error) => {
+          console.error('Failed to load model:', error);
+          setIsLoadingModel(false);
+          setModelProgress(0);
+          setSmartMode(false);
+          alert('Failed to load smart mode. Please try again later.');
+        });
+    }
+  }, [smartMode]);
+
+  // Speak assistant messages (only once per message)
+  useEffect(() => {
+    if (messages.length > 0 && speechSynthesisSupported && !isSpeaking) {
+      const lastMessage = messages[messages.length - 1];
+      const messageIndex = messages.length - 1;
+      
+      // Only speak if this is a new assistant message that hasn't been spoken yet
+      if (lastMessage.role === 'assistant' && messageIndex > lastSpokenIndexRef.current) {
+        // Extract text from markdown (simple extraction)
+        const text = lastMessage.content.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\n/g, ' ').trim();
+        // Only speak if message is not too long and not empty
+        if (text.length > 0 && text.length < 200) {
+          lastSpokenIndexRef.current = messageIndex;
+          // Note: We don't set mood here as it's managed by useAssistant hook
+          speak(text);
+        }
+      }
+    }
+  }, [messages, speechSynthesisSupported, isSpeaking, speak]);
 
   // Real-time tool search as user types
   useEffect(() => {
@@ -37,12 +99,21 @@ export default function AssistantPanel({ onClose }: Props) {
     if (!msg) return;
     setInput('');
     setSuggestions([]);
-    await sendMessage(msg);
-  }, [input, sendMessage]);
+    stop(); // Stop any ongoing speech
+    await sendMessage(msg, smartMode && isModelReady());
+  }, [input, sendMessage, smartMode, stop]);
 
   const handleToolClick = useCallback((tool: any) => {
     redirectToTool(tool.slug);
   }, [redirectToTool]);
+
+  const toggleVoiceInput = useCallback(() => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  }, [isListening, startListening, stopListening]);
 
   return (
     <div className="assistant-panel animate-slide-up" style={{ maxHeight: '80vh' }}>
@@ -51,14 +122,74 @@ export default function AssistantPanel({ onClose }: Props) {
         <div className="flex items-center gap-3">
           <AssistantAvatar mood={mood} size={40} />
           <div>
-            <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>DevBot</h3>
+            <div className="flex items-center gap-2">
+              <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>DevBot</h3>
+              {smartMode && isModelReady() && (
+                <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: 'var(--brand-primary)', color: 'white' }}>
+                  <Sparkles size={12} />
+                  Smart
+                </span>
+              )}
+            </div>
             <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              {isProcessing ? 'Searching...' : 'Find tools & navigate'}
+              {isProcessing ? 'Searching...' : isLoadingModel ? 'Loading smart mode...' : 'Find tools & navigate'}
             </p>
           </div>
         </div>
-        <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
+        <div className="flex items-center gap-2">
+          {/* Smart Mode Toggle */}
+          <button
+            onClick={() => setSmartMode(!smartMode)}
+            disabled={isLoadingModel}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg border transition-all ${
+              smartMode && isModelReady() ? 'opacity-100' : 'opacity-60'
+            }`}
+            style={{
+              borderColor: smartMode && isModelReady() ? 'var(--brand-primary)' : 'var(--border-primary)',
+              backgroundColor: smartMode && isModelReady() ? 'var(--bg-primary)' : 'var(--bg-secondary)',
+              color: smartMode && isModelReady() ? 'var(--brand-primary)' : 'var(--text-muted)'
+            }}
+            title={smartMode && isModelReady() ? 'Smart mode enabled' : 'Enable smart mode (loads AI model)'}
+          >
+            {isLoadingModel ? (
+              <>
+                <Loader size={12} className="animate-spin" />
+                <span>{modelProgress}%</span>
+              </>
+            ) : (
+              <>
+                <Sparkles size={12} />
+                <span>Smart</span>
+              </>
+            )}
+          </button>
+          <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
+        </div>
       </div>
+
+      {/* Model Loading Progress */}
+      {isLoadingModel && (
+        <div className="px-4 py-2 border-b" style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-secondary)' }}>
+          <div className="flex items-center gap-2 mb-1">
+            <Loader size={14} className="animate-spin" style={{ color: 'var(--brand-primary)' }} />
+            <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>
+              Loading AI model... ({modelProgress}%)
+            </span>
+          </div>
+          <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+            <div
+              className="h-full transition-all duration-300 rounded-full"
+              style={{
+                width: `${modelProgress}%`,
+                backgroundColor: 'var(--brand-primary)'
+              }}
+            />
+          </div>
+          <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+            First time? This may take a minute. Model will be cached for future visits.
+          </p>
+        </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ maxHeight: '350px', minHeight: '200px' }}>
@@ -161,7 +292,7 @@ export default function AssistantPanel({ onClose }: Props) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && !isProcessing) {
+                if (e.key === 'Enter' && !isProcessing && !isListening) {
                   if (suggestions.length === 1) {
                     handleToolClick(suggestions[0]);
                   } else {
@@ -169,23 +300,57 @@ export default function AssistantPanel({ onClose }: Props) {
                   }
                 }
               }}
-              placeholder="Search tools or ask a question..."
+              placeholder={isListening ? "Listening..." : "Search tools or ask a question..."}
               className="flex-1 input-base py-2.5 pl-10"
+              disabled={isListening}
             />
           </div>
           
+          {/* Voice Input Button */}
+          {speechRecognitionSupported && (
+            <button
+              onClick={toggleVoiceInput}
+              disabled={isProcessing}
+              className={`p-3 rounded-full transition-all ${
+                isListening 
+                  ? 'animate-pulse' 
+                  : ''
+              }`}
+              style={{
+                backgroundColor: isListening ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                color: isListening ? 'white' : 'var(--text-primary)',
+                border: `1px solid ${isListening ? 'var(--brand-primary)' : 'var(--border-primary)'}`
+              }}
+              title={isListening ? 'Stop listening' : 'Start voice input'}
+            >
+              {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+            </button>
+          )}
+          
           <button
             onClick={() => handleSend()}
-            disabled={!input.trim() || isProcessing}
+            disabled={!input.trim() || isProcessing || isListening}
             className="btn-primary p-3 rounded-full"
           >
             <Send size={18} />
           </button>
         </div>
-        {input.trim().length > 0 && suggestions.length === 0 && (
+        {input.trim().length > 0 && suggestions.length === 0 && !isListening && (
           <p className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
             Press Enter to search, or type more to see suggestions
           </p>
+        )}
+        {isListening && (
+          <div className="flex items-center gap-2 mt-2">
+            <div className="flex gap-1">
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '0ms' }} />
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '150ms' }} />
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--brand-primary)', animationDelay: '300ms' }} />
+            </div>
+            <p className="text-xs" style={{ color: 'var(--brand-primary)' }}>
+              Listening... Speak now
+            </p>
+          </div>
         )}
       </div>
     </div>

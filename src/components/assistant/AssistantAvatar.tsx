@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-type Mood = 'idle' | 'thinking' | 'happy' | 'confused';
+type Mood = 'idle' | 'thinking' | 'happy' | 'confused' | 'listening' | 'speaking';
 
 interface Props {
   mood: Mood;
@@ -14,7 +14,9 @@ export default function AssistantAvatar({ mood, size = 60 }: Props) {
         'relative transition-transform duration-300',
         mood === 'idle' && 'animate-float',
         mood === 'thinking' && 'animate-pulse-soft',
-        mood === 'happy' && 'animate-bounce-soft'
+        mood === 'happy' && 'animate-bounce-soft',
+        mood === 'listening' && 'animate-pulse',
+        mood === 'speaking' && 'animate-bounce-soft'
       )}
       style={{ width: size, height: size }}
     >
@@ -53,6 +55,8 @@ export default function AssistantAvatar({ mood, size = 60 }: Props) {
         {mood === 'happy' && <path d="M 38 60 Q 50 75 62 60" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" />}
         {mood === 'confused' && <path d="M 42 64 L 58 64" stroke="white" strokeWidth="3" strokeLinecap="round" />}
         {mood === 'thinking' && <path d="M 44 64 Q 50 60 56 64" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" />}
+        {mood === 'listening' && <ellipse cx="50" cy="64" rx="8" ry="4" fill="white" className="animate-pulse" />}
+        {mood === 'speaking' && <path d="M 38 60 Q 50 75 62 60" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" className="animate-pulse" />}
 
         {/* Antenna */}
         <line x1="50" y1="10" x2="50" y2="2" stroke="#3b82f6" strokeWidth="3" strokeLinecap="round" />
