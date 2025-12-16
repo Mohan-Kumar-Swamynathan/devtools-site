@@ -138,6 +138,12 @@ export const categories: Record<string, Category> = {
     name: 'Calculators',
     icon: '🧮',
     description: 'Financial, health, and utility calculators'
+  },
+  ai: {
+    id: 'ai',
+    name: 'AI Tools',
+    icon: '🤖',
+    description: 'Free browser-based AI tools powered by open source models'
   }
 };
 
@@ -2577,6 +2583,145 @@ export const tools: Tool[] = [
     icon: '📱',
     isNew: true,
     isPopular: true
+  },
+  // AI Tools
+  {
+    id: 'text-summarizer',
+    name: 'AI Text Summarizer',
+    slug: 'text-summarizer',
+    tagline: 'Summarize text with AI',
+    description: 'Free AI-powered text summarizer. Extract key points and create concise summaries from long articles, documents, or text. Powered by Transformers.js.',
+    keywords: ['text summarizer', 'ai summarizer', 'summarize text', 'text summary', 'ai summary', 'article summarizer'],
+    category: categories.ai,
+    icon: '📝',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'sentiment-analyzer',
+    name: 'Sentiment Analyzer',
+    slug: 'sentiment-analyzer',
+    tagline: 'Analyze text sentiment with AI',
+    description: 'Free AI sentiment analysis tool. Detect positive, negative, or neutral sentiment in text. Perfect for analyzing reviews, comments, or social media posts.',
+    keywords: ['sentiment analysis', 'sentiment analyzer', 'text sentiment', 'emotion detection', 'ai sentiment', 'sentiment detector'],
+    category: categories.ai,
+    icon: '😊',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'language-detector',
+    name: 'Language Detector',
+    slug: 'language-detector',
+    tagline: 'Detect text language with AI',
+    description: 'Free AI language detection tool. Automatically identify the language of any text. Supports 100+ languages with high accuracy.',
+    keywords: ['language detector', 'language identification', 'detect language', 'language recognition', 'ai language detector'],
+    category: categories.ai,
+    icon: '🌍',
+    isNew: true
+  },
+  {
+    id: 'text-paraphrase',
+    name: 'Text Paraphrase Tool',
+    slug: 'text-paraphrase',
+    tagline: 'Paraphrase text with AI',
+    description: 'Free AI text paraphrasing tool. Rewrite sentences and paragraphs while maintaining meaning. Perfect for content creation and avoiding plagiarism.',
+    keywords: ['paraphrase', 'text rewriter', 'ai rewriter', 'paraphrase tool', 'rewrite text', 'text spinner'],
+    category: categories.ai,
+    icon: '🔄',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'named-entity-recognition',
+    name: 'Named Entity Recognition',
+    slug: 'named-entity-recognition',
+    tagline: 'Extract entities from text',
+    description: 'Free AI-powered named entity recognition. Extract people, organizations, locations, dates, and more from text automatically.',
+    keywords: ['named entity recognition', 'ner', 'entity extraction', 'text entities', 'ai ner', 'entity recognition'],
+    category: categories.ai,
+    icon: '🏷️',
+    isNew: true
+  },
+  {
+    id: 'text-similarity',
+    name: 'Text Similarity Checker',
+    slug: 'text-similarity',
+    tagline: 'Compare text similarity with AI',
+    description: 'Free AI text similarity checker. Compare two texts and calculate similarity score. Detect plagiarism, find duplicate content, or measure text similarity.',
+    keywords: ['text similarity', 'similarity checker', 'text compare', 'plagiarism checker', 'duplicate text', 'ai similarity'],
+    category: categories.ai,
+    icon: '🔍',
+    isNew: true
+  },
+  {
+    id: 'code-explainer',
+    name: 'AI Code Explainer',
+    slug: 'code-explainer',
+    tagline: 'Explain code with AI',
+    description: 'Free AI code explanation tool. Get detailed explanations of code snippets in plain English. Understand complex code quickly.',
+    keywords: ['code explainer', 'explain code', 'ai code explanation', 'code documentation', 'code comments', 'ai code helper'],
+    category: categories.ai,
+    icon: '💻',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'keyword-extractor',
+    name: 'AI Keyword Extractor',
+    slug: 'keyword-extractor',
+    tagline: 'Extract keywords from text',
+    description: 'Free AI keyword extraction tool. Automatically extract important keywords and phrases from text. Perfect for SEO, content analysis, and research.',
+    keywords: ['keyword extractor', 'extract keywords', 'ai keywords', 'keyword extraction', 'text keywords', 'seo keywords'],
+    category: categories.ai,
+    icon: '🔑',
+    isNew: true
+  },
+  {
+    id: 'text-classifier',
+    name: 'Text Classifier',
+    slug: 'text-classifier',
+    tagline: 'Classify text with AI',
+    description: 'Free AI text classification tool. Automatically categorize text into predefined categories. Perfect for content moderation, spam detection, and organization.',
+    keywords: ['text classifier', 'text classification', 'categorize text', 'ai classifier', 'text categorization', 'content classification'],
+    category: categories.ai,
+    icon: '📂',
+    isNew: true
+  },
+  {
+    id: 'code-reviewer',
+    name: 'AI Code Reviewer',
+    slug: 'code-reviewer',
+    tagline: 'Review code with AI',
+    description: 'Free AI code review tool. Get suggestions for code improvements, bug detection, and best practices. Powered by open source AI models.',
+    keywords: ['code review', 'ai code review', 'code reviewer', 'code analysis', 'code suggestions', 'ai code helper'],
+    category: categories.ai,
+    icon: '👁️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'text-translator',
+    name: 'AI Text Translator',
+    slug: 'text-translator',
+    tagline: 'Translate text with AI',
+    description: 'Free AI-powered text translation tool. Translate text between multiple languages using browser-based AI models. No API keys required.',
+    keywords: ['text translator', 'ai translator', 'translate text', 'language translator', 'ai translation', 'multilingual'],
+    category: categories.ai,
+    icon: '🌐',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'text-generator',
+    name: 'AI Text Generator',
+    slug: 'text-generator',
+    tagline: 'Generate text with AI',
+    description: 'Free AI text generator. Create content, write articles, generate ideas, and more using open source language models running in your browser.',
+    keywords: ['text generator', 'ai generator', 'content generator', 'ai writing', 'text creation', 'ai content'],
+    category: categories.ai,
+    icon: '✍️',
+    isNew: true
   }
 ];
 

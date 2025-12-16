@@ -5,6 +5,9 @@ import { tools } from '@/lib/tools';
 env.useBrowserCache = true;
 env.allowLocalModels = false;
 
+// Set custom model path if needed (optional - uses Hugging Face by default)
+// env.remoteURL = 'https://huggingface.co';
+
 let generator: any = null;
 let isLoading = false;
 let loadError: Error | null = null;
@@ -21,6 +24,7 @@ export async function initModel(
   loadError = null;
   
   try {
+    console.log('Initializing Transformers.js model: Xenova/LaMini-Flan-T5-77M');
     generator = await pipeline(
       'text2text-generation',
       'Xenova/LaMini-Flan-T5-77M',
@@ -34,9 +38,21 @@ export async function initModel(
         }
       }
     );
+    console.log('Model loaded successfully');
   } catch (error) {
     loadError = error as Error;
     generator = null;
+    console.error('Model loading failed:', error);
+    
+    // Provide more detailed error information
+    if (error instanceof Error) {
+      if (error.message.includes('CSP') || error.message.includes('Content Security Policy')) {
+        throw new Error('Content Security Policy is blocking model download. Please allow connections to huggingface.co');
+      } else if (error.message.includes('Failed to fetch') || error.message.includes('network')) {
+        throw new Error('Network error: Unable to download model. Please check your internet connection.');
+      }
+    }
+    
     throw error;
   } finally {
     isLoading = false;

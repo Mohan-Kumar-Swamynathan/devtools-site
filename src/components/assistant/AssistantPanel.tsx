@@ -59,7 +59,18 @@ export default function AssistantPanel({ onClose }: Props) {
           setIsLoadingModel(false);
           setModelProgress(0);
           setSmartMode(false);
-          alert('Failed to load smart mode. Please try again later.');
+          
+          // Show more helpful error message
+          const errorMessage = error?.message || 'Unknown error';
+          const isCSPError = errorMessage.includes('CSP') || errorMessage.includes('Content Security Policy') || errorMessage.includes('Refused to connect');
+          
+          if (isCSPError) {
+            alert('Smart mode requires network access to Hugging Face. Please check your Content Security Policy settings or try again later.');
+          } else if (errorMessage.includes('Failed to fetch') || errorMessage.includes('network')) {
+            alert('Failed to download AI model. Please check your internet connection and try again.');
+          } else {
+            alert(`Failed to load smart mode: ${errorMessage}. Please try again later.`);
+          }
         });
     }
   }, [smartMode]);
@@ -123,7 +134,7 @@ export default function AssistantPanel({ onClose }: Props) {
           <AssistantAvatar mood={mood} size={40} />
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>DevBot</h3>
+            <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>DevBot</h3>
               {smartMode && isModelReady() && (
                 <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: 'var(--brand-primary)', color: 'white' }}>
                   <Sparkles size={12} />
@@ -163,7 +174,7 @@ export default function AssistantPanel({ onClose }: Props) {
               </>
             )}
           </button>
-          <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
+        <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
         </div>
       </div>
 

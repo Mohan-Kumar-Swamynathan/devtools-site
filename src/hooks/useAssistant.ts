@@ -52,45 +52,45 @@ export function useAssistant(): UseAssistantReturn {
           const ruleResponse = getRuleBasedResponse(text);
           const finalToolMatch = toolMatch || (ruleResponse.toolSlug ? getToolBySlug(ruleResponse.toolSlug) : null);
           
-          setMessages(prev => [...prev, { 
-            role: 'assistant', 
+        setMessages(prev => [...prev, { 
+          role: 'assistant', 
             content: llmResponse,
             tool: finalToolMatch
-          }]);
-          setMood('happy');
-          setIsProcessing(false);
-          
+        }]);
+        setMood('happy');
+        setIsProcessing(false);
+        
           // Reset mood after delay
           setTimeout(() => setMood('idle'), 3000);
-          return;
+        return;
         } catch (error) {
           console.error('LLM error, falling back to rule-based:', error);
           // Fall through to rule-based
-        }
       }
-      
+    }
+
       // Rule-based response (default or fallback)
       const ruleResponse = getRuleBasedResponse(text);
       const toolMatch = ruleResponse.toolSlug ? getToolBySlug(ruleResponse.toolSlug) : null;
-      
-      setMessages(prev => [...prev, { 
-        role: 'assistant', 
+    
+    setMessages(prev => [...prev, { 
+      role: 'assistant', 
         content: ruleResponse.text,
         tool: toolMatch,
         tools: toolMatch ? [toolMatch] : undefined
-      }]);
+    }]);
       setMood(ruleResponse.mood || 'happy');
-      setIsProcessing(false);
-      
-      // Auto-redirect if single tool match
-      if (toolMatch && ruleResponse.autoRedirect) {
-        setTimeout(() => {
-          redirectToTool(toolMatch.slug);
-        }, 1500);
-      }
+    setIsProcessing(false);
 
-      // Reset mood after delay
-      setTimeout(() => setMood('idle'), 3000);
+    // Auto-redirect if single tool match
+      if (toolMatch && ruleResponse.autoRedirect) {
+      setTimeout(() => {
+        redirectToTool(toolMatch.slug);
+      }, 1500);
+    }
+
+    // Reset mood after delay
+    setTimeout(() => setMood('idle'), 3000);
 
       setIsProcessing(false);
 

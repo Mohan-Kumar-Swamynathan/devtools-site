@@ -1,0 +1,39 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('sentiment-analyzer')!;
+const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <div class="text-center py-12">
+    <p class="text-lg mb-4" style="color: var(--text-primary);">Sentiment Analyzer - Coming Soon</p>
+    <p class="text-sm" style="color: var(--text-muted);">This tool will be available soon. Check back later!</p>
+  </div>
+
+  <Fragment slot="seo-content">
+    <h2>What is Sentiment Analyzer?</h2>
+    <p>
+      Sentiment Analyzer is a free AI tool that detects positive, negative, or neutral sentiment in text. 
+      Perfect for analyzing reviews, comments, or social media posts.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Detect sentiment (positive, negative, neutral)</li>
+      <li>Analyze reviews and comments</li>
+      <li>100% browser-based - no API keys required</li>
+      <li>Works offline after first load</li>
+      <li>Privacy-focused - your data never leaves your device</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+

@@ -1,4 +1,4 @@
-import { tools, categories, searchTools, Tool } from '@/lib/tools';
+import { tools, categories, searchTools, type Tool } from '@/lib/tools';
 import { matchIntent } from './intents';
 import { getResponseTemplate } from './responses';
 
@@ -251,4 +251,3 @@ export function getRuleBasedResponse(input: string): Response {
       };
   }
 }
-

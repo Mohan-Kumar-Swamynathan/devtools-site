@@ -10,7 +10,7 @@ export function getResponse(input: string): Response {
   // Remove confidence field for backward compatibility
   const { confidence, ...rest } = response;
   return rest;
-}
+      }
 
 // Export Response type for backward compatibility
 export type { Response };
