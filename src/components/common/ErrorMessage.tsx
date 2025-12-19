@@ -60,7 +60,8 @@ export default function ErrorMessage({
         borderColor: styles.border
       }}
       role="alert"
-      aria-live="polite"
+      aria-live={type === 'error' ? 'assertive' : 'polite'}
+      aria-atomic="true"
     >
       <div style={{ color: styles.text }} className="flex-shrink-0 mt-0.5">
         {styles.icon}

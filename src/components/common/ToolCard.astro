@@ -20,8 +20,14 @@ const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
 >
   <!-- Hover gradient effect -->
   <div 
-    class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+    class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
     style="background: linear-gradient(135deg, var(--brand-primary-light) 0%, transparent 100%);"
+  />
+  
+  <!-- Shine effect on hover -->
+  <div 
+    class="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none"
+    style="background: linear-gradient(110deg, transparent 40%, rgba(255,255,255,0.5) 50%, transparent 60%); background-size: 200% 100%; animation: shimmer 3s infinite;"
   />
   
   <div class="relative z-10 h-full flex flex-col p-5 sm:p-6">

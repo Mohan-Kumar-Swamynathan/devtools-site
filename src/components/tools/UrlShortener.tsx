@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
-import { Copy, ExternalLink, Trash2, Link2 } from 'lucide-react';
+import { Copy, ExternalLink, Trash2 } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 
 interface ShortUrl {

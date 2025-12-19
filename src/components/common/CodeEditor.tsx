@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Copy, Check, Download, Upload, Trash2, Maximize2, Minimize2 } from 'lucide-react';
+import { Highlight } from 'prism-react-renderer';
 import clsx from 'clsx';
 
 interface Props {
@@ -15,6 +16,9 @@ interface Props {
   maxHeight?: string;
   className?: string;
 }
+
+// Languages that support syntax highlighting
+const SUPPORTED_LANGUAGES = ['json', 'javascript', 'typescript', 'jsx', 'tsx', 'html', 'css', 'sql', 'xml', 'yaml', 'markdown', 'python', 'java', 'c', 'cpp', 'csharp', 'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'scala', 'bash', 'shell', 'powershell', 'graphql'];
 
 export default function CodeEditor({
   value,
@@ -32,8 +36,44 @@ export default function CodeEditor({
   const [copied, setCopied] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const lineCount = value.split('\n').length;
+  const shouldHighlight = language !== 'text' && SUPPORTED_LANGUAGES.includes(language.toLowerCase());
+
+  // Map language names to prism language identifiers
+  const getPrismLanguage = (lang: string): string => {
+    const langMap: Record<string, string> = {
+      'javascript': 'javascript',
+      'typescript': 'typescript',
+      'jsx': 'jsx',
+      'tsx': 'tsx',
+      'json': 'json',
+      'html': 'markup',
+      'css': 'css',
+      'sql': 'sql',
+      'xml': 'markup',
+      'yaml': 'yaml',
+      'markdown': 'markdown',
+      'python': 'python',
+      'java': 'java',
+      'c': 'c',
+      'cpp': 'cpp',
+      'csharp': 'csharp',
+      'php': 'php',
+      'ruby': 'ruby',
+      'go': 'go',
+      'rust': 'rust',
+      'swift': 'swift',
+      'kotlin': 'kotlin',
+      'scala': 'scala',
+      'bash': 'bash',
+      'shell': 'bash',
+      'powershell': 'powershell',
+      'graphql': 'graphql'
+    };
+    return langMap[lang.toLowerCase()] || lang.toLowerCase();
+  };
 
   const handleCopy = async () => {
     try {
@@ -87,6 +127,66 @@ export default function CodeEditor({
       textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, parseInt(maxHeight))}px`;
     }
   }, [value, maxHeight, isExpanded]);
+
+  // Sync textarea scroll with highlight container
+  useEffect(() => {
+    if (!shouldHighlight || !textareaRef.current || !containerRef.current) return;
+    
+    const textarea = textareaRef.current;
+    const container = containerRef.current;
+    
+    const handleTextareaScroll = () => {
+      container.scrollTop = textarea.scrollTop;
+      container.scrollLeft = textarea.scrollLeft;
+    };
+    
+    textarea.addEventListener('scroll', handleTextareaScroll);
+    
+    return () => {
+      textarea.removeEventListener('scroll', handleTextareaScroll);
+    };
+  }, [shouldHighlight]);
+
+  const theme = {
+    plain: {
+      color: 'var(--text-primary)',
+      backgroundColor: 'transparent',
+    },
+    styles: [
+      {
+        types: ['comment', 'prolog', 'doctype', 'cdata'],
+        style: { color: 'var(--syntax-comment)', fontStyle: 'italic' }
+      },
+      {
+        types: ['punctuation'],
+        style: { color: 'var(--syntax-punctuation)' }
+      },
+      {
+        types: ['property', 'tag', 'boolean', 'number', 'constant', 'symbol'],
+        style: { color: 'var(--syntax-number)' }
+      },
+      {
+        types: ['selector', 'attr-name', 'string', 'char', 'builtin'],
+        style: { color: 'var(--syntax-string)' }
+      },
+      {
+        types: ['operator', 'entity', 'url'],
+        style: { color: 'var(--syntax-operator)' }
+      },
+      {
+        types: ['atrule', 'attr-value', 'keyword'],
+        style: { color: 'var(--syntax-keyword)' }
+      },
+      {
+        types: ['function', 'class-name'],
+        style: { color: 'var(--syntax-function)' }
+      },
+      {
+        types: ['regex', 'important', 'variable'],
+        style: { color: 'var(--syntax-variable)' }
+      }
+    ]
+  };
 
   return (
     <div className={clsx('flex flex-col', className)}>
@@ -145,10 +245,22 @@ export default function CodeEditor({
       )}
 
       {/* Editor */}
-      <div className="relative animate-fade-in">
+      <div 
+        ref={containerRef}
+        className={clsx(
+          'relative rounded-xl border overflow-auto animate-fade-in',
+          showLineNumbers && 'pl-14'
+        )}
+        style={{ 
+          backgroundColor: 'var(--bg-primary)',
+          borderColor: 'var(--border-primary)',
+          maxHeight: isExpanded ? 'none' : maxHeight,
+          minHeight: '200px'
+        }}
+      >
         {showLineNumbers && (
           <div 
-            className="absolute left-0 top-0 bottom-0 w-12 flex flex-col items-end pr-3 pt-4 text-xs font-mono select-none overflow-hidden animate-slide-in-left"
+            className="absolute left-0 top-0 bottom-0 w-12 flex flex-col items-end pr-3 pt-4 text-xs font-mono select-none overflow-hidden animate-slide-in-left z-10"
             style={{ 
               color: 'var(--text-muted)', 
               backgroundColor: 'var(--bg-tertiary)',
@@ -162,24 +274,85 @@ export default function CodeEditor({
           </div>
         )}
         
-        <textarea
-          ref={textareaRef}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          readOnly={readOnly}
-          rows={rows}
-          spellCheck={false}
-          className={clsx(
-            'code-editor w-full transition-all duration-200',
-            showLineNumbers && 'pl-14',
-            isExpanded && 'h-[80vh]'
-          )}
-          style={{ 
-            maxHeight: isExpanded ? 'none' : maxHeight,
-            minHeight: '200px'
-          }}
-        />
+        {shouldHighlight ? (
+          <div className="relative w-full" style={{ minHeight: '200px' }}>
+            <Highlight
+              code={value}
+              language={getPrismLanguage(language)}
+              theme={theme}
+            >
+              {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                <pre 
+                  className={className} 
+                  style={{ 
+                    ...style, 
+                    margin: 0, 
+                    padding: '1rem', 
+                    fontFamily: 'JetBrains Mono, monospace', 
+                    fontSize: '0.875rem', 
+                    lineHeight: '1.75',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    overflow: 'hidden',
+                    pointerEvents: 'none',
+                    zIndex: 0
+                  }}
+                >
+                  <code style={{ display: 'block' }}>
+                    {tokens.map((line, i) => (
+                      <div key={i} {...getLineProps({ line })}>
+                        {line.map((token, key) => (
+                          <span key={key} {...getTokenProps({ token })} />
+                        ))}
+                      </div>
+                    ))}
+                  </code>
+                </pre>
+              )}
+            </Highlight>
+            <textarea
+              ref={textareaRef}
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              placeholder={placeholder}
+              readOnly={readOnly}
+              rows={rows}
+              spellCheck={false}
+              className="relative w-full p-4 font-mono text-sm leading-relaxed resize-none bg-transparent caret-current outline-none"
+              style={{
+                color: 'transparent',
+                caretColor: 'var(--text-primary)',
+                zIndex: 1,
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: '0.875rem',
+                lineHeight: '1.75',
+                minHeight: '200px',
+                height: '100%',
+              }}
+            />
+          </div>
+        ) : (
+          <textarea
+            ref={textareaRef}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={placeholder}
+            readOnly={readOnly}
+            rows={rows}
+            spellCheck={false}
+            className={clsx(
+              'code-editor w-full p-4 transition-all duration-200',
+              isExpanded && 'h-[80vh]'
+            )}
+            style={{ 
+              maxHeight: isExpanded ? 'none' : maxHeight,
+              minHeight: '200px'
+            }}
+          />
+        )}
       </div>
 
       {/* Footer Info */}
@@ -190,5 +363,3 @@ export default function CodeEditor({
     </div>
   );
 }
-
-

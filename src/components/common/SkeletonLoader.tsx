@@ -1,40 +1,42 @@
-import clsx from 'clsx';
-
 interface Props {
-  className?: string;
   lines?: number;
-  width?: string;
-  height?: string;
+  className?: string;
+  showAvatar?: boolean;
 }
 
 export default function SkeletonLoader({ 
-  className = '', 
-  lines = 1, 
-  width = '100%',
-  height = '1rem'
+  lines = 3, 
+  className = '',
+  showAvatar = false 
 }: Props) {
-  if (lines > 1) {
-    return (
-      <div className={clsx('space-y-2', className)}>
-        {Array.from({ length: lines }).map((_, i) => (
-          <div
-            key={i}
-            className="skeleton rounded"
-            style={{
-              width: i === lines - 1 ? '80%' : width,
-              height
-            }}
-          />
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <div
-      className={clsx('skeleton rounded', className)}
-      style={{ width, height }}
-    />
+    <div className={`animate-pulse space-y-3 ${className}`} role="status" aria-label="Loading">
+      {showAvatar && (
+        <div className="flex items-center space-x-4">
+          <div 
+            className="rounded-full h-12 w-12"
+            style={{ backgroundColor: 'var(--bg-tertiary)' }}
+          />
+          <div className="flex-1 space-y-2">
+            <div 
+              className="h-4 rounded w-3/4"
+              style={{ backgroundColor: 'var(--bg-tertiary)' }}
+            />
+            <div 
+              className="h-4 rounded w-1/2"
+              style={{ backgroundColor: 'var(--bg-tertiary)' }}
+            />
+          </div>
+        </div>
+      )}
+      {Array.from({ length: lines }).map((_, i) => (
+        <div 
+          key={i}
+          className={`h-4 rounded ${i === lines - 1 ? 'w-5/6' : 'w-full'}`}
+          style={{ backgroundColor: 'var(--bg-tertiary)' }}
+        />
+      ))}
+      <span className="sr-only">Loading content...</span>
+    </div>
   );
 }
-

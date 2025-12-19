@@ -4,6 +4,7 @@ import Breadcrumb from '@/components/common/Breadcrumb.astro';
 import AdSlot from '@/components/common/AdSlot.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
+import FaqSchema from '@/components/seo/FaqSchema.astro';
 import type { Tool } from '@/lib/tools';
 
 interface Props {
@@ -34,6 +35,25 @@ const siteUrl = 'https://devtool.site';
       { name: tool.category.name, url: `/#${tool.category.id}` },
       { name: tool.name, url: `/${tool.slug}` }
     ]} />
+    <!-- FAQ Schema -->
+    <FaqSchema faqs={[
+      {
+        question: `Is ${tool.name} free to use?`,
+        answer: `Yes, ${tool.name} is completely free. No registration required. All processing happens in your browser, so your data never leaves your device.`
+      },
+      {
+        question: `Is my data secure when using ${tool.name}?`,
+        answer: `Yes, all processing happens locally in your browser. Your data never leaves your device, ensuring complete privacy and security.`
+      },
+      {
+        question: `Do I need to install anything to use ${tool.name}?`,
+        answer: `No, ${tool.name} works entirely in your web browser. No downloads or installations required.`
+      },
+      {
+        question: `Can I use ${tool.name} offline?`,
+        answer: `Yes, once the page is loaded, ${tool.name} works offline. All processing happens in your browser without requiring an internet connection.`
+      }
+    ]} />
   </Fragment>
   
   <!-- Breadcrumb -->
@@ -44,20 +64,22 @@ const siteUrl = 'https://devtool.site';
   ]} />
   
   <!-- Tool Header -->
-  <header class="mb-6 sm:mb-8">
+  <header class="mb-6 sm:mb-8" role="banner">
     <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
-      <span class="text-4xl sm:text-5xl">{tool.icon}</span>
+      <span class="text-4xl sm:text-5xl" role="img" aria-label={tool.name}>{tool.icon}</span>
       <div>
         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold" style="color: var(--text-primary);">
           {tool.name}
         </h1>
-        <p class="text-sm sm:text-base mt-1" style="color: var(--text-secondary);">
+        <p class="text-sm sm:text-base mt-1" style="color: var(--text-secondary);" aria-label="Tool tagline">
           {tool.tagline}
         </p>
       </div>
     </div>
-    {tool.isNew && <span class="badge-primary">New</span>}
-    {tool.isPopular && <span class="badge-warning ml-2">Popular</span>}
+    <div class="flex flex-wrap gap-2" role="group" aria-label="Tool badges">
+      {tool.isNew && <span class="badge-primary" aria-label="New tool">New</span>}
+      {tool.isPopular && <span class="badge-warning" aria-label="Popular tool">Popular</span>}
+    </div>
   </header>
   
   <!-- Tool Component -->
@@ -73,36 +95,36 @@ const siteUrl = 'https://devtool.site';
     <slot name="seo-content" />
     
     <!-- Default FAQ if none provided -->
-    <div class="mt-8 p-6 rounded-2xl" style="background-color: var(--bg-secondary);">
-      <h2 class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
+    <section class="mt-8 p-6 rounded-2xl" style="background-color: var(--bg-secondary);" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
         Frequently Asked Questions
       </h2>
       <slot name="faq">
-        <div class="space-y-4">
-          <details class="group">
-            <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        <div class="space-y-4" role="list">
+          <details class="group" role="listitem">
+            <summary class="cursor-pointer font-medium focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded px-2 py-1" style="color: var(--text-primary);" tabindex="0">
               Is this tool free to use?
             </summary>
-            <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+            <p class="mt-2 text-sm px-2" style="color: var(--text-secondary);">
               Yes, {tool.name} is completely free. No registration required.
             </p>
           </details>
-          <details class="group">
-            <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+          <details class="group" role="listitem">
+            <summary class="cursor-pointer font-medium focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded px-2 py-1" style="color: var(--text-primary);" tabindex="0">
               Is my data secure?
             </summary>
-            <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+            <p class="mt-2 text-sm px-2" style="color: var(--text-secondary);">
               All processing happens in your browser. Your data never leaves your device.
             </p>
           </details>
         </div>
       </slot>
-    </div>
+    </section>
   </section>
   
   <!-- Related Tools -->
-  <section class="mt-12">
-    <h2 class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
+  <section class="mt-12" aria-labelledby="related-tools-heading">
+    <h2 id="related-tools-heading" class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
       Related Tools
     </h2>
     <slot name="related-tools" />

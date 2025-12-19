@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Search, Copy, Smile } from 'lucide-react';
+import { Search, Copy } from 'lucide-react';
 import { useToast } from '@/hooks/useToast';
 
 const EMOJI_CATEGORIES = {

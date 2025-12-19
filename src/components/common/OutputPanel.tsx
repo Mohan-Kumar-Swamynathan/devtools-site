@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Copy, Check, Download } from 'lucide-react';
+import { Highlight } from 'prism-react-renderer';
 import clsx from 'clsx';
 
 interface Props {
@@ -13,6 +14,9 @@ interface Props {
   asCode?: boolean;
 }
 
+// Languages that support syntax highlighting
+const SUPPORTED_LANGUAGES = ['json', 'javascript', 'typescript', 'jsx', 'tsx', 'html', 'css', 'sql', 'xml', 'yaml', 'markdown', 'python', 'java', 'c', 'cpp', 'csharp', 'php', 'ruby', 'go', 'rust', 'swift', 'kotlin', 'scala', 'bash', 'shell', 'powershell', 'graphql'];
+
 export default function OutputPanel({
   value,
   label = 'Output',
@@ -25,6 +29,41 @@ export default function OutputPanel({
 }: Props) {
   const [copied, setCopied] = useState(false);
   const lineCount = value.split('\n').length;
+  const shouldHighlight = language !== 'text' && SUPPORTED_LANGUAGES.includes(language.toLowerCase());
+
+  // Map language names to prism language identifiers
+  const getPrismLanguage = (lang: string): string => {
+    const langMap: Record<string, string> = {
+      'javascript': 'javascript',
+      'typescript': 'typescript',
+      'jsx': 'jsx',
+      'tsx': 'tsx',
+      'json': 'json',
+      'html': 'markup',
+      'css': 'css',
+      'sql': 'sql',
+      'xml': 'markup',
+      'yaml': 'yaml',
+      'markdown': 'markdown',
+      'python': 'python',
+      'java': 'java',
+      'c': 'c',
+      'cpp': 'cpp',
+      'csharp': 'csharp',
+      'php': 'php',
+      'ruby': 'ruby',
+      'go': 'go',
+      'rust': 'rust',
+      'swift': 'swift',
+      'kotlin': 'kotlin',
+      'scala': 'scala',
+      'bash': 'bash',
+      'shell': 'bash',
+      'powershell': 'powershell',
+      'graphql': 'graphql'
+    };
+    return langMap[lang.toLowerCase()] || lang.toLowerCase();
+  };
 
   const handleCopy = async () => {
     try {
@@ -52,6 +91,47 @@ export default function OutputPanel({
   };
 
   if (!value) return null;
+
+  const theme = {
+    plain: {
+      color: 'var(--syntax-text)',
+      backgroundColor: 'var(--syntax-bg)',
+    },
+    styles: [
+      {
+        types: ['comment', 'prolog', 'doctype', 'cdata'],
+        style: { color: 'var(--syntax-comment)', fontStyle: 'italic' }
+      },
+      {
+        types: ['punctuation'],
+        style: { color: 'var(--syntax-punctuation)' }
+      },
+      {
+        types: ['property', 'tag', 'boolean', 'number', 'constant', 'symbol'],
+        style: { color: 'var(--syntax-number)' }
+      },
+      {
+        types: ['selector', 'attr-name', 'string', 'char', 'builtin'],
+        style: { color: 'var(--syntax-string)' }
+      },
+      {
+        types: ['operator', 'entity', 'url'],
+        style: { color: 'var(--syntax-operator)' }
+      },
+      {
+        types: ['atrule', 'attr-value', 'keyword'],
+        style: { color: 'var(--syntax-keyword)' }
+      },
+      {
+        types: ['function', 'class-name'],
+        style: { color: 'var(--syntax-function)' }
+      },
+      {
+        types: ['regex', 'important', 'variable'],
+        style: { color: 'var(--syntax-variable)' }
+      }
+    ]
+  };
 
   return (
     <div className={clsx('flex flex-col', className)}>
@@ -85,15 +165,19 @@ export default function OutputPanel({
 
       {/* Output Area */}
       <div 
-        className="relative rounded-xl border overflow-hidden animate-fade-in-scale"
+        className={clsx(
+          'relative rounded-xl border overflow-hidden animate-fade-in-scale',
+          showLineNumbers && 'pl-14'
+        )}
         style={{ 
           backgroundColor: 'var(--syntax-bg)',
+          borderColor: 'var(--border-primary)',
           transformOrigin: 'top'
         }}
       >
         {showLineNumbers && (
           <div 
-            className="absolute left-0 top-0 bottom-0 w-12 flex flex-col items-end pr-3 pt-4 text-xs font-mono select-none"
+            className="absolute left-0 top-0 bottom-0 w-12 flex flex-col items-end pr-3 pt-4 text-xs font-mono select-none z-10"
             style={{ 
               color: 'var(--text-muted)', 
               backgroundColor: 'var(--bg-tertiary)',
@@ -106,18 +190,51 @@ export default function OutputPanel({
           </div>
         )}
         
-        <pre 
-          className={clsx(
-            'p-4 overflow-auto font-mono text-sm leading-6',
-            showLineNumbers && 'pl-14'
-          )}
-          style={{ 
-            maxHeight, 
-            color: 'var(--syntax-text)'
-          }}
-        >
-          <code>{value}</code>
-        </pre>
+        {shouldHighlight ? (
+          <div className="overflow-auto" style={{ maxHeight }}>
+            <Highlight
+              code={value}
+              language={getPrismLanguage(language)}
+              theme={theme}
+            >
+              {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                <pre 
+                  className={clsx(className, 'p-4 m-0 font-mono text-sm leading-6')}
+                  style={{ 
+                    ...style, 
+                    margin: 0,
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontSize: '0.875rem',
+                    lineHeight: '1.75'
+                  }}
+                >
+                  <code>
+                    {tokens.map((line, i) => (
+                      <div key={i} {...getLineProps({ line })}>
+                        {line.map((token, key) => (
+                          <span key={key} {...getTokenProps({ token })} />
+                        ))}
+                      </div>
+                    ))}
+                  </code>
+                </pre>
+              )}
+            </Highlight>
+          </div>
+        ) : (
+          <pre 
+            className={clsx(
+              'p-4 overflow-auto font-mono text-sm leading-6',
+              showLineNumbers && 'pl-14'
+            )}
+            style={{ 
+              maxHeight, 
+              color: 'var(--syntax-text)'
+            }}
+          >
+            <code>{value}</code>
+          </pre>
+        )}
       </div>
 
       {/* Footer Info */}
@@ -128,5 +245,3 @@ export default function OutputPanel({
     </div>
   );
 }
-
-

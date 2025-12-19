@@ -1,0 +1,23 @@
+---
+const siteUrl = 'https://devtool.site';
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "DevTools",
+  "url": siteUrl,
+  "logo": new URL("/icon-512.png", siteUrl).href,
+  "description": "Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, and 130+ more tools. Fast, free, and private.",
+  "sameAs": [
+    // Add social media links here when available
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Customer Service",
+    "availableLanguage": ["English"]
+  }
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Search, Globe, MapPin, Server, Shield, Loader } from 'lucide-react';
+import { Search, Globe, MapPin, Server, Loader } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import OutputPanel from '@/components/common/OutputPanel';

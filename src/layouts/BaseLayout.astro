@@ -5,6 +5,7 @@ import Assistant from '@/components/assistant/Assistant.tsx';
 import OnboardingManager from '@/components/onboarding/OnboardingManager.tsx';
 import KeyboardShortcuts from '@/components/common/KeyboardShortcuts.tsx';
 import JsonLd from '@/components/seo/JsonLd.astro';
+import OrganizationSchema from '@/components/seo/OrganizationSchema.astro';
 import '@/styles/global.css';
 
 interface Props {
@@ -41,11 +42,16 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <!-- Performance -->
+  <!-- Performance & Resource Hints -->
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+  
+  <!-- Prefetch critical resources -->
+  <link rel="prefetch" href="/favicon.svg" />
+  <link rel="prefetch" href="/manifest.json" />
   
   <!-- Accessibility -->
   <meta name="color-scheme" content="light dark" />
@@ -55,8 +61,16 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <meta name="description" content={description} />
   {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
   <meta name="author" content="DevTools" />
+  <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+  <meta name="googlebot" content={noindex ? "noindex, nofollow" : "index, follow"} />
+  <meta name="bingbot" content={noindex ? "noindex, nofollow" : "index, follow"} />
   <link rel="canonical" href={canonicalUrl} />
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  
+  <!-- Additional SEO -->
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="distribution" content="global" />
+  <meta name="rating" content="general" />
   
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
@@ -66,8 +80,11 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <meta property="og:image" content={new URL(ogImage, siteUrl).href} />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={siteTitle} />
   <meta property="og:site_name" content="DevTools" />
   <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="article:author" content="DevTools" />
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -75,6 +92,9 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <meta name="twitter:title" content={siteTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={new URL(ogImage, siteUrl).href} />
+  <meta name="twitter:image:alt" content={siteTitle} />
+  <meta name="twitter:creator" content="@devtools" />
+  <meta name="twitter:site" content="@devtools" />
   
   <!-- Favicons -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -97,12 +117,44 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <!-- Theme Script (Prevents Flash) -->
   <script is:inline>
     (function() {
-      const theme = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      if (theme === 'dark' || (!theme && prefersDark)) {
-        document.documentElement.classList.add('dark');
+      try {
+        const theme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (theme === 'dark' || (!theme && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {
+        // Fallback if localStorage is not available
+        console.warn('Theme initialization failed:', e);
       }
     })();
+  </script>
+  
+  <!-- Performance Monitoring -->
+  <script is:inline>
+    if ('PerformanceObserver' in window) {
+      try {
+        // Monitor Largest Contentful Paint (LCP)
+        new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          if (lastEntry) {
+            // Log to analytics if needed
+            console.debug('LCP:', lastEntry.renderTime || lastEntry.loadTime);
+          }
+        }).observe({ entryTypes: ['largest-contentful-paint'] });
+        
+        // Monitor First Input Delay (FID)
+        new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          entries.forEach((entry) => {
+            console.debug('FID:', entry.processingStart - entry.startTime);
+          });
+        }).observe({ entryTypes: ['first-input'] });
+      } catch (e) {
+        console.warn('Performance monitoring failed:', e);
+      }
+    }
   </script>
   
   <!-- Structured Data -->
@@ -116,8 +168,9 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "DevTools",
+    "alternateName": "DevTools.site",
     "url": siteUrl,
-    "description": "Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, and 130+ more tools",
+    "description": "Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, and 130+ more tools. Fast, free, and private.",
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
@@ -125,8 +178,19 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
         "urlTemplate": `${siteUrl}/?q={search_term_string}`
       },
       "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "DevTools",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${siteUrl}/icon-512.png`
+      }
     }
   })} />
+  
+  <!-- Organization Schema -->
+  <OrganizationSchema />
   
   <!-- Additional head content -->
   <slot name="head" />

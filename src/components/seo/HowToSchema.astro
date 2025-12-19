@@ -1,0 +1,57 @@
+---
+interface Step {
+  name: string;
+  text: string;
+  image?: string;
+  url?: string;
+}
+
+interface Props {
+  name: string;
+  description: string;
+  steps: Step[];
+  totalTime?: string;
+  tool?: string[];
+  supply?: string[];
+}
+
+const { name, description, steps, totalTime, tool, supply } = Astro.props;
+const siteUrl = 'https://devtool.site';
+const currentUrl = new URL(Astro.url.pathname, siteUrl).href;
+
+const howToSchema: any = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": name,
+  "description": description,
+  "step": steps.map((step, index) => ({
+    "@type": "HowToStep",
+    "position": index + 1,
+    "name": step.name,
+    "text": step.text,
+    ...(step.image && { "image": new URL(step.image, siteUrl).href }),
+    ...(step.url && { "url": new URL(step.url, siteUrl).href })
+  }))
+};
+
+if (totalTime) {
+  howToSchema.totalTime = totalTime;
+}
+
+if (tool && tool.length > 0) {
+  howToSchema.tool = tool.map(t => ({
+    "@type": "HowToTool",
+    "name": t
+  }));
+}
+
+if (supply && supply.length > 0) {
+  howToSchema.supply = supply.map(s => ({
+    "@type": "HowToSupply",
+    "name": s
+  }));
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+
