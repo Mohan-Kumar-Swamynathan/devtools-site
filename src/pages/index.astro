@@ -50,8 +50,8 @@ const totalTools = tools.length;
       <!-- Feature Badges with Stagger Animation -->
       <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
         <span 
-          class="feature-badge flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-300 hover:scale-110 hover:shadow-lg animate-fade-in-up"
-          style="background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-primary); animation-delay: 0.6s;"
+          class="feature-badge flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-200 hover:elevation-2 animate-fade-in-up elevation-1"
+          style="background-color: var(--bg-elevated); color: var(--text-primary); animation-delay: 0.6s;"
         >
           <svg class="w-5 h-5 text-green-500 flex-shrink-0 animate-check-in" style="animation-delay: 0.7s;" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -59,8 +59,8 @@ const totalTools = tools.length;
           No registration
         </span>
         <span 
-          class="feature-badge flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-300 hover:scale-110 hover:shadow-lg animate-fade-in-up"
-          style="background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-primary); animation-delay: 0.7s;"
+          class="feature-badge flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-200 hover:elevation-2 animate-fade-in-up elevation-1"
+          style="background-color: var(--bg-elevated); color: var(--text-primary); animation-delay: 0.7s;"
         >
           <svg class="w-5 h-5 text-green-500 flex-shrink-0 animate-check-in" style="animation-delay: 0.8s;" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -68,8 +68,8 @@ const totalTools = tools.length;
           100% Free
         </span>
         <span 
-          class="feature-badge flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-300 hover:scale-110 hover:shadow-lg animate-fade-in-up"
-          style="background-color: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-primary); animation-delay: 0.8s;"
+          class="feature-badge flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-all duration-200 hover:elevation-2 animate-fade-in-up elevation-1"
+          style="background-color: var(--bg-elevated); color: var(--text-primary); animation-delay: 0.8s;"
         >
           <svg class="w-5 h-5 text-green-500 flex-shrink-0 animate-check-in" style="animation-delay: 0.9s;" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -105,14 +105,14 @@ const totalTools = tools.length;
   <!-- Popular Tools -->
   <section class="mb-16 sm:mb-20 scroll-section" id="popular">
     <div class="flex items-center justify-between mb-8">
-      <h2 class="text-2xl sm:text-3xl font-bold flex items-center gap-3 animate-slide-in-left" style="color: var(--text-primary);">
+      <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight flex items-center gap-3 animate-slide-in-left" style="color: var(--text-primary);">
         <span class="text-3xl sm:text-4xl animate-bounce-slow">⭐</span>
         <span>Popular Tools</span>
       </h2>
       <a 
         href="#json" 
-        class="text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 hidden sm:flex items-center gap-2"
-        style="color: var(--brand-primary); background-color: var(--bg-secondary);"
+        class="text-sm font-medium px-4 py-2.5 rounded-full transition-all duration-200 hover:bg-[var(--bg-secondary)] hidden sm:flex items-center gap-2"
+        style="color: var(--brand-primary);"
       >
         View All
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -120,7 +120,7 @@ const totalTools = tools.length;
         </svg>
       </a>
     </div>
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
       {popularTools.slice(0, 8).map((tool, index) => (
         <div 
           class="tool-card-wrapper animate-fade-in-scale" 
@@ -146,24 +146,24 @@ const totalTools = tools.length;
         data-category-index={catIndex}
       >
         <div class="flex items-center justify-between mb-8">
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold flex items-center gap-3" style="color: var(--text-primary);">
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight flex items-center gap-4" style="color: var(--text-primary);">
             <span 
-              class="text-3xl sm:text-4xl transition-all duration-500 hover:scale-125 hover:rotate-12 inline-block cursor-pointer"
+              class="text-3xl sm:text-4xl transition-transform duration-200 hover:scale-110 inline-block"
               role="img"
               aria-label={category.name}
             >
               {category.icon}
             </span> 
-            <span class="category-title">{category.name}</span>
+            <span>{category.name}</span>
           </h2>
           <span 
-            class="text-sm font-medium px-4 py-2 rounded-full transition-all duration-300 hover:scale-110"
-            style="background-color: var(--bg-secondary); color: var(--text-muted); border: 1px solid var(--border-primary);"
+            class="text-sm font-medium px-4 py-2 rounded-full elevation-1"
+            style="background-color: var(--bg-elevated); color: var(--text-muted);"
           >
             {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'}
           </span>
         </div>
-        <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
           {categoryTools.map((tool, toolIndex) => (
             <div 
               class="tool-card-wrapper animate-fade-in-scale" 

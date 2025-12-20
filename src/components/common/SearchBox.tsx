@@ -118,8 +118,8 @@ export default function SearchBox({ tools }: Props) {
       <div className="relative">
         <Search 
           size={18} 
-          className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none"
-          style={{ color: 'var(--text-muted)' }}
+          className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10"
+          style={{ color: 'var(--text-primary)' }}
         />
         <input
           ref={inputRef}
@@ -129,7 +129,12 @@ export default function SearchBox({ tools }: Props) {
           onFocus={() => setIsOpen(true)}
           onKeyDown={handleKeyDown}
           placeholder="Search tools... (⌘K)"
-          className="w-full pl-10 pr-10 py-2.5 rounded-xl text-sm input-base"
+          className="w-full pl-10 pr-10 py-2.5 rounded-2xl text-sm input-base"
+          style={{ 
+            backgroundColor: 'var(--bg-elevated)',
+            color: 'var(--text-primary)',
+            borderColor: 'var(--border-primary)'
+          }}
           aria-label="Search tools"
           aria-expanded={isOpen}
           aria-haspopup="listbox"
@@ -138,7 +143,9 @@ export default function SearchBox({ tools }: Props) {
         {query && (
           <button
             onClick={() => { setQuery(''); inputRef.current?.focus(); }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 btn-icon p-1"
+            className="absolute right-3 top-1/2 -translate-y-1/2 btn-icon p-1 z-10"
+            style={{ color: 'var(--text-primary)' }}
+            aria-label="Clear search"
           >
             <X size={16} />
           </button>

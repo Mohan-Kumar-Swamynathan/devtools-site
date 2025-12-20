@@ -1,6 +1,8 @@
 import { tools, categories, searchTools, type Tool } from '@/lib/tools';
 import { matchIntent } from './intents';
 import { getResponseTemplate } from './responses';
+import { getToolContext, getContextDescription } from './context';
+import { fillInput, triggerCalculation, readResults, clearInputs, exploreTool } from './toolActions';
 
 export interface Response {
   text: string;
@@ -8,6 +10,8 @@ export interface Response {
   toolSlug?: string;
   autoRedirect?: boolean;
   confidence?: number; // 0-1, for hybrid system
+  action?: 'fill_input' | 'calculate' | 'read_result' | 'clear' | 'explore';
+  actionResult?: any;
 }
 
 /**
@@ -136,8 +140,145 @@ export function getRuleBasedResponse(input: string): Response {
   // Match intent
   const intent = matchIntent(query);
   
+  // Get current context for tool interaction intents
+  const context = typeof window !== 'undefined' ? getToolContext() : null;
+  
   switch (intent.type) {
+    case 'fill_input':
+      if (!context || context.pageType !== 'tool') {
+        return {
+          text: "I can only fill inputs when you're on a tool page. Navigate to a tool first!",
+          mood: 'confused',
+          confidence: 0.8
+        };
+      }
+      
+      if (!intent.field || !intent.value) {
+        return {
+          text: "I need to know which field and what value. Try: 'set loan amount to 100000'",
+          mood: 'confused',
+          confidence: 0.7
+        };
+      }
+      
+      const fillResult = fillInput(intent.field, intent.value);
+      return {
+        text: fillResult.success 
+          ? `✅ ${fillResult.message || `Set ${intent.field} to ${intent.value}`}`
+          : `❌ ${fillResult.message || 'Could not fill input'}`,
+        mood: fillResult.success ? 'happy' : 'confused',
+        confidence: fillResult.success ? 0.9 : 0.5,
+        action: 'fill_input',
+        actionResult: fillResult
+      };
+    
+    case 'calculate':
+      if (!context || context.pageType !== 'tool') {
+        return {
+          text: "I can only calculate when you're on a tool page. Navigate to a tool first!",
+          mood: 'confused',
+          confidence: 0.8
+        };
+      }
+      
+      const calcResult = triggerCalculation();
+      // Wait a bit for calculation to complete, then read results
+      setTimeout(() => {
+        const readResult = readResults();
+        if (readResult.success) {
+          // Update the response with results
+          const resultElement = document.querySelector('[data-assistant-result]');
+          if (resultElement) {
+            resultElement.textContent = readResult.message || '';
+          }
+        }
+      }, 500);
+      
+      return {
+        text: calcResult.success 
+          ? `✅ ${calcResult.message || 'Calculation triggered!'}`
+          : `❌ ${calcResult.message || 'Could not trigger calculation'}`,
+        mood: calcResult.success ? 'happy' : 'confused',
+        confidence: calcResult.success ? 0.9 : 0.5,
+        action: 'calculate',
+        actionResult: calcResult
+      };
+    
+    case 'read_result':
+      if (!context || context.pageType !== 'tool') {
+        return {
+          text: "I can only read results when you're on a tool page with calculated results.",
+          mood: 'confused',
+          confidence: 0.8
+        };
+      }
+      
+      const readResult = readResults();
+      return {
+        text: readResult.success 
+          ? `📊 ${readResult.message || 'Results read successfully'}`
+          : `❌ ${readResult.message || 'No results available yet'}`,
+        mood: readResult.success ? 'happy' : 'confused',
+        confidence: readResult.success ? 0.9 : 0.5,
+        action: 'read_result',
+        actionResult: readResult
+      };
+    
+    case 'explore':
+      if (!context || context.pageType !== 'tool') {
+        return {
+          text: "I can explore tools when you're on a tool page. Navigate to a tool first!",
+          mood: 'confused',
+          confidence: 0.8
+        };
+      }
+      
+      const exploration = exploreTool(context);
+      return {
+        text: exploration,
+        mood: 'happy',
+        confidence: 0.9,
+        action: 'explore',
+        actionResult: { context }
+      };
+    
+    case 'clear':
+      if (!context || context.pageType !== 'tool') {
+        return {
+          text: "I can only clear inputs when you're on a tool page.",
+          mood: 'confused',
+          confidence: 0.8
+        };
+      }
+      
+      const clearResult = clearInputs();
+      return {
+        text: clearResult.success 
+          ? `✅ ${clearResult.message || 'All inputs cleared'}`
+          : `❌ ${clearResult.message || 'Could not clear inputs'}`,
+        mood: clearResult.success ? 'happy' : 'confused',
+        confidence: clearResult.success ? 0.9 : 0.5,
+        action: 'clear',
+        actionResult: clearResult
+      };
     case 'greeting':
+      // Context-aware greeting
+      if (context && context.pageType === 'tool' && context.tool) {
+        const contextDesc = getContextDescription(context);
+        let guidance = '';
+        
+        if (context.tool.slug === 'loan-calculator') {
+          guidance = '\n\n**Try these voice commands:**\n• "set loan amount to 500000"\n• "set interest rate to 8.5"\n• "set loan term to 20 years"\n• "calculate" or "what\'s my EMI"\n• "explore this tool" for more options';
+        } else {
+          guidance = '\n\n**Try saying:**\n• "set [field] to [value]"\n• "calculate"\n• "explore this tool"';
+        }
+        
+        return {
+          text: `Hi! 👋 I can help you use **${context.tool.name}** ${context.tool.icon}\n\n${contextDesc}${guidance}`,
+          mood: 'happy',
+          confidence: 0.9
+        };
+      }
       return { 
         text: getResponseTemplate('greeting'), 
         mood: 'happy',

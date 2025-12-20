@@ -1,5 +1,6 @@
 ---
 import ToolLayout from '@/layouts/ToolLayout.astro';
+import TextSummarizer from '@/components/tools/TextSummarizer.tsx';
 import ToolCard from '@/components/common/ToolCard.astro';
 import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
 
@@ -8,10 +9,7 @@ const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slic
 ---
 
 <ToolLayout tool={tool}>
-  <div class="text-center py-12">
-    <p class="text-lg mb-4" style="color: var(--text-primary);">AI Text Summarizer - Coming Soon</p>
-    <p class="text-sm" style="color: var(--text-muted);">This tool will be available soon. Check back later!</p>
-  </div>
+  <TextSummarizer client:load />
 
   <Fragment slot="seo-content">
     <h2>What is AI Text Summarizer?</h2>

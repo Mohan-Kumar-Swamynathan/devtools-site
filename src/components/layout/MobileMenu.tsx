@@ -79,8 +79,37 @@ export default function MobileMenu({ tools, categories }: Props) {
               </button>
             </div>
 
-            {/* Categories */}
+            {/* Featured Tool */}
             <nav className="p-4">
+              {(() => {
+                const flowBuilder = tools.find(t => t.slug === 'flow-builder');
+                if (!flowBuilder) return null;
+                return (
+                  <div className="mb-6 pb-4 border-b" style={{ borderColor: 'var(--border-primary)' }}>
+                    <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>
+                      ⭐ Featured
+                    </h3>
+                    <a
+                      href={`/${flowBuilder.slug}`}
+                      className="flex items-center justify-between py-3 px-4 rounded-lg transition-all hover:scale-[1.02] shadow-lg"
+                      style={{
+                        background: 'linear-gradient(135deg, var(--brand-primary) 0%, #7dd3fc 100%)',
+                        color: 'white',
+                      }}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="flex items-center gap-3">
+                        <span className="text-xl">{flowBuilder.icon}</span>
+                        <span className="font-semibold">{flowBuilder.name}</span>
+                      </span>
+                      <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full animate-pulse">
+                        New
+                      </span>
+                    </a>
+                  </div>
+                );
+              })()}
+              
               {categories.map((category) => (
                 <div key={category.id} className="mb-6">
                   <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>

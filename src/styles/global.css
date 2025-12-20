@@ -1,6 +1,16 @@
 /* Google Fonts - Must be first */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+/* Fallback for Inter font */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -59,11 +69,34 @@
     --syntax-class: #7c3aed;
     --syntax-constant: #be185d;
     
-    /* Shadows */
+    /* Shadows - Material Design Elevation System */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    
+    /* Material Design Elevation (dp) */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px 0 rgb(0 0 0 / 0.12), 0 1px 2px 0 rgb(0 0 0 / 0.24);
+    --elevation-2: 0 3px 6px 0 rgb(0 0 0 / 0.16), 0 3px 6px 0 rgb(0 0 0 / 0.23);
+    --elevation-4: 0 10px 20px 0 rgb(0 0 0 / 0.19), 0 6px 6px 0 rgb(0 0 0 / 0.23);
+    --elevation-8: 0 15px 30px 0 rgb(0 0 0 / 0.25), 0 10px 10px 0 rgb(0 0 0 / 0.22);
+    --elevation-16: 0 20px 40px 0 rgb(0 0 0 / 0.30), 0 15px 12px 0 rgb(0 0 0 / 0.22);
+    
+    /* Material Design Easing Curves */
+    --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+    --ease-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);
+    --ease-accelerate: cubic-bezier(0.4, 0.0, 1, 1);
+    --ease-sharp: cubic-bezier(0.4, 0.0, 0.6, 1);
+    
+    /* Material Design Transition Durations */
+    --duration-shortest: 150ms;
+    --duration-shorter: 200ms;
+    --duration-short: 250ms;
+    --duration-standard: 300ms;
+    --duration-complex: 375ms;
+    --duration-entering: 225ms;
+    --duration-leaving: 195ms;
   }
   
   /* ==================== DARK THEME ==================== */
@@ -119,11 +152,34 @@
     --syntax-class: #c084fc;
     --syntax-constant: #f472b6;
     
-    /* Shadows */
+    /* Shadows - Material Design Elevation System */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.3);
     --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+    
+    /* Material Design Elevation (dp) - Dark Theme */
+    --elevation-0: none;
+    --elevation-1: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px 0 rgb(0 0 0 / 0.5);
+    --elevation-2: 0 3px 6px 0 rgb(0 0 0 / 0.5), 0 3px 6px 0 rgb(0 0 0 / 0.6);
+    --elevation-4: 0 10px 20px 0 rgb(0 0 0 / 0.6), 0 6px 6px 0 rgb(0 0 0 / 0.6);
+    --elevation-8: 0 15px 30px 0 rgb(0 0 0 / 0.7), 0 10px 10px 0 rgb(0 0 0 / 0.6);
+    --elevation-16: 0 20px 40px 0 rgb(0 0 0 / 0.8), 0 15px 12px 0 rgb(0 0 0 / 0.6);
+    
+    /* Material Design Easing Curves */
+    --ease-standard: cubic-bezier(0.4, 0.0, 0.2, 1);
+    --ease-decelerate: cubic-bezier(0.0, 0.0, 0.2, 1);
+    --ease-accelerate: cubic-bezier(0.4, 0.0, 1, 1);
+    --ease-sharp: cubic-bezier(0.4, 0.0, 0.6, 1);
+    
+    /* Material Design Transition Durations */
+    --duration-shortest: 150ms;
+    --duration-shorter: 200ms;
+    --duration-short: 250ms;
+    --duration-standard: 300ms;
+    --duration-complex: 375ms;
+    --duration-entering: 225ms;
+    --duration-leaving: 195ms;
   }
   
   /* ==================== BASE STYLES ==================== */
@@ -136,7 +192,8 @@
     @apply font-sans antialiased;
     background-color: var(--bg-primary);
     color: var(--text-primary);
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: background-color var(--duration-standard) var(--ease-standard), 
+                color var(--duration-standard) var(--ease-standard);
   }
   
   * {
@@ -187,8 +244,6 @@
   .btn-primary {
     @apply btn text-white;
     background-color: var(--brand-primary);
-    position: relative;
-    overflow: hidden;
   }
   
   .btn-primary:hover:not(:disabled) {
@@ -216,8 +271,13 @@
     cursor: not-allowed;
   }
   
-  /* Ripple effect on button click */
-  .btn-primary::after {
+  /* Material Design Ripple Effect */
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .btn-primary::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -225,14 +285,54 @@
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.5);
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition: width var(--duration-standard) var(--ease-standard), 
+                height var(--duration-standard) var(--ease-standard),
+                opacity var(--duration-standard) var(--ease-standard);
+    opacity: 0;
+    pointer-events: none;
   }
   
-  .btn-primary:active::after {
+  .btn-primary:active::before {
     width: 300px;
     height: 300px;
+    opacity: 1;
+    transition: width var(--duration-shorter) var(--ease-decelerate), 
+                height var(--duration-shorter) var(--ease-decelerate),
+                opacity var(--duration-shortest) var(--ease-standard);
+  }
+  
+  /* Ripple utility class for any element */
+  .ripple {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width var(--duration-standard) var(--ease-standard), 
+                height var(--duration-standard) var(--ease-standard),
+                opacity var(--duration-standard) var(--ease-standard);
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  .ripple:active::after {
+    width: 300px;
+    height: 300px;
+    opacity: 1;
+    transition: width var(--duration-shorter) var(--ease-decelerate), 
+                height var(--duration-shorter) var(--ease-decelerate),
+                opacity var(--duration-shortest) var(--ease-standard);
   }
   
   .btn-secondary {
@@ -279,9 +379,10 @@
   }
   
   .btn-icon {
-    @apply p-2.5 rounded-xl transition-colors duration-200
+    @apply p-2.5 rounded-xl transition-all duration-200
            focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
-    color: var(--text-muted);
+    color: var(--text-primary);
+    background-color: transparent;
   }
   
   .btn-icon:hover {
@@ -291,10 +392,12 @@
   
   .btn-icon:focus-visible {
     --tw-ring-color: var(--brand-primary);
+    background-color: var(--bg-secondary);
   }
   
   .btn-icon:active {
     transform: scale(0.95);
+    background-color: var(--bg-tertiary);
   }
   
   .btn-sm {
@@ -307,10 +410,10 @@
   
   /* ==================== INPUTS ==================== */
   .input-base {
-    @apply w-full px-4 py-3 rounded-xl border text-sm
+    @apply w-full px-4 py-3 rounded-2xl border text-sm
            transition-all duration-200
            focus:outline-none focus:ring-2;
-    background-color: var(--bg-primary);
+    background-color: var(--bg-elevated);
     color: var(--text-primary);
     border-color: var(--border-primary);
   }
@@ -320,15 +423,14 @@
   }
   
   .input-base:focus {
-    border-color: var(--border-focus);
+    border-color: var(--brand-primary);
     --tw-ring-color: var(--brand-primary-light);
     box-shadow: 0 0 0 3px var(--brand-primary-light);
-    transform: translateY(-1px);
   }
   
   .input-base:hover:not(:focus) {
     border-color: var(--border-secondary);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: var(--bg-secondary);
   }
   
   .input-base:disabled {
@@ -361,24 +463,23 @@
   
   /* ==================== CARDS ==================== */
   .card {
-    @apply rounded-2xl border p-6;
-    background-color: var(--bg-primary);
-    border-color: var(--border-primary);
-    box-shadow: var(--shadow-sm);
+    @apply rounded-3xl p-6 transition-all duration-200;
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-primary);
   }
   
   .card-hover {
-    @apply card cursor-pointer transition-all duration-200;
+    @apply card cursor-pointer;
   }
   
   .card-hover:hover {
-    border-color: var(--brand-primary);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--elevation-4);
     transform: translateY(-2px);
   }
   
   .card-hover:active {
     transform: translateY(0);
+    box-shadow: var(--elevation-2);
   }
   
   /* Tool Card - Consistent height and styling */
@@ -409,37 +510,147 @@
   }
   
   .tool-panel {
-    @apply rounded-2xl border p-4 sm:p-6 transition-all duration-200;
-    background-color: var(--bg-secondary);
+    @apply p-6 sm:p-8 transition-all duration-200;
+    background-color: var(--bg-elevated);
     border-color: var(--border-primary);
-    box-shadow: var(--shadow-sm);
   }
   
   .tool-panel:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--elevation-2);
   }
   
-  /* Tool Card - Consistent height and styling */
-  .tool-card {
-    @apply rounded-2xl border transition-all duration-300 cursor-pointer;
+  .tool-panel-fullscreen {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    max-height: 100vh;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    overflow: hidden;
     background-color: var(--bg-primary);
-    border-color: var(--border-primary);
-    box-shadow: var(--shadow-sm);
-    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Ensure proper height calculation - fallback if JS doesn't run */
+  @supports (height: 100dvh) {
+    .tool-panel-fullscreen {
+      height: 100dvh;
+    }
+  }
+  
+  /* Remove padding from main container when fullscreen */
+  body:has(.tool-panel-fullscreen) #main-content {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  body:has(.tool-panel-fullscreen) #main-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  .tool-panel-fullscreen > * {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+  
+  /* Ensure ReactFlow canvas is visible */
+  .tool-panel-fullscreen .react-flow {
+    width: 100% !important;
+    height: 100% !important;
+    position: relative !important;
+  }
+  
+  .tool-panel-fullscreen .react-flow__viewport {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .tool-panel-fullscreen .react-flow__renderer {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* Ensure background is visible */
+  .react-flow__background {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  /* Ensure welcome message is visible above ReactFlow */
+  .react-flow + div[class*="absolute"] {
+    z-index: 50 !important;
+  }
+  
+  
+  /* Mobile improvements for fullscreen tools */
+  @media (max-width: 768px) {
+    .tool-panel-fullscreen {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 500px;
+      max-height: 100vh;
+    }
+    
+    @supports (height: 100dvh) {
+      .tool-panel-fullscreen {
+        height: 100dvh;
+      }
+    }
+    
+    /* Hide sidebar on mobile, show as overlay */
+    .tool-panel-fullscreen [data-tour="sidebar"] {
+      position: fixed;
+      left: -100%;
+      top: 0;
+      bottom: 0;
+      z-index: 1000;
+      transition: left 0.3s ease;
+    }
+    
+    .tool-panel-fullscreen [data-tour="sidebar"].mobile-open {
+      left: 0;
+    }
+    
+    /* Adjust toolbar for mobile */
+    .react-flow__panel {
+      padding: 0.5rem !important;
+      margin: 0.5rem !important;
+    }
+    
+    /* Better touch targets */
+    .react-flow__handle {
+      width: 12px !important;
+      height: 12px !important;
+      min-width: 44px;
+      min-height: 44px;
+      touch-action: none;
+    }
+  }
+  
+  /* Tool Card - Material Design 3 styling */
+  .tool-card {
+    @apply transition-all duration-300 cursor-pointer;
+    min-height: 200px;
     height: 100%;
     display: flex;
     flex-direction: column;
   }
   
   .tool-card:hover {
-    border-color: var(--brand-primary);
-    box-shadow: var(--shadow-xl);
-    transform: translateY(-4px);
+    transform: translateY(-2px);
   }
   
   .tool-card:active {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+    transform: translateY(0);
   }
   
   .tool-card:focus-visible {
@@ -465,10 +676,9 @@
   }
   
   .badge-primary {
-    @apply badge;
-    background: linear-gradient(135deg, var(--brand-primary), var(--brand-primary-dark));
+    @apply badge elevation-1;
+    background-color: var(--brand-primary);
     color: white;
-    box-shadow: 0 2px 4px rgba(14, 165, 233, 0.3);
   }
   
   .badge-success {
@@ -484,10 +694,9 @@
   }
   
   .badge-warning {
-    @apply badge;
-    background: linear-gradient(135deg, #f59e0b, #d97706);
+    @apply badge elevation-1;
+    background-color: #f59e0b;
     color: white;
-    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
   }
   
   /* ==================== ALERTS ==================== */
@@ -617,15 +826,15 @@
   
   /* ==================== ASSISTANT ==================== */
   .assistant-panel {
-    @apply fixed bottom-24 right-6 w-[360px] max-w-[calc(100vw-3rem)] 
-           rounded-2xl border overflow-hidden z-50;
-    background-color: var(--bg-elevated);
-    box-shadow: var(--shadow-lg);
+    @apply fixed bottom-24 right-6 w-[380px] max-w-[calc(100vw-3rem)] 
+           overflow-hidden z-50 flex flex-col;
+    box-shadow: var(--elevation-16);
   }
   
   @media (max-width: 640px) {
     .assistant-panel {
       @apply bottom-20 right-4 left-4 w-auto;
+      box-shadow: var(--elevation-8);
     }
   }
   
@@ -1259,6 +1468,237 @@ input[type="range"]::-moz-range-thumb {
 input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ==================== MATERIAL DESIGN UTILITIES ==================== */
+@layer utilities {
+  /* Material Design Elevation Classes */
+  .elevation-0 {
+    box-shadow: var(--elevation-0);
+  }
+  
+  .elevation-1 {
+    box-shadow: var(--elevation-1);
+  }
+  
+  .elevation-2 {
+    box-shadow: var(--elevation-2);
+  }
+  
+  .elevation-4 {
+    box-shadow: var(--elevation-4);
+  }
+  
+  .elevation-8 {
+    box-shadow: var(--elevation-8);
+  }
+  
+  .elevation-16 {
+    box-shadow: var(--elevation-16);
+  }
+  
+  /* Material Design Transitions */
+  .transition-material {
+    transition: all var(--duration-standard) var(--ease-standard);
+  }
+  
+  .transition-material-fast {
+    transition: all var(--duration-shorter) var(--ease-standard);
+  }
+  
+  .transition-material-slow {
+    transition: all var(--duration-complex) var(--ease-standard);
+  }
+  
+  /* Material Design Surface */
+  .surface {
+    background-color: var(--bg-elevated);
+    border: 1px solid var(--border-primary);
+  }
+  
+  .surface-elevated {
+    background-color: var(--bg-elevated);
+    box-shadow: var(--elevation-2);
+  }
+  
+  /* Material Design Touch Target (48x48dp minimum) */
+  .touch-target {
+    min-width: 48px;
+    min-height: 48px;
+  }
+  
+  /* Material Design Typography Scale */
+  .material-headline-1 {
+    font-size: 6rem;
+    font-weight: 300;
+    line-height: 1.167;
+    letter-spacing: -0.01562em;
+  }
+  
+  .material-headline-2 {
+    font-size: 3.75rem;
+    font-weight: 300;
+    line-height: 1.2;
+    letter-spacing: -0.00833em;
+  }
+  
+  .material-headline-3 {
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.167;
+    letter-spacing: 0;
+  }
+  
+  .material-headline-4 {
+    font-size: 2.125rem;
+    font-weight: 400;
+    line-height: 1.235;
+    letter-spacing: 0.00735em;
+  }
+  
+  .material-headline-5 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.334;
+    letter-spacing: 0;
+  }
+  
+  .material-headline-6 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+  }
+  
+  .material-body-1 {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+  }
+  
+  .material-body-2 {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.43;
+    letter-spacing: 0.01071em;
+  }
+  
+  .material-button {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+  }
+  
+  .material-caption {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.66;
+    letter-spacing: 0.03333em;
+  }
+  
+  .material-overline {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 2.66;
+    letter-spacing: 0.08333em;
+    text-transform: uppercase;
+  }
+}
+
+/* ==================== ENHANCED CARD ELEVATIONS ==================== */
+.card {
+  transition: box-shadow var(--duration-standard) var(--ease-standard),
+              transform var(--duration-standard) var(--ease-standard);
+}
+
+.card:hover {
+  box-shadow: var(--elevation-4);
+}
+
+.card:active {
+  box-shadow: var(--elevation-2);
+}
+
+.tool-card {
+  transition: box-shadow var(--duration-standard) var(--ease-standard),
+              transform var(--duration-standard) var(--ease-standard);
+}
+
+.tool-card:hover {
+  box-shadow: var(--elevation-8);
+}
+
+.tool-card:active {
+  box-shadow: var(--elevation-4);
+}
+
+/* ==================== ENHANCED INPUT TRANSITIONS ==================== */
+.input-base {
+  transition: border-color var(--duration-standard) var(--ease-standard),
+              box-shadow var(--duration-standard) var(--ease-standard),
+              transform var(--duration-shorter) var(--ease-decelerate);
+}
+
+.input-base:focus {
+  transition: border-color var(--duration-shorter) var(--ease-decelerate),
+              box-shadow var(--duration-shorter) var(--ease-decelerate),
+              transform var(--duration-shorter) var(--ease-decelerate);
+}
+
+/* ==================== REACTFLOW HANDLE STYLES ==================== */
+.react-flow__handle {
+  width: 10px !important;
+  height: 10px !important;
+  border: 2px solid white !important;
+  border-radius: 50% !important;
+  background: #2563eb !important;
+  opacity: 0.9 !important;
+  transition: all 0.2s ease !important;
+}
+
+.dark .react-flow__handle {
+  background: #3b82f6 !important;
+}
+
+.react-flow__handle:hover {
+  width: 14px !important;
+  height: 14px !important;
+  opacity: 1 !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2) !important;
+}
+
+.react-flow__handle.react-flow__handle-connecting {
+  background: #22c55e !important;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3) !important;
+}
+
+.react-flow__handle.react-flow__handle-valid {
+  background: #22c55e !important;
+}
+
+.react-flow__connection-line {
+  stroke: #2563eb !important;
+  stroke-width: 3 !important;
+}
+
+.dark .react-flow__connection-line {
+  stroke: #3b82f6 !important;
+}
+
+.react-flow__edge-path {
+  stroke-width: 2 !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: #2563eb !important;
+  stroke-width: 3 !important;
+}
+
+.dark .react-flow__edge.selected .react-flow__edge-path {
+  stroke: #3b82f6 !important;
 }
 
 /* ==================== PRINT STYLES ==================== */

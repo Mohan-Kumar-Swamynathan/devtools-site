@@ -1,0 +1,30 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('json-to-csv')!;
+const relatedTools = getToolsByCategory(tool.category.id).filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <!-- TODO: Import and add tool component here -->
+  <!-- Example: <JsonFormatter client:load /> -->
+  
+  <div class="p-6 text-center" style="color: var(--text-muted);">
+    <p>Tool component coming soon...</p>
+  </div>
+
+  <Fragment slot="seo-content">
+    <h2>About json-to-csv</h2>
+    <p>
+      A useful developer tool.
+    </p>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>

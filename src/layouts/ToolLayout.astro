@@ -9,9 +9,10 @@ import type { Tool } from '@/lib/tools';
 
 interface Props {
   tool: Tool;
+  fullScreen?: boolean;
 }
 
-const { tool } = Astro.props;
+const { tool, fullScreen = false } = Astro.props;
 const siteUrl = 'https://devtool.site';
 ---
 
@@ -56,64 +57,78 @@ const siteUrl = 'https://devtool.site';
     ]} />
   </Fragment>
   
-  <!-- Breadcrumb -->
-  <Breadcrumb items={[
-    { label: 'Home', href: '/' },
-    { label: tool.category.name, href: `/#${tool.category.id}` },
-    { label: tool.name }
-  ]} />
-  
-  <!-- Tool Header -->
-  <header class="mb-6 sm:mb-8" role="banner">
-    <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
-      <span class="text-4xl sm:text-5xl" role="img" aria-label={tool.name}>{tool.icon}</span>
-      <div>
-        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold" style="color: var(--text-primary);">
-          {tool.name}
-        </h1>
-        <p class="text-sm sm:text-base mt-1" style="color: var(--text-secondary);" aria-label="Tool tagline">
-          {tool.tagline}
-        </p>
-      </div>
-    </div>
-    <div class="flex flex-wrap gap-2" role="group" aria-label="Tool badges">
-      {tool.isNew && <span class="badge-primary" aria-label="New tool">New</span>}
-      {tool.isPopular && <span class="badge-warning" aria-label="Popular tool">Popular</span>}
-    </div>
-  </header>
+  {!fullScreen && (
+    <>
+      <!-- Breadcrumb -->
+      <Breadcrumb items={[
+        { label: 'Home', href: '/' },
+        { label: tool.category.name, href: `/#${tool.category.id}` },
+        { label: tool.name }
+      ]} />
+      
+      <!-- Tool Header -->
+      <header class="mb-8 sm:mb-10" role="banner">
+        <div class="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-4">
+          <div class="flex items-center gap-4 sm:gap-6">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center elevation-1 transition-all duration-200 hover:elevation-2" style="background-color: var(--bg-secondary);">
+              <span class="text-4xl sm:text-5xl" role="img" aria-label={tool.name}>{tool.icon}</span>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight" style="color: var(--text-primary);">
+                  {tool.name}
+                </h1>
+                <div class="flex gap-2" role="group" aria-label="Tool badges">
+                  {tool.isNew && <span class="badge-primary text-xs px-2.5 py-1" aria-label="New tool">New</span>}
+                  {tool.isPopular && <span class="badge-warning text-xs px-2.5 py-1" aria-label="Popular tool">Popular</span>}
+                </div>
+              </div>
+              <p class="text-base sm:text-lg" style="color: var(--text-secondary);" aria-label="Tool tagline">
+                {tool.tagline}
+              </p>
+            </div>
+          </div>
+        </div>
+      </header>
+    </>
+  )}
   
   <!-- Tool Component -->
-  <div class="tool-panel mb-8">
+  <div class={fullScreen ? "tool-panel-fullscreen" : "tool-panel mb-10 elevation-1 rounded-3xl overflow-hidden"}>
     <slot />
   </div>
   
-  <!-- Ad Slot -->
-  <AdSlot slot="footer" class="mb-8" />
-  
-  <!-- SEO Content -->
-  <section class="prose prose-slate dark:prose-invert max-w-none">
-    <slot name="seo-content" />
+  {!fullScreen && (
+    <>
+      <!-- Ad Slot -->
+      <AdSlot slot="footer" class="mb-8" />
+      
+      <!-- SEO Content -->
+      <section class="prose prose-slate dark:prose-invert max-w-none mb-10">
+    <div class="elevation-1 rounded-3xl p-6 sm:p-8" style="background-color: var(--bg-elevated);">
+      <slot name="seo-content" />
+    </div>
     
     <!-- Default FAQ if none provided -->
-    <section class="mt-8 p-6 rounded-2xl" style="background-color: var(--bg-secondary);" aria-labelledby="faq-heading">
-      <h2 id="faq-heading" class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
+    <section class="mt-8 elevation-1 rounded-3xl p-6 sm:p-8" style="background-color: var(--bg-elevated);" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="text-2xl font-semibold mb-6" style="color: var(--text-primary);">
         Frequently Asked Questions
       </h2>
       <slot name="faq">
-        <div class="space-y-4" role="list">
-          <details class="group" role="listitem">
-            <summary class="cursor-pointer font-medium focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded px-2 py-1" style="color: var(--text-primary);" tabindex="0">
+        <div class="space-y-3" role="list">
+          <details class="group rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-secondary)]" role="listitem" style="border: 1px solid var(--border-primary);">
+            <summary class="cursor-pointer font-medium text-base focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded-lg px-2 py-1 -mx-2" style="color: var(--text-primary);" tabindex="0">
               Is this tool free to use?
             </summary>
-            <p class="mt-2 text-sm px-2" style="color: var(--text-secondary);">
+            <p class="mt-3 text-sm px-2" style="color: var(--text-secondary);">
               Yes, {tool.name} is completely free. No registration required.
             </p>
           </details>
-          <details class="group" role="listitem">
-            <summary class="cursor-pointer font-medium focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded px-2 py-1" style="color: var(--text-primary);" tabindex="0">
+          <details class="group rounded-xl p-4 transition-all duration-200 hover:bg-[var(--bg-secondary)]" role="listitem" style="border: 1px solid var(--border-primary);">
+            <summary class="cursor-pointer font-medium text-base focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded-lg px-2 py-1 -mx-2" style="color: var(--text-primary);" tabindex="0">
               Is my data secure?
             </summary>
-            <p class="mt-2 text-sm px-2" style="color: var(--text-secondary);">
+            <p class="mt-3 text-sm px-2" style="color: var(--text-secondary);">
               All processing happens in your browser. Your data never leaves your device.
             </p>
           </details>
@@ -122,13 +137,15 @@ const siteUrl = 'https://devtool.site';
     </section>
   </section>
   
-  <!-- Related Tools -->
-  <section class="mt-12" aria-labelledby="related-tools-heading">
-    <h2 id="related-tools-heading" class="text-xl font-semibold mb-4" style="color: var(--text-primary);">
-      Related Tools
-    </h2>
-    <slot name="related-tools" />
-  </section>
+      <!-- Related Tools -->
+      <section class="mt-12" aria-labelledby="related-tools-heading">
+        <h2 id="related-tools-heading" class="text-2xl font-semibold mb-6" style="color: var(--text-primary);">
+          Related Tools
+        </h2>
+        <slot name="related-tools" />
+      </section>
+    </>
+  )}
 </BaseLayout>
 
 

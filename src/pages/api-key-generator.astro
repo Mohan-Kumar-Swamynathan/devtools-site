@@ -1,0 +1,42 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ApiKeyGenerator from '@/components/tools/ApiKeyGenerator.tsx';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { getToolBySlug, getToolsByCategory } from '@/lib/tools';
+
+const tool = getToolBySlug('api-key-generator')!;
+const relatedTools = getToolsByCategory('generators').filter(t => t.id !== tool.id).slice(0, 4);
+---
+
+<ToolLayout tool={tool}>
+  <ApiKeyGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>What is API Key Generator?</h2>
+    <p>
+      Generate cryptographically secure API keys for your applications. Multiple formats and lengths supported.
+    </p>
+    
+    <h2>Features</h2>
+    <ul>
+      <li>Generate secure API keys</li>
+      <li>Multiple character set options</li>
+      <li>Customizable length (8-256 characters)</li>
+      <li>Add prefixes and suffixes</li>
+      <li>Generate multiple keys at once</li>
+      <li>Copy keys with one click</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+      {relatedTools.map(t => <ToolCard {...t} />)}
+    </div>
+  </Fragment>
+</ToolLayout>
+
+
+
+
+
+

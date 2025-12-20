@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Calculator, TrendingUp } from 'lucide-react';
+import { formatIndianCurrency } from '@/lib/currency';
 
 export default function LoanCalculator() {
   const [principal, setPrincipal] = useState('');
@@ -51,12 +52,12 @@ export default function LoanCalculator() {
             <Calculator size={20} />
             Loan Details
           </h3>
-          <div className="p-4 rounded-xl border space-y-4" style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderColor: 'var(--border-primary)'
+          <div className="p-6 rounded-3xl elevation-1 space-y-4" style={{
+            backgroundColor: 'var(--bg-elevated)',
+            border: '1px solid var(--border-primary)'
           }}>
             <div>
-              <label className="label">Loan Amount ($)</label>
+              <label className="label">Loan Amount (₹)</label>
               <input
                 type="number"
                 value={principal}
@@ -64,6 +65,7 @@ export default function LoanCalculator() {
                 className="input w-full"
                 placeholder="100000"
                 min="0"
+                data-tool-input="principal"
               />
             </div>
             <div>
@@ -76,6 +78,7 @@ export default function LoanCalculator() {
                 placeholder="5.5"
                 min="0"
                 step="0.1"
+                data-tool-input="interestRate"
               />
             </div>
             <div>
@@ -88,11 +91,13 @@ export default function LoanCalculator() {
                   className="input flex-1"
                   placeholder="30"
                   min="1"
+                  data-tool-input="loanTerm"
                 />
                 <select
                   value={termType}
                   onChange={(e) => setTermType(e.target.value as 'years' | 'months')}
                   className="input w-32"
+                  data-tool-input="termType"
                 >
                   <option value="years">Years</option>
                   <option value="months">Months</option>
@@ -107,43 +112,43 @@ export default function LoanCalculator() {
             <TrendingUp size={20} />
             Results
           </h3>
-          <div className="p-6 rounded-xl border space-y-4" style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderColor: 'var(--border-primary)'
+          <div className="p-6 rounded-3xl elevation-1 space-y-4" style={{
+            backgroundColor: 'var(--bg-elevated)',
+            border: '1px solid var(--border-primary)'
           }}>
             <div className="grid grid-cols-1 gap-4">
-              <div className="p-4 rounded-lg border text-center" style={{
-                backgroundColor: 'var(--bg-primary)',
-                borderColor: 'var(--border-primary)'
-              }}>
+            <div className="p-4 rounded-2xl elevation-1 text-center" style={{
+              backgroundColor: 'var(--bg-elevated)',
+              border: '1px solid var(--border-primary)'
+            }}>
                 <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
                   Monthly EMI
                 </div>
-                <div className="text-3xl font-bold" style={{ color: 'var(--brand-primary)' }}>
-                  ${results.emi.toFixed(2)}
+                <div className="text-3xl font-bold" style={{ color: 'var(--brand-primary)' }} data-tool-result="emi">
+                  {formatIndianCurrency(results.emi)}
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-lg border text-center" style={{
-                  backgroundColor: 'var(--bg-primary)',
-                  borderColor: 'var(--border-primary)'
+                <div className="p-3 rounded-2xl elevation-1 text-center" style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-primary)'
                 }}>
                   <div className="text-xs font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
                     Total Interest
                   </div>
-                  <div className="text-lg font-bold" style={{ color: 'var(--status-warning)' }}>
-                    ${results.totalInterest.toFixed(2)}
+                  <div className="text-lg font-bold" style={{ color: 'var(--status-warning)' }} data-tool-result="totalInterest">
+                    {formatIndianCurrency(results.totalInterest)}
                   </div>
                 </div>
-                <div className="p-3 rounded-lg border text-center" style={{
-                  backgroundColor: 'var(--bg-primary)',
-                  borderColor: 'var(--border-primary)'
+                <div className="p-3 rounded-2xl elevation-1 text-center" style={{
+                  backgroundColor: 'var(--bg-elevated)',
+                  border: '1px solid var(--border-primary)'
                 }}>
                   <div className="text-xs font-medium mb-1" style={{ color: 'var(--text-muted)' }}>
                     Total Amount
                   </div>
-                  <div className="text-lg font-bold" style={{ color: 'var(--status-success)' }}>
-                    ${results.totalAmount.toFixed(2)}
+                  <div className="text-lg font-bold" style={{ color: 'var(--status-success)' }} data-tool-result="totalAmount">
+                    {formatIndianCurrency(results.totalAmount)}
                   </div>
                 </div>
               </div>
@@ -157,9 +162,9 @@ export default function LoanCalculator() {
           <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
             Amortization Schedule (First 12 Months)
           </h3>
-          <div className="p-4 rounded-xl border overflow-x-auto" style={{
-            backgroundColor: 'var(--bg-secondary)',
-            borderColor: 'var(--border-primary)'
+          <div className="p-4 rounded-3xl elevation-1 overflow-x-auto" style={{
+            backgroundColor: 'var(--bg-elevated)',
+            border: '1px solid var(--border-primary)'
           }}>
             <table className="w-full text-sm">
               <thead>
@@ -176,16 +181,16 @@ export default function LoanCalculator() {
                   <tr key={row.month} className="border-b" style={{ borderColor: 'var(--border-primary)' }}>
                     <td className="p-2" style={{ color: 'var(--text-primary)' }}>{row.month}</td>
                     <td className="text-right p-2" style={{ color: 'var(--text-primary)' }}>
-                      ${row.emi.toFixed(2)}
+                      {formatIndianCurrency(row.emi)}
                     </td>
                     <td className="text-right p-2" style={{ color: 'var(--status-success)' }}>
-                      ${row.principal.toFixed(2)}
+                      {formatIndianCurrency(row.principal)}
                     </td>
                     <td className="text-right p-2" style={{ color: 'var(--status-warning)' }}>
-                      ${row.interest.toFixed(2)}
+                      {formatIndianCurrency(row.interest)}
                     </td>
                     <td className="text-right p-2" style={{ color: 'var(--text-primary)' }}>
-                      ${row.balance.toFixed(2)}
+                      {formatIndianCurrency(row.balance)}
                     </td>
                   </tr>
                 ))}

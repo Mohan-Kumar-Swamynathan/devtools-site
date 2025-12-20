@@ -99,14 +99,28 @@ Provide a helpful, conversational response. If they're looking for a tool, sugge
   
   try {
     const result = await generator(prompt, {
-      max_new_tokens: 80,
+      max_new_tokens: 100,
       temperature: 0.7,
       do_sample: true,
+      top_p: 0.9,
     });
     
-    return result[0]?.generated_text || "I'm not sure how to help with that. Can you rephrase?";
+    const generated = result[0]?.generated_text || '';
+    // Clean up the response - remove the prompt if it's included
+    const cleaned = generated.replace(prompt, '').trim();
+    return cleaned || "I'm not sure how to help with that. Can you rephrase?";
   } catch (error) {
     console.error('LLM generation error:', error);
+    // Provide more helpful error messages
+    if (error instanceof Error) {
+      if (error.message.includes('CSP') || error.message.includes('Content Security Policy')) {
+        throw new Error('Content Security Policy is blocking the request. Please allow connections to huggingface.co');
+      } else if (error.message.includes('Failed to fetch') || error.message.includes('network')) {
+        throw new Error('Network error. Please check your internet connection and try again.');
+      } else if (error.message.includes('timeout')) {
+        throw new Error('Request timed out. Please try again.');
+      }
+    }
     throw error;
   }
 }

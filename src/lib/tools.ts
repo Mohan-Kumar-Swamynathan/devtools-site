@@ -2722,6 +2722,195 @@ export const tools: Tool[] = [
     category: categories.ai,
     icon: '✍️',
     isNew: true
+  },
+  // Additional Useful Tools
+  {
+    id: 'api-key-generator',
+    name: 'API Key Generator',
+    slug: 'api-key-generator',
+    tagline: 'Generate secure API keys',
+    description: 'Generate cryptographically secure API keys for your applications. Multiple formats and lengths supported.',
+    keywords: ['api key generator', 'generate api key', 'secure key generator', 'api token'],
+    category: categories.generators,
+    icon: '🔐',
+    isNew: true
+  },
+  {
+    id: 'color-shades-generator',
+    name: 'Color Shades Generator',
+    slug: 'color-shades-generator',
+    tagline: 'Generate color shades and tints',
+    description: 'Generate color shades, tints, and variations from a base color. Perfect for creating color palettes.',
+    keywords: ['color shades', 'color generator', 'color palette', 'shades generator'],
+    category: categories.css,
+    icon: '🎨',
+    isNew: true
+  },
+  {
+    id: 'css-clip-path-generator',
+    name: 'CSS Clip Path Generator',
+    slug: 'css-clip-path-generator',
+    tagline: 'Generate CSS clip-path values',
+    description: 'Visual CSS clip-path generator. Create custom shapes and export CSS code.',
+    keywords: ['css clip path', 'clip path generator', 'css shapes', 'clip-path'],
+    category: categories.css,
+    icon: '✂️',
+    isNew: true
+  },
+  {
+    id: 'json-schema-generator',
+    name: 'JSON Schema Generator',
+    slug: 'json-schema-generator',
+    tagline: 'Generate JSON Schema from JSON',
+    description: 'Automatically generate JSON Schema from JSON data. Validate JSON structure and generate schemas.',
+    keywords: ['json schema', 'schema generator', 'json validation', 'json schema generator'],
+    category: categories.json,
+    icon: '📋',
+    isNew: true
+  },
+  {
+    id: 'sql-query-formatter',
+    name: 'SQL Query Formatter',
+    slug: 'sql-query-formatter',
+    tagline: 'Format and beautify SQL queries',
+    description: 'Format SQL queries with proper indentation and syntax highlighting. Supports multiple SQL dialects.',
+    keywords: ['sql formatter', 'sql beautifier', 'format sql', 'sql prettifier'],
+    category: categories.formatters,
+    icon: '🗄️',
+    isNew: true
+  },
+  {
+    id: 'regex-replacer',
+    name: 'Regex Replacer',
+    slug: 'regex-replacer',
+    tagline: 'Find and replace with regex',
+    description: 'Find and replace text using regular expressions. Test regex patterns and see results in real-time.',
+    keywords: ['regex replace', 'regex replacer', 'find replace regex', 'regex substitution'],
+    category: categories.text,
+    icon: '🔄',
+    isNew: true
+  },
+  {
+    id: 'json-compare',
+    name: 'JSON Compare',
+    slug: 'json-compare',
+    tagline: 'Compare and merge JSON objects',
+    description: 'Compare two JSON objects side-by-side, find differences, and merge changes.',
+    keywords: ['json compare', 'json merge', 'compare json', 'json diff tool'],
+    category: categories.json,
+    icon: '⚖️',
+    isNew: true
+  },
+  {
+    id: 'api-documentation-generator',
+    name: 'API Documentation Generator',
+    slug: 'api-documentation-generator',
+    tagline: 'Generate API docs from endpoints',
+    description: 'Generate API documentation in Markdown format. Includes endpoints, parameters, and examples.',
+    keywords: ['api docs', 'api documentation', 'generate api docs', 'api markdown'],
+    category: categories.documentation,
+    icon: '📖',
+    isNew: true
+  },
+  {
+    id: 'env-file-validator',
+    name: '.env File Validator',
+    slug: 'env-file-validator',
+    tagline: 'Validate environment variable files',
+    description: 'Validate .env files for syntax errors, duplicate keys, and best practices.',
+    keywords: ['env validator', 'validate env file', 'environment variables', 'env checker'],
+    category: categories.validators,
+    icon: '✅',
+    isNew: true
+  },
+  {
+    id: 'http-request-builder',
+    name: 'HTTP Request Builder',
+    slug: 'http-request-builder',
+    tagline: 'Build and test HTTP requests',
+    description: 'Build HTTP requests visually. Test APIs with custom headers, body, and methods.',
+    keywords: ['http request', 'api tester', 'http builder', 'rest client'],
+    category: categories.network,
+    icon: '🌐',
+    isNew: true
+  },
+  {
+    id: 'webhook-builder',
+    name: 'Webhook Builder',
+    slug: 'webhook-builder',
+    tagline: 'Build and test webhooks',
+    description: 'Create and test webhook payloads. Simulate webhook calls and validate responses.',
+    keywords: ['webhook builder', 'webhook tester', 'webhook simulator', 'webhook creator'],
+    category: categories.network,
+    icon: '🪝',
+    isNew: true
+  },
+  {
+    id: 'css-animation-generator',
+    name: 'CSS Animation Generator',
+    slug: 'css-animation-generator',
+    tagline: 'Generate CSS animations visually',
+    description: 'Create CSS animations with a visual editor. Export keyframe animations and transitions.',
+    keywords: ['css animation', 'animation generator', 'keyframes generator', 'css keyframes'],
+    category: categories.css,
+    icon: '🎬',
+    isNew: true
+  },
+  {
+    id: 'json-to-graphql',
+    name: 'JSON to GraphQL',
+    slug: 'json-to-graphql',
+    tagline: 'Convert JSON to GraphQL schema',
+    description: 'Convert JSON data to GraphQL schema and queries. Generate type definitions automatically.',
+    keywords: ['json to graphql', 'graphql schema', 'graphql generator', 'json graphql'],
+    category: categories.converters,
+    icon: '🔄',
+    isNew: true
+  },
+  {
+    id: 'markdown-editor',
+    name: 'Markdown Editor',
+    slug: 'markdown-editor',
+    tagline: 'Live markdown editor with preview',
+    description: 'Full-featured markdown editor with live preview, syntax highlighting, and export options.',
+    keywords: ['markdown editor', 'md editor', 'markdown preview', 'markdown writer'],
+    category: categories.text,
+    icon: '✏️',
+    isNew: true
+  },
+  {
+    id: 'code-formatter',
+    name: 'Multi-Language Code Formatter',
+    slug: 'code-formatter',
+    tagline: 'Format code in multiple languages',
+    description: 'Format and beautify code in JavaScript, Python, Java, C++, and more. One tool for all languages.',
+    keywords: ['code formatter', 'code beautifier', 'format code', 'prettify code'],
+    category: categories.formatters,
+    icon: '✨',
+    isNew: true
+  },
+  {
+    id: 'base64-image-converter',
+    name: 'Base64 Image Converter',
+    slug: 'base64-image-converter',
+    tagline: 'Convert images to/from Base64',
+    description: 'Convert images to Base64 strings and decode Base64 back to images. Supports all image formats.',
+    keywords: ['base64 image', 'image base64', 'base64 converter', 'image encoder'],
+    category: categories.converters,
+    icon: '🖼️',
+    isNew: true
+  },
+  {
+    id: 'flow-builder',
+    name: 'Flow Builder',
+    slug: 'flow-builder',
+    tagline: 'Visual flowchart builder - Canva-level ease, Linear-level precision',
+    description: 'Create beautiful flowcharts and process diagrams with ease. Visual canvas editor with automatic layout, built-in validation, and Mermaid compatibility. Works entirely in your browser - no backend, no login required.',
+    keywords: ['flowchart', 'diagram', 'flow builder', 'process diagram', 'mermaid', 'flowchart maker', 'diagram tool', 'visual flow'],
+    category: categories.misc,
+    icon: '📊',
+    isNew: true,
+    isPopular: true
   }
 ];
 

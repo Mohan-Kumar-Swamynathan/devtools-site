@@ -41,13 +41,14 @@ export default defineConfig({
         output: {
           manualChunks: {
             'react-vendor': ['react', 'react-dom'],
-            'prism-vendor': ['prism-react-renderer']
+            'prism-vendor': ['prism-react-renderer'],
+            'reactflow-vendor': ['reactflow']
           }
         }
       }
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'prism-react-renderer']
+      include: ['react', 'react-dom', 'prism-react-renderer', 'reactflow']
     }
   },
   image: {

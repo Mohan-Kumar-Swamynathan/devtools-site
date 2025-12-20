@@ -11,25 +11,25 @@ interface Props {
 const { items } = Astro.props;
 ---
 
-<nav aria-label="Breadcrumb" class="mb-6">
-  <ol class="flex items-center gap-2 text-sm flex-wrap" style="color: var(--text-muted);">
+<nav aria-label="Breadcrumb" class="mb-8">
+  <ol class="flex items-center gap-1.5 text-sm flex-wrap">
     {items.map((item, index) => (
-      <li class="flex items-center gap-2">
+      <li class="flex items-center gap-1.5">
         {index > 0 && (
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--text-muted);">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         )}
         {item.href ? (
           <a 
             href={item.href} 
-            class="hover:underline transition-colors"
+            class="px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-[var(--bg-secondary)]"
             style="color: var(--text-muted);"
           >
             {item.label}
           </a>
         ) : (
-          <span style="color: var(--text-primary); font-weight: 500;">
+          <span class="px-2.5 py-1 rounded-full font-medium" style="color: var(--text-primary);">
             {item.label}
           </span>
         )}

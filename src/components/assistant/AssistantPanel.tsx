@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Send, Search, ArrowRight, Mic, MicOff, Sparkles, Loader } from 'lucide-react';
+import { X, Send, Search, ArrowRight, Mic, MicOff, Sparkles, Loader, AlertCircle } from 'lucide-react';
 import AssistantAvatar from './AssistantAvatar';
 import MessageBubble from './MessageBubble';
 import SuggestionChips from './SuggestionChips';
@@ -19,6 +19,7 @@ export default function AssistantPanel({ onClose }: Props) {
   const [smartMode, setSmartMode] = useState(false);
   const [modelProgress, setModelProgress] = useState(0);
   const [isLoadingModel, setIsLoadingModel] = useState(false);
+  const [modelError, setModelError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const lastSpokenIndexRef = useRef<number>(-1);
   
@@ -31,14 +32,17 @@ export default function AssistantPanel({ onClose }: Props) {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Handle voice transcript
+  // Handle voice transcript with enhanced parsing
   useEffect(() => {
     if (transcript && !isProcessing && !isListening) {
-      setInput(transcript);
-      // Use a small delay to ensure state is updated
+      // Clean up the transcript (remove extra spaces, normalize)
+      const cleanedTranscript = transcript.trim().replace(/\s+/g, ' ');
+      setInput(cleanedTranscript);
+      
+      // Use a small delay to ensure state is updated and allow for natural speech pauses
       setTimeout(() => {
-        handleSend(transcript);
-      }, 100);
+        handleSend(cleanedTranscript);
+      }, 150);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transcript, isProcessing, isListening]);
@@ -60,17 +64,17 @@ export default function AssistantPanel({ onClose }: Props) {
           setModelProgress(0);
           setSmartMode(false);
           
-          // Show more helpful error message
           const errorMessage = error?.message || 'Unknown error';
-          const isCSPError = errorMessage.includes('CSP') || errorMessage.includes('Content Security Policy') || errorMessage.includes('Refused to connect');
-          
-          if (isCSPError) {
-            alert('Smart mode requires network access to Hugging Face. Please check your Content Security Policy settings or try again later.');
+          if (errorMessage.includes('CSP') || errorMessage.includes('Content Security Policy')) {
+            setModelError('Content Security Policy is blocking model download. Smart mode requires network access.');
           } else if (errorMessage.includes('Failed to fetch') || errorMessage.includes('network')) {
-            alert('Failed to download AI model. Please check your internet connection and try again.');
+            setModelError('Network error. Please check your internet connection and try again.');
           } else {
-            alert(`Failed to load smart mode: ${errorMessage}. Please try again later.`);
+            setModelError('Failed to load AI model. Rule-based mode is still available.');
           }
+          
+          // Clear error after 10 seconds
+          setTimeout(() => setModelError(null), 10000);
         });
     }
   }, [smartMode]);
@@ -108,10 +112,32 @@ export default function AssistantPanel({ onClose }: Props) {
   const handleSend = useCallback(async (text?: string) => {
     const msg = text || input.trim();
     if (!msg) return;
+    
+    // Normalize the message for better command recognition
+    const normalizedMsg = msg
+      .toLowerCase()
+      .replace(/\s+/g, ' ')
+      .trim();
+    
     setInput('');
     setSuggestions([]);
     stop(); // Stop any ongoing speech
-    await sendMessage(msg, smartMode && isModelReady());
+    
+    // Check if we're on a tool page
+    const isToolPage = typeof window !== 'undefined' && 
+      window.location.pathname !== '/' && 
+      window.location.pathname !== '/index.html' && 
+      window.location.pathname.length > 1;
+    
+    // Detect tool commands (works for both voice and text input)
+    const isToolCommand = /^(set|fill|put|enter|calculate|compute|what'?s|show|tell|read|explore|clear|reset)/i.test(normalizedMsg);
+    
+    // If on tool page and it's a tool command, always use rule-based for immediate action
+    // This ensures both voice and text input fill tool inputs
+    const useLLM = smartMode && isModelReady() && !isToolCommand && !isToolPage;
+    
+    // sendMessage will handle tool interactions automatically via ruleBasedBrain
+    await sendMessage(msg, useLLM);
   }, [input, sendMessage, smartMode, stop]);
 
   const handleToolClick = useCallback((tool: any) => {
@@ -127,9 +153,9 @@ export default function AssistantPanel({ onClose }: Props) {
   }, [isListening, startListening, stopListening]);
 
   return (
-    <div className="assistant-panel animate-slide-up" style={{ maxHeight: '80vh' }}>
+    <div className="assistant-panel animate-slide-up rounded-3xl elevation-8" style={{ maxHeight: '80vh', backgroundColor: 'var(--bg-elevated)', border: '1px solid var(--border-primary)' }}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-primary)' }}>
+      <div className="flex items-center justify-between p-5 border-b" style={{ borderColor: 'var(--border-primary)' }}>
         <div className="flex items-center gap-3">
           <AssistantAvatar mood={mood} size={40} />
           <div>
@@ -178,6 +204,26 @@ export default function AssistantPanel({ onClose }: Props) {
         </div>
       </div>
 
+      {/* Model Error Display */}
+      {modelError && (
+        <div className="px-4 py-2 border-b" style={{ borderColor: 'var(--status-error)', backgroundColor: 'var(--status-error-bg)' }}>
+          <div className="flex items-start gap-2">
+            <AlertCircle size={16} style={{ color: 'var(--status-error)' }} className="flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-xs font-medium" style={{ color: 'var(--status-error)' }}>
+                {modelError}
+              </p>
+              <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                You can still use rule-based mode for tool suggestions.
+              </p>
+            </div>
+            <button onClick={() => setModelError(null)} className="btn-icon p-1">
+              <X size={14} />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Model Loading Progress */}
       {isLoadingModel && (
         <div className="px-4 py-2 border-b" style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-secondary)' }}>
@@ -203,14 +249,40 @@ export default function AssistantPanel({ onClose }: Props) {
       )}
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4" style={{ maxHeight: '350px', minHeight: '200px' }}>
+      <div className="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar" style={{ maxHeight: '350px', minHeight: '200px' }}>
         {messages.length === 0 && (
-          <div className="text-center py-8">
-            <AssistantAvatar mood="happy" size={80} />
-            <p className="mt-4 font-medium" style={{ color: 'var(--text-primary)' }}>Hi! I'm DevBot 👋</p>
-            <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-              Search for tools or ask me to navigate. I'll help you find what you need!
+          <div className="text-center py-12">
+            <div className="mb-6">
+              <AssistantAvatar mood="happy" size={80} />
+            </div>
+            <p className="mt-4 text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Hi! I'm DevBot 👋</p>
+            <p className="text-sm mt-2 px-4" style={{ color: 'var(--text-muted)' }}>
+              Search for tools, ask me to navigate, or use voice commands to interact with tools!
             </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-2 px-4">
+              <button
+                onClick={() => handleSend('explore this tool')}
+                className="px-4 py-2 rounded-xl text-xs font-medium transition-all duration-200 ripple"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-primary)'
+                }}
+              >
+                Explore Tool
+              </button>
+              <button
+                onClick={() => handleSend('show popular tools')}
+                className="px-4 py-2 rounded-xl text-xs font-medium transition-all duration-200 ripple"
+                style={{
+                  backgroundColor: 'var(--bg-secondary)',
+                  color: 'var(--text-primary)',
+                  border: '1px solid var(--border-primary)'
+                }}
+              >
+                Popular Tools
+              </button>
+            </div>
           </div>
         )}
         
@@ -294,10 +366,10 @@ export default function AssistantPanel({ onClose }: Props) {
       )}
 
       {/* Input */}
-      <div className="p-4 border-t" style={{ borderColor: 'var(--border-primary)' }}>
-        <div className="flex items-center gap-2">
+      <div className="p-5 border-t" style={{ borderColor: 'var(--border-primary)', backgroundColor: 'var(--bg-secondary)' }}>
+        <div className="flex items-center gap-3">
           <div className="relative flex-1">
-            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2" style={{ color: 'var(--text-muted)' }} />
+            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 z-10" style={{ color: 'var(--text-primary)' }} />
             <input
               type="text"
               value={input}
@@ -312,7 +384,12 @@ export default function AssistantPanel({ onClose }: Props) {
                 }
               }}
               placeholder={isListening ? "Listening..." : "Search tools or ask a question..."}
-              className="flex-1 input-base py-2.5 pl-10"
+              className="flex-1 input-base py-3 pl-10 pr-4 rounded-2xl"
+              style={{ 
+                backgroundColor: 'var(--bg-elevated)',
+                color: 'var(--text-primary)',
+                borderColor: 'var(--border-primary)'
+              }}
               disabled={isListening}
             />
           </div>
@@ -322,13 +399,13 @@ export default function AssistantPanel({ onClose }: Props) {
             <button
               onClick={toggleVoiceInput}
               disabled={isProcessing}
-              className={`p-3 rounded-full transition-all ${
+              className={`p-3 rounded-xl transition-all ripple touch-target ${
                 isListening 
                   ? 'animate-pulse' 
                   : ''
               }`}
               style={{
-                backgroundColor: isListening ? 'var(--brand-primary)' : 'var(--bg-secondary)',
+                backgroundColor: isListening ? 'var(--brand-primary)' : 'var(--bg-elevated)',
                 color: isListening ? 'white' : 'var(--text-primary)',
                 border: `1px solid ${isListening ? 'var(--brand-primary)' : 'var(--border-primary)'}`
               }}
@@ -341,7 +418,11 @@ export default function AssistantPanel({ onClose }: Props) {
           <button
             onClick={() => handleSend()}
             disabled={!input.trim() || isProcessing || isListening}
-            className="btn-primary p-3 rounded-full"
+            className="btn-primary p-3 rounded-xl ripple touch-target"
+            style={{
+              backgroundColor: (!input.trim() || isProcessing || isListening) ? 'var(--bg-tertiary)' : 'var(--brand-primary)',
+              opacity: (!input.trim() || isProcessing || isListening) ? 0.5 : 1
+            }}
           >
             <Send size={18} />
           </button>
