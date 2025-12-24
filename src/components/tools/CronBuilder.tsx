@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CronBuilder() {
   const [minute, setMinute] = useState('*');
@@ -34,8 +36,10 @@ export default function CronBuilder() {
     updateExpression();
   }, [updateExpression]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div>
           <label className="label">Minute (0-59)</label>
@@ -109,7 +113,7 @@ export default function CronBuilder() {
           <li><code className="px-1 py-0.5 rounded" style={{ backgroundColor: 'var(--bg-tertiary)' }}>*/5 * * * *</code> - Every 5 minutes</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

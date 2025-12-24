@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CodeBeautifier from '@/components/tools/CodeBeautifier';
+import ToolSchema from '@/components/seo/ToolSchema.astro';
+import FAQSchema from '@/components/seo/FAQSchema.astro';
+
+const tool = {
+  name: 'Code Beautifier',
+  description: 'Free multi-language code beautifier. Format JavaScript, TypeScript, JSON, HTML, CSS, SQL, and XML with customizable indentation.',
+  url: 'https://devtools.site/code-beautifier'
+};
+
+const faqs = [
+  {
+    question: 'What languages does the Code Beautifier support?',
+    answer: 'The Code Beautifier supports JavaScript, TypeScript, JSON, HTML, CSS, SQL, and XML. You can select your language from the dropdown menu.'
+  },
+  {
+    question: 'Can I customize the indentation?',
+    answer: 'Yes! You can choose between 2, 4, or 8 spaces for indentation to match your coding style or project requirements.'
+  },
+  {
+    question: 'Does it validate my code?',
+    answer: 'For JSON, the beautifier validates the syntax before formatting. For other languages, it performs basic formatting without full validation.'
+  },
+  {
+    question: 'Is my code sent to a server?',
+    answer: 'No, all code beautification happens locally in your browser. Your code never leaves your device.'
+  },
+  {
+    question: 'Can I beautify minified code?',
+    answer: 'Yes! The Code Beautifier is perfect for making minified or compressed code readable again by adding proper indentation and line breaks.'
+  }
+];
+---
+
+<BaseLayout
+  title="Code Beautifier - Free Online Code Formatter"
+  description={tool.description}
+  keywords={['code beautifier', 'format code', 'prettify code', 'code formatter online', 'beautify javascript', 'beautify css', 'beautify html', 'beautify json']}
+>
+  <CodeBeautifier client:load />
+  <ToolSchema {...tool} />
+  <FAQSchema faqs={faqs} />
+</BaseLayout>

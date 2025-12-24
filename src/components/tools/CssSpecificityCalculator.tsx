@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface SpecificityResult {
   selector: string;
@@ -78,8 +80,20 @@ export default function CssSpecificityCalculator() {
     setOutput(outputText);
   }, [selectors]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={calculate} className="btn-primary">
+          Calculate Specificity
+        </button>
+        <button onClick={() => { setSelectors(''); setResults([]); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={selectors}
         onChange={setSelectors}
@@ -88,14 +102,14 @@ export default function CssSpecificityCalculator() {
         placeholder="div.container&#10;#header .nav-item&#10;a:hover"
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={calculate} className="btn-primary">
-          Calculate Specificity
-        </button>
-        <button onClick={() => { setSelectors(''); setResults([]); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {results.length > 0 && (
         <div className="space-y-3">
@@ -153,7 +167,7 @@ export default function CssSpecificityCalculator() {
           <li>• Higher specificity wins when selectors conflict</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

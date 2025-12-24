@@ -1,5 +1,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { Calculator, TrendingUp } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CompoundInterestCalculator() {
   const [principal, setPrincipal] = useState('');
@@ -48,8 +50,10 @@ export default function CompoundInterestCalculator() {
   const results = calculate();
   const maxAmount = Math.max(...results.dataPoints.map(d => d.amount), parseFloat(principal) || 1);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <h3 className="text-lg font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
@@ -208,7 +212,7 @@ export default function CompoundInterestCalculator() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

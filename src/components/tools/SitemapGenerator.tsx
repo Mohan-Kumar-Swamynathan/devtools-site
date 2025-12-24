@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function SitemapGenerator() {
   const [urls, setUrls] = useState('');
@@ -25,8 +27,20 @@ ${urlList.map(url => `  <url>
     setOutput(xml);
   }, [urls, changefreq, priority]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} disabled={!urls} className="btn-primary">
+          Generate Sitemap
+        </button>
+        <button onClick={() => { setUrls(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={urls}
         onChange={setUrls}
@@ -64,14 +78,14 @@ https://example.com/contact"
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} disabled={!urls} className="btn-primary">
-          Generate Sitemap
-        </button>
-        <button onClick={() => { setUrls(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -81,7 +95,7 @@ https://example.com/contact"
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

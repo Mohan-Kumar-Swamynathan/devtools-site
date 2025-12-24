@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JwtValidator() {
   const [input, setInput] = useState('');
@@ -55,8 +57,20 @@ export default function JwtValidator() {
     }
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={validate} disabled={!input} className="btn-primary">
+          Validate JWT
+        </button>
+        <button onClick={() => { setInput(''); setResult(null); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -65,14 +79,14 @@ export default function JwtValidator() {
         placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={validate} disabled={!input} className="btn-primary">
-          Validate JWT
-        </button>
-        <button onClick={() => { setInput(''); setResult(null); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {result && (
@@ -114,7 +128,7 @@ export default function JwtValidator() {
           )}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

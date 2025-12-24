@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function HashGenerator() {
   const [input, setInput] = useState('');
@@ -83,17 +85,9 @@ export default function HashGenerator() {
     setHashes(newHashes);
   }, [input]);
 
-  return (
-    <div className="space-y-6">
-      <CodeEditor
-        value={input}
-        onChange={setInput}
-        language="text"
-        label="Text to Hash"
-        placeholder="Enter text to generate hash"
-      />
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <select value={algorithm} onChange={(e) => setAlgorithm(e.target.value as any)} className="input-base">
           <option value="sha256">SHA-256</option>
           <option value="sha1">SHA-1</option>
@@ -110,6 +104,35 @@ export default function HashGenerator() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      <CodeEditor
+        value={input}
+        onChange={setInput}
+        language="text"
+        label="Text to Hash"
+        placeholder="Enter text to generate hash"
+      />
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {Object.keys(hashes).length > 0 && (
         <div className="space-y-3">
@@ -121,7 +144,7 @@ export default function HashGenerator() {
           ))}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

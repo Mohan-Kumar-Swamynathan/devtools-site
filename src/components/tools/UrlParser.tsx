@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function UrlParser() {
   const [url, setUrl] = useState('');
@@ -29,8 +31,20 @@ export default function UrlParser() {
     }
   }, [url]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={parse} disabled={!url} className="btn-primary">
+          Parse URL
+        </button>
+        <button onClick={() => { setUrl(''); setParsed(null); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">URL to Parse</label>
         <input
@@ -46,14 +60,14 @@ export default function UrlParser() {
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={parse} disabled={!url} className="btn-primary">
-          Parse URL
-        </button>
-        <button onClick={() => { setUrl(''); setParsed(null); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {parsed && (
@@ -109,7 +123,7 @@ export default function UrlParser() {
           )}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

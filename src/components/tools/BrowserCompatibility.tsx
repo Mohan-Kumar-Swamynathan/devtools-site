@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Search, Info } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const FEATURES = [
   { name: 'CSS Grid', support: { chrome: '57+', firefox: '52+', safari: '10.1+', edge: '16+' } },
@@ -22,8 +24,10 @@ export default function BrowserCompatibility() {
     f.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="space-y-4">
         <div>
           <label className="label">Search Features</label>
@@ -121,7 +125,7 @@ export default function BrowserCompatibility() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

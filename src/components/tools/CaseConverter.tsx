@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CaseConverter() {
   const [input, setInput] = useState('');
@@ -47,8 +49,10 @@ export default function CaseConverter() {
     convert();
   }, [convert]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={(v) => { setInput(v); convert(); }}
@@ -77,7 +81,7 @@ export default function CaseConverter() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

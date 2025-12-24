@@ -11,11 +11,12 @@ interface Props {
   description: string;
   steps: Step[];
   totalTime?: string;
+  performTime?: string;
   tool?: string[];
   supply?: string[];
 }
 
-const { name, description, steps, totalTime, tool, supply } = Astro.props;
+const { name, description, steps, totalTime, performTime, tool, supply } = Astro.props;
 const siteUrl = 'https://devtool.site';
 const currentUrl = new URL(Astro.url.pathname, siteUrl).href;
 
@@ -31,11 +32,20 @@ const howToSchema: any = {
     "text": step.text,
     ...(step.image && { "image": new URL(step.image, siteUrl).href }),
     ...(step.url && { "url": new URL(step.url, siteUrl).href })
-  }))
+  })),
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+  }
 };
 
 if (totalTime) {
   howToSchema.totalTime = totalTime;
+}
+
+if (performTime) {
+  howToSchema.performTime = performTime;
 }
 
 if (tool && tool.length > 0) {
@@ -54,6 +64,9 @@ if (supply && supply.length > 0) {
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+
+
+
 
 
 

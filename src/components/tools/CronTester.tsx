@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CronTester() {
   const [expression, setExpression] = useState('0 * * * *');
@@ -57,8 +59,20 @@ export default function CronTester() {
     }
   }, [expression]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={test} disabled={!expression} className="btn-primary">
+          Test Expression
+        </button>
+        <button onClick={() => { setExpression('0 * * * *'); setResult(''); setIsValid(null); }} className="btn-ghost">
+          Reset
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Cron Expression</label>
         <input
@@ -73,14 +87,14 @@ export default function CronTester() {
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={test} disabled={!expression} className="btn-primary">
-          Test Expression
-        </button>
-        <button onClick={() => { setExpression('0 * * * *'); setResult(''); setIsValid(null); }} className="btn-ghost">
-          Reset
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {result && (
         <div>
@@ -90,7 +104,7 @@ export default function CronTester() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

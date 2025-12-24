@@ -5,6 +5,8 @@ import { FileText, Loader, AlertCircle } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { initModel, isModelReady, isModelLoading, generateResponse } from '@/lib/assistant/browserLLM';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TextSummarizer() {
   const [input, setInput] = useState('');
@@ -65,8 +67,38 @@ export default function TextSummarizer() {
     }
   }, [input, modelReady]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button
+          onClick={summarize}
+          disabled={!input.trim() || isSummarizing || !modelReady}
+          className="btn-primary flex items-center gap-2"
+        >
+          {isSummarizing ? (
+            <>
+              <Loader size={16} className="animate-spin" />
+              Summarizing...
+            </>
+          ) : (
+            <>
+              <FileText size={16} />
+              Summarize
+            </>
+          )}
+        </button>
+        <button
+          onClick={() => { setInput(''); setSummary(''); setError(''); }}
+          className="btn-ghost"
+          disabled={isSummarizing}
+        >
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {/* Model Status */}
       {!modelReady && !modelLoading && (
         <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-primary)' }}>
@@ -120,32 +152,32 @@ export default function TextSummarizer() {
       />
 
       {/* Actions */}
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={summarize}
-          disabled={!input.trim() || isSummarizing || !modelReady}
-          className="btn-primary flex items-center gap-2"
-        >
-          {isSummarizing ? (
-            <>
-              <Loader size={16} className="animate-spin" />
-              Summarizing...
-            </>
-          ) : (
-            <>
-              <FileText size={16} />
-              Summarize
-            </>
-          )}
-        </button>
-        <button
-          onClick={() => { setInput(''); setSummary(''); setError(''); }}
-          className="btn-ghost"
-          disabled={isSummarizing}
-        >
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Error */}
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
@@ -158,9 +190,11 @@ export default function TextSummarizer() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
+
+
 
 
 

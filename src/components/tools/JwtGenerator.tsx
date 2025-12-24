@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JwtGenerator() {
   const [header, setHeader] = useState('{"alg":"HS256","typ":"JWT"}');
@@ -42,8 +44,20 @@ export default function JwtGenerator() {
     }
   }, [header, payload, secret]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} className="btn-primary">
+          Generate JWT
+        </button>
+        <button onClick={() => { setHeader('{"alg":"HS256","typ":"JWT"}'); setPayload('{"sub":"1234567890","name":"John Doe","iat":1516239022}'); setSecret(''); setToken(''); setError(''); }} className="btn-ghost">
+          Reset
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={header}
         onChange={setHeader}
@@ -71,14 +85,14 @@ export default function JwtGenerator() {
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} className="btn-primary">
-          Generate JWT
-        </button>
-        <button onClick={() => { setHeader('{"alg":"HS256","typ":"JWT"}'); setPayload('{"sub":"1234567890","name":"John Doe","iat":1516239022}'); setSecret(''); setToken(''); setError(''); }} className="btn-ghost">
-          Reset
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {token && (
@@ -88,7 +102,7 @@ export default function JwtGenerator() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

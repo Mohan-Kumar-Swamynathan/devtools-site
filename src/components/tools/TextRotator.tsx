@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TextRotator() {
   const [input, setInput] = useState('');
@@ -33,8 +35,10 @@ export default function TextRotator() {
     setOutput(rotation === 'ROT13' ? rot13(input) : rot47(input));
   }, [input, rotation]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Rotation Type</label>
         <select value={rotation} onChange={(e) => { setRotation(e.target.value as any); rotate(); }} className="input-base">
@@ -58,7 +62,7 @@ export default function TextRotator() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

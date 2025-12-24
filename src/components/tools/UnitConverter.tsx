@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 type UnitType = 'length' | 'weight' | 'temperature';
 
@@ -60,8 +62,10 @@ export default function UnitConverter() {
 
   const units = unitType === 'length' ? lengthUnits : unitType === 'weight' ? weightUnits : tempUnits;
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Unit Type</label>
         <select value={unitType} onChange={(e) => { setUnitType(e.target.value as UnitType); setFromValue(''); setResult(''); }} className="input-base">
@@ -109,7 +113,7 @@ export default function UnitConverter() {
           <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>{toUnit}</p>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

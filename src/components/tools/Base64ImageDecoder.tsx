@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { Download } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function Base64ImageDecoder() {
   const [input, setInput] = useState('');
@@ -37,17 +39,9 @@ export default function Base64ImageDecoder() {
     document.body.removeChild(link);
   }, [imageUrl]);
 
-  return (
-    <div className="space-y-6">
-      <CodeEditor
-        value={input}
-        onChange={setInput}
-        language="text"
-        label="Base64 String"
-        placeholder="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
-      />
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button onClick={decode} disabled={!input} className="btn-primary">
           Decode Image
         </button>
@@ -61,6 +55,32 @@ export default function Base64ImageDecoder() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      <CodeEditor
+        value={input}
+        onChange={setInput}
+        language="text"
+        label="Base64 String"
+        placeholder="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+      />
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {imageUrl && (
@@ -68,7 +88,7 @@ export default function Base64ImageDecoder() {
           <img src={imageUrl} alt="Decoded" className="max-w-full max-h-96 rounded-lg" />
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

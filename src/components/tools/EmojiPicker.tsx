@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Search, Copy } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 const EMOJI_CATEGORIES = {
@@ -27,9 +28,9 @@ export default function EmojiPicker() {
     !search || emoji.includes(search)
   );
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <div className="flex-1 min-w-[200px]">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2" size={18} style={{ color: 'var(--text-muted)' }} />
@@ -43,6 +44,24 @@ export default function EmojiPicker() {
           </div>
         </div>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="flex flex-wrap gap-2 mb-4">
         {Object.keys(EMOJI_CATEGORIES).map(category => (
@@ -80,7 +99,7 @@ export default function EmojiPicker() {
           ))}
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

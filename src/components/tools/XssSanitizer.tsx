@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function XssSanitizer() {
   const [input, setInput] = useState('');
@@ -27,17 +29,9 @@ export default function XssSanitizer() {
     setOutput(escaped);
   }, [input]);
 
-  return (
-    <div className="space-y-6">
-      <CodeEditor
-        value={input}
-        onChange={setInput}
-        language="html"
-        label="HTML Input (potentially unsafe)"
-        placeholder='<script>alert("XSS")</script><p>Hello</p>'
-      />
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button onClick={sanitize} disabled={!input} className="btn-primary">
           Sanitize (Remove HTML)
         </button>
@@ -48,6 +42,29 @@ export default function XssSanitizer() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      <CodeEditor
+        value={input}
+        onChange={setInput}
+        language="html"
+        label="HTML Input (potentially unsafe)"
+        placeholder='<script>alert("XSS")</script><p>Hello</p>'
+      />
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -56,7 +73,7 @@ export default function XssSanitizer() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

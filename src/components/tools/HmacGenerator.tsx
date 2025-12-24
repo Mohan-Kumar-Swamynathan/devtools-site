@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function HmacGenerator() {
   const [message, setMessage] = useState('');
@@ -40,8 +42,20 @@ export default function HmacGenerator() {
     }
   }, [message, secret, algorithm]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} disabled={!message || !secret} className="btn-primary">
+          Generate HMAC
+        </button>
+        <button onClick={() => { setMessage(''); setSecret(''); setOutput(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={message}
         onChange={setMessage}
@@ -70,14 +84,14 @@ export default function HmacGenerator() {
         </select>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} disabled={!message || !secret} className="btn-primary">
-          Generate HMAC
-        </button>
-        <button onClick={() => { setMessage(''); setSecret(''); setOutput(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
@@ -87,7 +101,7 @@ export default function HmacGenerator() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

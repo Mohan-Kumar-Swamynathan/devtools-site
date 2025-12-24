@@ -3,6 +3,8 @@ import { Search, Globe, MapPin, Server, Loader } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface IPInfo {
   ip: string;
@@ -98,8 +100,10 @@ export default function IpAddressLookup() {
     lookupIP(ip.trim());
   }, [ip, lookupIP]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="space-y-4">
@@ -282,7 +286,7 @@ export default function IpAddressLookup() {
           <li>• Your IP address is used for API requests</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Image, Download } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function Base64ToImage() {
   const [base64, setBase64] = useState('');
@@ -57,8 +59,10 @@ export default function Base64ToImage() {
     document.body.removeChild(link);
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <h3 className="text-lg font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
@@ -137,7 +141,7 @@ export default function Base64ToImage() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

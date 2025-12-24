@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const statusCodes = [
   { code: 100, name: 'Continue', description: 'The server has received the request headers' },
@@ -48,8 +50,10 @@ export default function HttpStatusCodes() {
     return '#6b7280';
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex flex-wrap items-center gap-4">
         <input
           type="text"
@@ -87,7 +91,7 @@ export default function HttpStatusCodes() {
           </div>
         ))}
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

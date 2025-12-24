@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CsvToMarkdown() {
   const [input, setInput] = useState('');
@@ -34,8 +36,10 @@ export default function CsvToMarkdown() {
     setOutput(markdown.trim());
   }, [input]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={(v) => { setInput(v); convert(); }}
@@ -54,6 +58,6 @@ Jane,25,LA"
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }

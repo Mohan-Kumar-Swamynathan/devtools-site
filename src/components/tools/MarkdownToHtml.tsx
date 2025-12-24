@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import { marked } from 'marked';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function MarkdownToHtml() {
   const [markdown, setMarkdown] = useState('# Hello World\n\nThis is **markdown** text.');
@@ -23,8 +25,10 @@ export default function MarkdownToHtml() {
     convert();
   }, [convert]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
           <CodeEditor
@@ -72,6 +76,6 @@ export default function MarkdownToHtml() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }

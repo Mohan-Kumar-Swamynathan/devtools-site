@@ -1,0 +1,105 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  applicationCategory?: string;
+  operatingSystem?: string;
+  featureList?: string[];
+  screenshot?: string;
+  video?: string;
+  softwareVersion?: string;
+  releaseNotes?: string;
+  aggregateRating?: {
+    ratingValue: number;
+    ratingCount: number;
+  };
+}
+
+const { 
+  name, 
+  description, 
+  applicationCategory = "DeveloperApplication", 
+  operatingSystem = "Web",
+  featureList = [],
+  screenshot,
+  video,
+  softwareVersion = "1.0.0",
+  releaseNotes,
+  aggregateRating
+} = Astro.props;
+
+const siteUrl = 'https://devtool.site';
+const toolUrl = new URL(Astro.url.pathname, siteUrl).href;
+
+const schema: any = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": name,
+  "description": description,
+  "url": toolUrl,
+  "applicationCategory": applicationCategory,
+  "applicationSubCategory": "Developer Tool",
+  "operatingSystem": operatingSystem,
+  "softwareVersion": softwareVersion,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "DevTools",
+    "url": siteUrl
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "DevTools",
+    "url": siteUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/icon-512.png`
+    }
+  }
+};
+
+// Add feature list if provided
+if (featureList.length > 0) {
+  schema.featureList = featureList;
+}
+
+// Add screenshot if provided
+if (screenshot) {
+  schema.screenshot = new URL(screenshot, siteUrl).href;
+}
+
+// Add video if provided
+if (video) {
+  schema.video = {
+    "@type": "VideoObject",
+    "name": `How to use ${name}`,
+    "description": `Tutorial video for ${name}`,
+    "thumbnailUrl": new URL(screenshot || '/og-image.png', siteUrl).href,
+    "contentUrl": new URL(video, siteUrl).href
+  };
+}
+
+// Add release notes if provided
+if (releaseNotes) {
+  schema.releaseNotes = releaseNotes;
+}
+
+// Add aggregate rating if provided
+if (aggregateRating) {
+  schema.aggregateRating = {
+    "@type": "AggregateRating",
+    "ratingValue": aggregateRating.ratingValue,
+    "ratingCount": aggregateRating.ratingCount,
+    "bestRating": 5,
+    "worstRating": 1
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+

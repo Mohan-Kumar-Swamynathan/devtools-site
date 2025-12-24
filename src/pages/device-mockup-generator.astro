@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import DeviceMockupGenerator from '@/components/tools/DeviceMockupGenerator';
+
+const toolData = {
+  name: 'Device Mockup Generator',
+  description: 'Create beautiful device mockups for your screenshots instantly. Browser windows, iPhone frames, and custom backgrounds.',
+  category: 'Images'
+};
+---
+
+<BaseLayout
+  title={toolData.name}
+  description={toolData.description}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <DeviceMockupGenerator client:load />
+  </ToolLayout>
+</BaseLayout>

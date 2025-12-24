@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function QueryStringParser() {
   const [input, setInput] = useState('');
@@ -57,8 +59,24 @@ export default function QueryStringParser() {
     setError('');
   };
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button 
+          onClick={mode === 'parse' ? parse : build} 
+          disabled={!input} 
+          className="btn-primary"
+        >
+          {mode === 'parse' ? 'Parse' : 'Build'}
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('parse')}
@@ -88,18 +106,18 @@ export default function QueryStringParser() {
         placeholder={mode === 'parse' ? 'key1=value1&key2=value2' : '{"key1": "value1", "key2": "value2"}'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button 
-          onClick={mode === 'parse' ? parse : build} 
-          disabled={!input} 
-          className="btn-primary"
-        >
-          {mode === 'parse' ? 'Parse' : 'Build'}
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
@@ -110,7 +128,7 @@ export default function QueryStringParser() {
           showLineNumbers={mode === 'parse'}
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,5 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { Download } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 import type { QRCode } from 'qrcode-generator';
 
 export default function QrGenerator() {
@@ -54,20 +56,9 @@ export default function QrGenerator() {
     img.src = 'data:image/svg+xml;base64,' + btoa(qrSvg);
   }, [qrSvg]);
 
-  return (
-    <div className="space-y-6">
-      <div>
-        <label className="label">Text or URL</label>
-        <textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter text or URL to generate QR code"
-          className="input-base min-h-[100px]"
-          onBlur={generate}
-        />
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button onClick={generate} disabled={!text} className="btn-primary">
           Generate QR Code
         </button>
@@ -81,6 +72,35 @@ export default function QrGenerator() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      <div>
+        <label className="label">Text or URL</label>
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Enter text or URL to generate QR code"
+          className="input-base min-h-[100px]"
+          onBlur={generate}
+        />
+      </div>
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {qrSvg && (
         <div className="flex justify-center p-6 rounded-xl border" style={{ borderColor: 'var(--border-primary)' }}>
@@ -88,7 +108,7 @@ export default function QrGenerator() {
           <canvas ref={canvasRef} className="hidden" />
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

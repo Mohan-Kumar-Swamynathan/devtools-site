@@ -1,5 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { Upload, Download, X } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ImageResizer() {
   const [imageUrl, setImageUrl] = useState('');
@@ -71,8 +73,27 @@ export default function ImageResizer() {
     }
   };
 
+  
+  const controls = (
+              <div className="flex items-center gap-3">
+            <button onClick={resize} className="btn-primary">
+              Resize Image
+            </button>
+            {resizedUrl && (
+              <button onClick={download} className="btn-secondary flex items-center gap-2">
+                <Download size={18} />
+                Download
+              </button>
+            )}
+            <button onClick={clear} className="btn-ghost">
+              <X size={18} />
+              Clear
+            </button>
+          </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Upload Image</label>
         <div className="flex items-center gap-3">
@@ -148,21 +169,21 @@ export default function ImageResizer() {
             <span>Maintain aspect ratio</span>
           </label>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <button onClick={resize} className="btn-primary">
-              Resize Image
-            </button>
-            {resizedUrl && (
-              <button onClick={download} className="btn-secondary flex items-center gap-2">
-                <Download size={18} />
-                Download
-              </button>
-            )}
-            <button onClick={clear} className="btn-ghost">
-              <X size={18} />
-              Clear
-            </button>
-          </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           {resizedUrl && (
             <div>
@@ -175,7 +196,7 @@ export default function ImageResizer() {
         </>
       )}
       <canvas ref={canvasRef} className="hidden" />
-    </div>
+    </ToolShell>
   );
 }
 

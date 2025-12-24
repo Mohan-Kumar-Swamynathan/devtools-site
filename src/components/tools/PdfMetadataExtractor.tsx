@@ -3,6 +3,8 @@ import { Upload, Trash2, Info } from 'lucide-react';
 import { PDFDocument } from 'pdf-lib';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function PdfMetadataExtractor() {
   const [pdf, setPdf] = useState<File | null>(null);
@@ -54,15 +56,14 @@ export default function PdfMetadataExtractor() {
 
   const formatSize = (bytes: number) => {
     if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+    if (bytes < 1024 * 1024) 
+
+  return (bytes / 1024).toFixed(2) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   };
 
-  return (
-    <div className="space-y-6">
-      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
-
-      <div className="flex flex-wrap items-center gap-3">
+    const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isLoading}
@@ -100,6 +101,50 @@ export default function PdfMetadataExtractor() {
           className="hidden"
         />
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {pdf && metadata && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -189,7 +234,7 @@ export default function PdfMetadataExtractor() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

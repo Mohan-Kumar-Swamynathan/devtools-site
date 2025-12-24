@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Copy, RotateCcw, Palette } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 const generatePalette = (baseColor: string) => {
@@ -54,9 +55,9 @@ export default function ColorPaletteGenerator() {
     });
   }, [palette, showToast]);
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={handleCopyPalette}
           className="btn-primary flex items-center gap-2"
@@ -75,6 +76,29 @@ export default function ColorPaletteGenerator() {
           Random Color
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="space-y-4">
         <div>
@@ -139,7 +163,7 @@ export default function ColorPaletteGenerator() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

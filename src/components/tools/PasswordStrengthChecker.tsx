@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Eye, EyeOff, Check, X } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function PasswordStrengthChecker() {
   const [password, setPassword] = useState('');
@@ -44,8 +46,10 @@ export default function PasswordStrengthChecker() {
 
   const result = checkStrength(password);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="space-y-4">
         <div>
           <label className="label">Password</label>
@@ -116,6 +120,6 @@ export default function PasswordStrengthChecker() {
           </div>
         )}
       </div>
-    </div>
+    </ToolShell>
   );
 }

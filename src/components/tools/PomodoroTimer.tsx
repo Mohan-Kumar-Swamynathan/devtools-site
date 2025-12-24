@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Play, Pause, RotateCcw, Bell } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const POMODORO_DURATION = 25 * 60; // 25 minutes in seconds
 const SHORT_BREAK = 5 * 60; // 5 minutes
@@ -49,7 +51,7 @@ export default function PomodoroTimer() {
       }
     }
 
-    return () => {
+  return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
@@ -94,8 +96,10 @@ export default function PomodoroTimer() {
     setIsRunning(false);
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="max-w-2xl mx-auto">
         <div className="flex justify-center gap-2 mb-6">
           <button
@@ -208,7 +212,7 @@ export default function PomodoroTimer() {
           </div>
         )}
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

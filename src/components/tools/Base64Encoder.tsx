@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function Base64Encoder() {
   const [input, setInput] = useState('');
@@ -29,8 +31,24 @@ export default function Base64Encoder() {
     setOutput('');
   };
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button 
+          onClick={mode === 'encode' ? encode : decode} 
+          disabled={!input} 
+          className="btn-primary"
+        >
+          {mode === 'encode' ? 'Encode' : 'Decode'}
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('encode')}
@@ -60,18 +78,18 @@ export default function Base64Encoder() {
         placeholder={mode === 'encode' ? 'Hello World' : 'SGVsbG8gV29ybGQ='}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button 
-          onClick={mode === 'encode' ? encode : decode} 
-          disabled={!input} 
-          className="btn-primary"
-        >
-          {mode === 'encode' ? 'Encode' : 'Decode'}
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -80,7 +98,7 @@ export default function Base64Encoder() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

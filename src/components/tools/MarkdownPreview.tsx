@@ -2,6 +2,8 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { marked } from 'marked';
 import { Highlight } from 'prism-react-renderer';
 import { ChevronDown, ChevronUp, Copy, Check, RotateCcw } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 // Configure marked with GFM support
 marked.setOptions({
@@ -210,7 +212,7 @@ export default function MarkdownPreview() {
     editor.addEventListener('scroll', handleEditorScroll);
     preview.addEventListener('scroll', handlePreviewScroll);
 
-    return () => {
+  return () => {
       editor.removeEventListener('scroll', handleEditorScroll);
       preview.removeEventListener('scroll', handlePreviewScroll);
     };
@@ -255,8 +257,10 @@ export default function MarkdownPreview() {
     setExpandedExample(null);
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {/* Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl border" 
         style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-primary)' }}>
@@ -492,6 +496,6 @@ export default function MarkdownPreview() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }

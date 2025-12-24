@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function HtaccessGenerator() {
   const [rules, setRules] = useState({
@@ -77,8 +79,10 @@ export default function HtaccessGenerator() {
     generate();
   }, [generate]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="space-y-4">
         <label className="flex items-center gap-2 cursor-pointer">
           <input
@@ -145,7 +149,7 @@ export default function HtaccessGenerator() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

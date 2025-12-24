@@ -1,0 +1,21 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import SocialMediaImageResizer from '@/components/tools/SocialMediaImageResizer';
+
+const toolData = {
+  name: 'Social Media Image Resizer',
+  description: 'Resize and crop images for Instagram, Twitter, LinkedIn, and more. Perfect aspect ratios every time.',
+  category: 'Images'
+};
+---
+
+<BaseLayout
+  title={toolData.name}
+  description={toolData.description}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <SocialMediaImageResizer client:load />
+  </ToolLayout>
+</BaseLayout>

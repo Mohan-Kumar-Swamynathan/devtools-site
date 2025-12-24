@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function RobotsTxtGenerator() {
   const [userAgent, setUserAgent] = useState('*');
@@ -62,8 +64,20 @@ export default function RobotsTxtGenerator() {
     setOutput(lines.join('\n'));
   }, [userAgent, allowPaths, disallowPaths, crawlDelay, sitemap]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} className="btn-primary">
+          Generate robots.txt
+        </button>
+        <button onClick={() => { setUserAgent('*'); setAllowPaths(['']); setDisallowPaths(['/admin', '/private']); setSitemap(''); setCrawlDelay(''); setOutput(''); }} className="btn-ghost">
+          Reset
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">User-agent</label>
         <input
@@ -136,14 +150,14 @@ export default function RobotsTxtGenerator() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} className="btn-primary">
-          Generate robots.txt
-        </button>
-        <button onClick={() => { setUserAgent('*'); setAllowPaths(['']); setDisallowPaths(['/admin', '/private']); setSitemap(''); setCrawlDelay(''); setOutput(''); }} className="btn-ghost">
-          Reset
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -153,7 +167,7 @@ export default function RobotsTxtGenerator() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

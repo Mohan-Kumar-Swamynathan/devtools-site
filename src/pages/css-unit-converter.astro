@@ -1,0 +1,11 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import CssUnitConverter from '../components/tools/CssUnitConverter';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('css-unit-converter')!;
+---
+
+<ToolLayout tool={tool}>
+  <CssUnitConverter client:load />
+</ToolLayout>

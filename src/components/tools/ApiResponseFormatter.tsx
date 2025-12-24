@@ -1,6 +1,9 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import CollapsibleSection from '@/components/common/CollapsibleSection';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ApiResponseFormatter() {
   const [input, setInput] = useState('');
@@ -30,8 +33,10 @@ export default function ApiResponseFormatter() {
     }
   }, [input, format]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Response Format</label>
         <select value={format} onChange={(e) => { setFormat(e.target.value as any); formatResponse(); }} className="input-base">
@@ -40,24 +45,36 @@ export default function ApiResponseFormatter() {
         </select>
       </div>
 
-      <CodeEditor
-        value={input}
-        onChange={(v) => { setInput(v); formatResponse(); }}
-        language={format}
-        label="API Response"
-        placeholder={format === 'json' ? '{"status":"success","data":{}}' : '<?xml version="1.0"?><response><status>success</status></response>'}
-      />
+      <CollapsibleSection
+        title="Input"
+        persistKey="api-response-formatter-input-expanded"
+        defaultExpanded={true}
+      >
+        <CodeEditor
+          value={input}
+          onChange={(v) => { setInput(v); formatResponse(); }}
+          language={format}
+          label="API Response"
+          placeholder={format === 'json' ? '{"status":"success","data":{}}' : '<?xml version="1.0"?><response><status>success</status></response>'}
+        />
+      </CollapsibleSection>
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
-        <OutputPanel
-          value={output}
-          label="Formatted Response"
-          language={format}
-          showLineNumbers
-        />
+        <CollapsibleSection
+          title="Output"
+          persistKey="api-response-formatter-output-expanded"
+          defaultExpanded={true}
+        >
+          <OutputPanel
+            value={output}
+            label="Formatted Response"
+            language={format}
+            showLineNumbers
+          />
+        </CollapsibleSection>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

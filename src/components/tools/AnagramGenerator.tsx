@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function AnagramGenerator() {
   const [input, setInput] = useState('');
@@ -49,8 +51,20 @@ export default function AnagramGenerator() {
     setOutput(Array.from(anagrams).join('\n') || 'No anagrams generated');
   }, [input, maxResults]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generateAnagrams} disabled={!input} className="btn-primary">
+          Generate Anagrams
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -72,14 +86,14 @@ export default function AnagramGenerator() {
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generateAnagrams} disabled={!input} className="btn-primary">
-          Generate Anagrams
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -88,7 +102,7 @@ export default function AnagramGenerator() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

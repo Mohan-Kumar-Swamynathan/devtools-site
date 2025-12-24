@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Monitor, Smartphone, Tablet, Maximize2, RotateCcw } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 type DevicePreset = {
   name: string;
@@ -74,8 +76,10 @@ export default function ResponsiveDesignTester() {
     }
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-4">
           <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
@@ -279,7 +283,7 @@ export default function ResponsiveDesignTester() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

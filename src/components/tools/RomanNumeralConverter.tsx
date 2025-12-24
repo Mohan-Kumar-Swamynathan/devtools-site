@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const romanNumerals: Array<[number, string]> = [
   [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
@@ -83,8 +85,24 @@ export default function RomanNumeralConverter() {
     setError('');
   };
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button 
+          onClick={mode === 'number-to-roman' ? numberToRoman : romanToNumber} 
+          disabled={!input} 
+          className="btn-primary"
+        >
+          Convert
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('number-to-roman')}
@@ -118,18 +136,18 @@ export default function RomanNumeralConverter() {
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button 
-          onClick={mode === 'number-to-roman' ? numberToRoman : romanToNumber} 
-          disabled={!input} 
-          className="btn-primary"
-        >
-          Convert
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
@@ -139,7 +157,7 @@ export default function RomanNumeralConverter() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

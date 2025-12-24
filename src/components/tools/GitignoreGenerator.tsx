@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const gitignoreTemplates: Record<string, string> = {
   node: `# Dependencies
@@ -144,8 +146,20 @@ export default function GitignoreGenerator() {
     setOutput(lines.join('\n').trim());
   }, [selected]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} disabled={selected.length === 0} className="btn-primary">
+          Generate .gitignore
+        </button>
+        <button onClick={() => { setSelected([]); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Select Technologies</label>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -169,14 +183,14 @@ export default function GitignoreGenerator() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} disabled={selected.length === 0} className="btn-primary">
-          Generate .gitignore
-        </button>
-        <button onClick={() => { setSelected([]); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -186,7 +200,7 @@ export default function GitignoreGenerator() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

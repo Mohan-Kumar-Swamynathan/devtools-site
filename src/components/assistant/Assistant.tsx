@@ -8,7 +8,6 @@ export default function Assistant() {
 
   return (
     <>
-      <FloatingCharacter onOpenPanel={() => setIsOpen(true)} />
       <AssistantButton onClick={() => setIsOpen(true)} />
       {isOpen && <AssistantPanel onClose={() => setIsOpen(false)} />}
     </>

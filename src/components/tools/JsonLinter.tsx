@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JsonLinter() {
   const [input, setInput] = useState('');
@@ -48,8 +50,20 @@ export default function JsonLinter() {
     }
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={lint} disabled={!input} className="btn-primary">
+          Lint JSON
+        </button>
+        <button onClick={() => { setInput(''); setErrors([]); setFormatted(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -58,14 +72,14 @@ export default function JsonLinter() {
         placeholder='{"key": "value"}'
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={lint} disabled={!input} className="btn-primary">
-          Lint JSON
-        </button>
-        <button onClick={() => { setInput(''); setErrors([]); setFormatted(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {errors.length > 0 && (
         <div>
@@ -93,7 +107,7 @@ export default function JsonLinter() {
           />
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

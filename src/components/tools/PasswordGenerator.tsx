@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import { Copy, Check } from 'lucide-react';
 import { randomString } from '@/lib/utils';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function PasswordGenerator() {
   const [password, setPassword] = useState('');
@@ -32,8 +34,10 @@ export default function PasswordGenerator() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {/* Password Display */}
       <div className="relative">
         <input
@@ -112,7 +116,7 @@ export default function PasswordGenerator() {
       <button onClick={generate} className="btn-primary w-full">
         Generate Password
       </button>
-    </div>
+    </ToolShell>
   );
 }
 

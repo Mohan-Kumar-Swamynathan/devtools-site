@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CurlConverter() {
   const [curl, setCurl] = useState('');
@@ -77,17 +79,9 @@ export default function CurlConverter() {
     setOutput(code);
   }, [curl, language]);
 
-  return (
-    <div className="space-y-6">
-      <CodeEditor
-        value={curl}
-        onChange={setCurl}
-        language="bash"
-        label="cURL Command"
-        placeholder='curl -X GET "https://api.example.com/data" -H "Authorization: Bearer token"'
-      />
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <select value={language} onChange={(e) => { setLanguage(e.target.value as any); convert(); }} className="input-base">
           <option value="javascript">JavaScript (fetch)</option>
           <option value="python">Python (requests)</option>
@@ -100,6 +94,31 @@ export default function CurlConverter() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      <CodeEditor
+        value={curl}
+        onChange={setCurl}
+        language="bash"
+        label="cURL Command"
+        placeholder='curl -X GET "https://api.example.com/data" -H "Authorization: Bearer token"'
+      />
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -109,7 +128,7 @@ export default function CurlConverter() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

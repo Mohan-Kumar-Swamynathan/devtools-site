@@ -348,6 +348,30 @@ export const tools: Tool[] = [
     icon: '🎨'
   },
   {
+    id: 'code-beautifier',
+    name: 'Code Beautifier',
+    slug: 'code-beautifier',
+    tagline: 'Beautify code in multiple languages',
+    description: 'Free multi-language code beautifier. Format JavaScript, TypeScript, JSON, HTML, CSS, SQL, and XML with customizable indentation.',
+    keywords: ['code beautifier', 'format code', 'prettify code', 'code formatter online', 'beautify javascript', 'beautify css', 'beautify html'],
+    category: categories.formatters,
+    icon: '✨',
+    isPopular: true,
+    isNew: true
+  },
+  {
+    id: 'string-utilities',
+    name: 'String Utilities',
+    slug: 'string-utilities',
+    tagline: 'Manipulate and analyze text strings',
+    description: 'String manipulation tools. Reverse, shuffle, sort, change case, trim, remove duplicates, and count characters, words, and lines.',
+    keywords: ['string utilities', 'text manipulation', 'reverse string', 'shuffle text', 'sort lines', 'character counter', 'word counter', 'string tools'],
+    category: categories.text,
+    icon: '🔤',
+    isPopular: true,
+    isNew: true
+  },
+  {
     id: 'js-formatter',
     name: 'JavaScript Formatter',
     slug: 'js-formatter',
@@ -755,6 +779,18 @@ export const tools: Tool[] = [
     icon: '⚙️'
   },
   // Web Tools
+  {
+    id: 'seo-analyzer',
+    name: 'SEO Analyzer',
+    slug: 'seo-analyzer',
+    tagline: 'Analyze and improve your SEO',
+    description: 'Free SEO analyzer tool. Check meta tags, structured data, Open Graph, Twitter Cards, and get actionable SEO recommendations to improve your search rankings.',
+    keywords: ['seo analyzer', 'seo checker', 'meta tags analyzer', 'seo audit tool', 'open graph checker', 'structured data validator', 'seo score'],
+    category: categories.web,
+    icon: '🔍',
+    isPopular: true,
+    isNew: true
+  },
   {
     id: 'url-parser',
     name: 'URL Parser',
@@ -2911,25 +2947,121 @@ export const tools: Tool[] = [
     icon: '📊',
     isNew: true,
     isPopular: true
-  }
+  },
+  {
+    id: 'device-mockup-generator',
+    name: 'Device Mockup Generator',
+    slug: 'device-mockup-generator',
+    tagline: 'Create device mockups',
+    description: 'Create beautiful device mockups for your screenshots. Browser windows, iPhone frames, and more.',
+    keywords: ['device mockup', 'browser frame', 'iphone mockup', 'screenshot wrapper'],
+    category: categories.image,
+    icon: '📱',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'social-media-image-resizer',
+    name: 'Social Media Image Resizer',
+    slug: 'social-media-image-resizer',
+    tagline: 'Resize for social media',
+    description: 'Resize and crop images for Instagram, Twitter, LinkedIn, and more.',
+    keywords: ['social media resizer', 'image cropper', 'instagram post size', 'twitter header size'],
+    category: categories.image,
+    icon: '🖼️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'wifi-qr-code-generator',
+    name: 'WiFi QR Code Generator',
+    slug: 'wifi-qr-code-generator',
+    tagline: 'Share WiFi via QR Code',
+    description: 'Generate a QR code to share your WiFi network credentials. Supports WPA/WPA2, WEP, and Open networks.',
+    keywords: ['wifi qr code', 'wifi sharing', 'qr code generator', 'wifi password share'],
+    category: categories.misc,
+    icon: '📶',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'jwt-debugger',
+    name: 'JWT Debugger',
+    slug: 'jwt-debugger',
+    tagline: 'Decode & Inspect JWTs',
+    description: 'Decode and verify JSON Web Tokens (JWT). Inspect header, payload and signature.',
+    keywords: ['jwt', 'json web token', 'decode jwt', 'jwt debugger', 'token inspector'],
+    category: categories.web,
+    icon: '🔒',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'keyboard-event-viewer',
+    name: 'Keyboard Event Viewer',
+    slug: 'keyboard-event-viewer',
+    tagline: 'Visualize Keyboard Events',
+    description: 'Real-time visualization of JavaScript keyboard events, key codes, and modifiers.',
+    keywords: ['keyboard event', 'keycode', 'javascript key event', 'key event viewer'],
+    category: categories.web,
+    icon: '⌨️',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'cron-expression-generator',
+    name: 'Cron Generator',
+    slug: 'cron-expression-generator',
+    tagline: 'Visual Cron Editor',
+    description: 'Generate and explain cron schedule expressions. Include visual breakdown of minute, hour, day, month, and week fields.',
+    keywords: ['cron', 'cron generator', 'cron scheduler', 'crontab', 'schedule editor'],
+    category: categories.misc,
+    icon: '⏰',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'regex-tester',
+    name: 'Regex Tester',
+    slug: 'regex-tester',
+    tagline: 'Test Regular Expressions',
+    description: 'Test and debug regular expressions in real-time. See matches, groups, and flags instantly.',
+    keywords: ['regex', 'regular expression', 'regex tester', 'pattern matching', 'regex debugger'],
+    category: categories.web,
+    icon: '🔍',
+    isNew: true,
+    isPopular: true
+  },
+  {
+    id: 'css-unit-converter',
+    name: 'CSS Unit Converter',
+    slug: 'css-unit-converter',
+    tagline: 'Convert CSS Units',
+    description: 'Convert between CSS units: px, rem, em, %, vw, vh, and pt. Essential for responsive design.',
+    keywords: ['css units', 'px to rem', 'rem to px', 'css converter', 'responsive design'],
+    category: categories.web,
+    icon: '📐',
+    isNew: true,
+    isPopular: true
+  },
 ];
 
 // Helper functions
-export const getToolBySlug = (slug: string): Tool | undefined => 
+export const getToolBySlug = (slug: string): Tool | undefined =>
   tools.find(t => t.slug === slug);
 
-export const getToolsByCategory = (categoryId: string): Tool[] => 
+export const getToolsByCategory = (categoryId: string): Tool[] =>
   tools.filter(t => t.category.id === categoryId);
 
-export const getPopularTools = (): Tool[] => 
+export const getPopularTools = (): Tool[] =>
   tools.filter(t => t.isPopular);
 
-export const getNewTools = (): Tool[] => 
+export const getNewTools = (): Tool[] =>
   tools.filter(t => t.isNew);
 
 export const searchTools = (query: string): Tool[] => {
   const q = query.toLowerCase();
-  return tools.filter(t => 
+  return tools.filter(t =>
     t.name.toLowerCase().includes(q) ||
     t.tagline.toLowerCase().includes(q) ||
     t.keywords.some(k => k.toLowerCase().includes(q))

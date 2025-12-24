@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Copy, Download, RotateCcw } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 export default function TextToSlug() {
@@ -61,9 +62,9 @@ export default function TextToSlug() {
     URL.revokeObjectURL(link.href);
   }, [slug]);
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={handleCopy}
           disabled={!slug}
@@ -91,6 +92,38 @@ export default function TextToSlug() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
@@ -166,7 +199,7 @@ export default function TextToSlug() {
           </label>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

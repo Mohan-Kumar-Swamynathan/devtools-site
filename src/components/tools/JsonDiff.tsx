@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { diffJson } from 'diff';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JsonDiff() {
   const [json1, setJson1] = useState('');
@@ -25,8 +27,20 @@ export default function JsonDiff() {
     }
   }, [json1, json2]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={compare} disabled={!json1 || !json2} className="btn-primary">
+          Compare
+        </button>
+        <button onClick={() => { setJson1(''); setJson2(''); setDiff([]); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <CodeEditor
           value={json1}
@@ -44,14 +58,14 @@ export default function JsonDiff() {
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={compare} disabled={!json1 || !json2} className="btn-primary">
-          Compare
-        </button>
-        <button onClick={() => { setJson1(''); setJson2(''); setDiff([]); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
 
@@ -80,7 +94,7 @@ export default function JsonDiff() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

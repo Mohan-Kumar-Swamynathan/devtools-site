@@ -1,0 +1,87 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  mainEntity?: string;
+  speakableSections?: string[];
+  breadcrumbs?: { name: string; url: string }[];
+}
+
+const { 
+  name, 
+  description, 
+  mainEntity,
+  speakableSections = [],
+  breadcrumbs = []
+} = Astro.props;
+
+const siteUrl = 'https://devtool.site';
+const currentUrl = new URL(Astro.url.pathname, siteUrl).href;
+
+const schema: any = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": name,
+  "description": description,
+  "url": currentUrl,
+  "inLanguage": "en-US",
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`
+  },
+  "about": {
+    "@type": "Thing",
+    "name": "Developer Tools"
+  },
+  "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": `${siteUrl}/og-image.png`
+  }
+};
+
+// Add speakable sections for voice search optimization
+if (speakableSections.length > 0) {
+  schema.speakable = {
+    "@type": "SpeakableSpecification",
+    "cssSelector": speakableSections
+  };
+}
+
+// Add main entity if provided
+if (mainEntity) {
+  schema.mainEntity = {
+    "@type": "SoftwareApplication",
+    "@id": mainEntity
+  };
+}
+
+// Add breadcrumb navigation
+if (breadcrumbs.length > 0) {
+  schema.breadcrumb = {
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": crumb.name,
+      "item": new URL(crumb.url, siteUrl).href
+    }))
+  };
+}
+
+// Add potential actions
+schema.potentialAction = [
+  {
+    "@type": "UseAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": currentUrl,
+      "actionPlatform": [
+        "http://schema.org/DesktopWebPlatform",
+        "http://schema.org/MobileWebPlatform"
+      ]
+    }
+  }
+];
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

@@ -3,6 +3,8 @@ import { Upload, Camera, X, CheckCircle, Loader } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import OutputPanel from '@/components/common/OutputPanel';
 import jsQR from 'jsqr';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function QrCodeReader() {
   const [result, setResult] = useState<string>('');
@@ -155,13 +157,16 @@ export default function QrCodeReader() {
   }, []);
 
   useEffect(() => {
-    return () => {
+
+  return () => {
       stopCameraScan();
     };
   }, [stopCameraScan]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -311,7 +316,7 @@ export default function QrCodeReader() {
           </ul>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function NumberBaseConverter() {
   const [decimal, setDecimal] = useState('');
@@ -70,8 +72,10 @@ export default function NumberBaseConverter() {
     setHex(num.toString(16).toUpperCase());
   }, []);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Decimal (Base 10)</label>
@@ -114,7 +118,7 @@ export default function NumberBaseConverter() {
           />
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

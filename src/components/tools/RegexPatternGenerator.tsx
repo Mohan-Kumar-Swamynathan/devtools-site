@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface Pattern {
   name: string;
@@ -90,8 +92,10 @@ export default function RegexPatternGenerator() {
 
   const patternInfo = getPatternInfo();
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div>
@@ -243,7 +247,7 @@ export default function RegexPatternGenerator() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

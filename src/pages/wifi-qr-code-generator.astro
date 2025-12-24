@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import WifiQrCodeGenerator from '@/components/tools/WifiQrCodeGenerator';
+import { tools } from '@/lib/tools';
+
+const tool = tools.find((t) => t.id === 'wifi-qr-code-generator');
+---
+
+<BaseLayout title={tool?.name} description={tool?.description} toolData={tool}>
+  {tool && (
+    <ToolLayout tool={tool}>
+      <WifiQrCodeGenerator client:load />
+    </ToolLayout>
+  )}
+</BaseLayout>

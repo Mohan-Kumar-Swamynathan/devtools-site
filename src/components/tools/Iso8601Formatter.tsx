@@ -1,5 +1,8 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import CollapsibleSection from '@/components/common/CollapsibleSection';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function Iso8601Formatter() {
   const [input, setInput] = useState('');
@@ -46,62 +49,87 @@ export default function Iso8601Formatter() {
     setOutput('');
   };
 
+
+  const controls = (
+    <div className="flex items-center gap-3">
+      <button
+        onClick={mode === 'format' ? format : parse}
+        disabled={!input && mode === 'parse'}
+        className="btn-primary"
+      >
+        {mode === 'format' ? 'Format' : 'Parse'}
+      </button>
+      <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+        Clear
+      </button>
+    </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('format')}
-          className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-            mode === 'format' ? 'tab-active' : ''
-          }`}
+          className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${mode === 'format' ? 'tab-active' : ''
+            }`}
           style={mode === 'format' ? { backgroundColor: 'var(--bg-primary)' } : {}}
         >
           Format to ISO 8601
         </button>
         <button
           onClick={() => handleModeChange('parse')}
-          className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-            mode === 'parse' ? 'tab-active' : ''
-          }`}
+          className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${mode === 'parse' ? 'tab-active' : ''
+            }`}
           style={mode === 'parse' ? { backgroundColor: 'var(--bg-primary)' } : {}}
         >
           Parse ISO 8601
         </button>
       </div>
 
-      <div>
-        <label className="label">{mode === 'format' ? 'Date Input' : 'ISO 8601 String'}</label>
-        <input
-          type={mode === 'format' ? 'datetime-local' : 'text'}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={mode === 'format' ? '' : '2024-01-01T00:00:00.000Z'}
-          className="input-base"
-        />
-      </div>
+      <CollapsibleSection
+        title="Input"
+        persistKey="iso8601-formatter-input-expanded"
+        defaultExpanded={true}
+      >
+        <div>
+          <label className="label">{mode === 'format' ? 'Date Input' : 'ISO 8601 String'}</label>
+          <input
+            type={mode === 'format' ? 'datetime-local' : 'text'}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={mode === 'format' ? '' : '2024-01-01T00:00:00.000Z'}
+            className="input-base"
+          />
+        </div>
+      </CollapsibleSection>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button 
-          onClick={mode === 'format' ? format : parse} 
-          disabled={!input && mode === 'parse'} 
-          className="btn-primary"
-        >
-          {mode === 'format' ? 'Format' : 'Parse'}
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+      {/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {output && (
-        <OutputPanel
-          value={output}
-          label={mode === 'format' ? 'ISO 8601 Output' : 'Parsed Date'}
-          language={mode === 'parse' ? 'json' : 'text'}
-          showLineNumbers={mode === 'parse'}
-        />
+        <CollapsibleSection
+          title="Output"
+          persistKey="iso8601-formatter-output-expanded"
+          defaultExpanded={true}
+        >
+          <OutputPanel
+            value={output}
+            label={mode === 'format' ? 'ISO 8601 Output' : 'Parsed Date'}
+            language={mode === 'parse' ? 'json' : 'text'}
+            showLineNumbers={mode === 'parse'}
+          />
+        </CollapsibleSection>
       )}
-    </div>
+    </ToolShell>
   );
 }
-

@@ -1,9 +1,10 @@
 import { useState, useRef, useCallback } from 'react';
 import { Upload, Trash2, Download, RotateCw } from 'lucide-react';
 import { PDFDocument, degrees } from 'pdf-lib';
-import { useToast } from '@/hooks/useToast';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function PdfPageRotator() {
   const [pdf, setPdf] = useState<File | null>(null);
@@ -123,11 +124,9 @@ export default function PdfPageRotator() {
     );
   }, []);
 
-  return (
-    <div className="space-y-6">
-      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isProcessing}
@@ -176,6 +175,61 @@ export default function PdfPageRotator() {
           className="hidden"
         />
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {pdf && (
         <div className="space-y-4">
@@ -259,7 +313,7 @@ export default function PdfPageRotator() {
           )}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

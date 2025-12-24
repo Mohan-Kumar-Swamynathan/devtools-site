@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ColorPaletteGenerator from '@/components/tools/ColorPaletteGenerator'; 
+
+import { tools } from '@/lib/tools';
+
+const toolData = tools.find(t => t.slug === 'color-shades-generator') || tools.find(t => t.id === 'color-shades-generator');
+---
+
+<BaseLayout
+  title={toolData?.name || 'color-shades-generator'}
+  description={toolData?.description || ''}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <ColorPaletteGenerator client:load />
+  </ToolLayout>
+</BaseLayout>

@@ -1,5 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function PerformanceMonitor() {
   const [metrics, setMetrics] = useState<any>(null);
@@ -56,15 +58,9 @@ export default function PerformanceMonitor() {
     }));
   }, []);
 
-  return (
-    <div className="space-y-6">
-      <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-primary)' }}>
-        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-          Monitor browser performance metrics including memory usage, navigation timing, and resource loading.
-        </p>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button 
           onClick={isMonitoring ? stopMonitoring : startMonitoring} 
           className={isMonitoring ? 'btn-error' : 'btn-primary'}
@@ -75,6 +71,27 @@ export default function PerformanceMonitor() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-primary)' }}>
+        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+          Monitor browser performance metrics including memory usage, navigation timing, and resource loading.
+        </p>
+      </div>
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
 
       {metrics && (
         <div className="space-y-4">
@@ -92,7 +109,7 @@ export default function PerformanceMonitor() {
           />
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ApiTester() {
   const [url, setUrl] = useState('');
@@ -73,8 +75,20 @@ export default function ApiTester() {
     }
   }, [url, method, headers, body]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={test} disabled={!url || loading} className="btn-primary">
+          {loading ? 'Testing...' : 'Test API'}
+        </button>
+        <button onClick={() => { setUrl(''); setResponse(null); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-primary)' }}>
         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           <strong>Note:</strong> This tool makes actual HTTP requests. Use with caution and only test your own APIs.
@@ -128,14 +142,14 @@ Authorization: Bearer token"
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={test} disabled={!url || loading} className="btn-primary">
-          {loading ? 'Testing...' : 'Test API'}
-        </button>
-        <button onClick={() => { setUrl(''); setResponse(null); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {response && (
         <div className="space-y-4">
@@ -175,7 +189,7 @@ Authorization: Bearer token"
           )}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

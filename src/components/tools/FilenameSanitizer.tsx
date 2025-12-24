@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function FilenameSanitizer() {
   const [input, setInput] = useState('');
@@ -32,8 +34,10 @@ export default function FilenameSanitizer() {
     setOutput(sanitized);
   }, [input, target]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Target Platform</label>
         <select value={target} onChange={(e) => { setTarget(e.target.value as any); sanitize(); }} className="input-base">
@@ -58,7 +62,7 @@ export default function FilenameSanitizer() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

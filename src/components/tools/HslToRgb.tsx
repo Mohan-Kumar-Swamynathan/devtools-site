@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Palette } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function HslToRgb() {
   const [mode, setMode] = useState<'hsl-to-rgb' | 'rgb-to-hsl'>('hsl-to-rgb');
@@ -81,8 +83,10 @@ export default function HslToRgb() {
     ? `rgb(${hslResult.r}, ${hslResult.g}, ${hslResult.b})`
     : `rgb(${r}, ${g}, ${b})`;
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex justify-center gap-2 mb-6">
         <button
           onClick={() => setMode('hsl-to-rgb')}
@@ -294,7 +298,7 @@ export default function HslToRgb() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

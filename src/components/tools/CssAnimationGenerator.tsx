@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Copy, Play, RotateCcw } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 export default function CssAnimationGenerator() {
@@ -74,9 +75,9 @@ export default function CssAnimationGenerator() {
 
   const css = generateCSS();
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={handleCopy}
           className="btn-primary flex items-center gap-2"
@@ -104,6 +105,38 @@ export default function CssAnimationGenerator() {
           Reset
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
@@ -298,7 +331,7 @@ export default function CssAnimationGenerator() {
           </pre>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

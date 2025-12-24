@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageToBase64 from '@/components/tools/ImageToBase64'; 
+
+import { tools } from '@/lib/tools';
+
+const toolData = tools.find(t => t.slug === 'base64-image-converter') || tools.find(t => t.id === 'base64-image-converter');
+---
+
+<BaseLayout
+  title={toolData?.name || 'base64-image-converter'}
+  description={toolData?.description || ''}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <ImageToBase64 client:load />
+  </ToolLayout>
+</BaseLayout>

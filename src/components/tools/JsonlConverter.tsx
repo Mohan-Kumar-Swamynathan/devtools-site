@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JsonlConverter() {
   const [input, setInput] = useState('');
@@ -48,8 +50,24 @@ export default function JsonlConverter() {
     setError('');
   };
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button 
+          onClick={mode === 'jsonl-to-json' ? jsonlToJson : jsonToJsonl} 
+          disabled={!input} 
+          className="btn-primary"
+        >
+          Convert
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('jsonl-to-json')}
@@ -79,18 +97,18 @@ export default function JsonlConverter() {
         placeholder={mode === 'jsonl-to-json' ? '{"name": "John"}\n{"name": "Jane"}' : '[{"name": "John"}, {"name": "Jane"}]'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button 
-          onClick={mode === 'jsonl-to-json' ? jsonlToJson : jsonToJsonl} 
-          disabled={!input} 
-          className="btn-primary"
-        >
-          Convert
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
@@ -101,7 +119,7 @@ export default function JsonlConverter() {
           showLineNumbers={mode === 'jsonl-to-json'}
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

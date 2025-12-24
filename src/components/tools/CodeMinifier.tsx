@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 type CodeType = 'html' | 'css' | 'javascript';
 
@@ -68,7 +70,7 @@ export default function CodeMinifier() {
 
     // Remove semicolons before closing braces
     minified = minified.replace(/;\s*}/g, '}');
-    
+
     return minified;
   }, []);
 
@@ -101,11 +103,14 @@ export default function CodeMinifier() {
 
   const getCompressionRatio = () => {
     if (!input || !output) return 0;
-    return ((1 - output.length / input.length) * 100).toFixed(1);
+
+  return ((1 - output.length / input.length) * 100).toFixed(1);
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -161,9 +166,9 @@ export default function CodeMinifier() {
         </>
       )}
 
-      <div className="p-4 rounded-xl border text-sm" style={{ 
-        backgroundColor: 'var(--bg-secondary)', 
-        borderColor: 'var(--border-primary)' 
+      <div className="p-4 rounded-xl border text-sm" style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderColor: 'var(--border-primary)'
       }}>
         <h3 className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
           Minification Features:
@@ -175,7 +180,7 @@ export default function CodeMinifier() {
           <li>• All processing happens in your browser - your code never leaves your device</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

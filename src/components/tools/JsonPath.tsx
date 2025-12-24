@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JsonPath() {
   const [json, setJson] = useState('');
@@ -82,8 +84,23 @@ export default function JsonPath() {
     }
   }, [json]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={extract} disabled={!json || !path} className="btn-primary">
+          Extract Value
+        </button>
+        <button onClick={findAllPaths} disabled={!json} className="btn-secondary">
+          List All Paths
+        </button>
+        <button onClick={() => { setJson(''); setPath(''); setResult(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={json}
         onChange={setJson}
@@ -106,17 +123,17 @@ export default function JsonPath() {
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={extract} disabled={!json || !path} className="btn-primary">
-          Extract Value
-        </button>
-        <button onClick={findAllPaths} disabled={!json} className="btn-secondary">
-          List All Paths
-        </button>
-        <button onClick={() => { setJson(''); setPath(''); setResult(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {result && (
@@ -127,7 +144,7 @@ export default function JsonPath() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

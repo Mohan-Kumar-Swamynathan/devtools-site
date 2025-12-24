@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function FlexboxPlayground() {
   const [direction, setDirection] = useState<'row' | 'column'>('row');
@@ -19,8 +21,10 @@ export default function FlexboxPlayground() {
 }`;
   }, [direction, justify, align, wrap, gap]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Flex Direction</label>
@@ -109,7 +113,7 @@ export default function FlexboxPlayground() {
         language="css"
         showLineNumbers
       />
-    </div>
+    </ToolShell>
   );
 }
 

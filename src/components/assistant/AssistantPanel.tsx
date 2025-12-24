@@ -22,7 +22,7 @@ export default function AssistantPanel({ onClose }: Props) {
   const [modelError, setModelError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const lastSpokenIndexRef = useRef<number>(-1);
-  
+
   const { messages, mood, sendMessage, isProcessing, redirectToTool } = useAssistant();
   const { isListening, transcript, startListening, stopListening, isSupported: speechRecognitionSupported } = useSpeechRecognition();
   const { speak, stop, isSpeaking, isSupported: speechSynthesisSupported } = useSpeechSynthesis();
@@ -38,7 +38,7 @@ export default function AssistantPanel({ onClose }: Props) {
       // Clean up the transcript (remove extra spaces, normalize)
       const cleanedTranscript = transcript.trim().replace(/\s+/g, ' ');
       setInput(cleanedTranscript);
-      
+
       // Use a small delay to ensure state is updated and allow for natural speech pauses
       setTimeout(() => {
         handleSend(cleanedTranscript);
@@ -63,7 +63,7 @@ export default function AssistantPanel({ onClose }: Props) {
           setIsLoadingModel(false);
           setModelProgress(0);
           setSmartMode(false);
-          
+
           const errorMessage = error?.message || 'Unknown error';
           if (errorMessage.includes('CSP') || errorMessage.includes('Content Security Policy')) {
             setModelError('Content Security Policy is blocking model download. Smart mode requires network access.');
@@ -72,7 +72,7 @@ export default function AssistantPanel({ onClose }: Props) {
           } else {
             setModelError('Failed to load AI model. Rule-based mode is still available.');
           }
-          
+
           // Clear error after 10 seconds
           setTimeout(() => setModelError(null), 10000);
         });
@@ -84,7 +84,7 @@ export default function AssistantPanel({ onClose }: Props) {
     if (messages.length > 0 && speechSynthesisSupported && !isSpeaking) {
       const lastMessage = messages[messages.length - 1];
       const messageIndex = messages.length - 1;
-      
+
       // Only speak if this is a new assistant message that hasn't been spoken yet
       if (lastMessage.role === 'assistant' && messageIndex > lastSpokenIndexRef.current) {
         // Extract text from markdown (simple extraction)
@@ -112,30 +112,30 @@ export default function AssistantPanel({ onClose }: Props) {
   const handleSend = useCallback(async (text?: string) => {
     const msg = text || input.trim();
     if (!msg) return;
-    
+
     // Normalize the message for better command recognition
     const normalizedMsg = msg
       .toLowerCase()
       .replace(/\s+/g, ' ')
       .trim();
-    
+
     setInput('');
     setSuggestions([]);
     stop(); // Stop any ongoing speech
-    
+
     // Check if we're on a tool page
-    const isToolPage = typeof window !== 'undefined' && 
-      window.location.pathname !== '/' && 
-      window.location.pathname !== '/index.html' && 
+    const isToolPage = typeof window !== 'undefined' &&
+      window.location.pathname !== '/' &&
+      window.location.pathname !== '/index.html' &&
       window.location.pathname.length > 1;
-    
+
     // Detect tool commands (works for both voice and text input)
     const isToolCommand = /^(set|fill|put|enter|calculate|compute|what'?s|show|tell|read|explore|clear|reset)/i.test(normalizedMsg);
-    
+
     // If on tool page and it's a tool command, always use rule-based for immediate action
     // This ensures both voice and text input fill tool inputs
     const useLLM = smartMode && isModelReady() && !isToolCommand && !isToolPage;
-    
+
     // sendMessage will handle tool interactions automatically via ruleBasedBrain
     await sendMessage(msg, useLLM);
   }, [input, sendMessage, smartMode, stop]);
@@ -160,7 +160,7 @@ export default function AssistantPanel({ onClose }: Props) {
           <AssistantAvatar mood={mood} size={40} />
           <div>
             <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>DevBot</h3>
+              <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>DevBot</h3>
               {smartMode && isModelReady() && (
                 <span className="flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: 'var(--brand-primary)', color: 'white' }}>
                   <Sparkles size={12} />
@@ -178,9 +178,8 @@ export default function AssistantPanel({ onClose }: Props) {
           <button
             onClick={() => setSmartMode(!smartMode)}
             disabled={isLoadingModel}
-            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg border transition-all ${
-              smartMode && isModelReady() ? 'opacity-100' : 'opacity-60'
-            }`}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg border transition-all ${smartMode && isModelReady() ? 'opacity-100' : 'opacity-60'
+              }`}
             style={{
               borderColor: smartMode && isModelReady() ? 'var(--brand-primary)' : 'var(--border-primary)',
               backgroundColor: smartMode && isModelReady() ? 'var(--bg-primary)' : 'var(--bg-secondary)',
@@ -200,7 +199,7 @@ export default function AssistantPanel({ onClose }: Props) {
               </>
             )}
           </button>
-        <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
+          <button onClick={onClose} className="btn-icon p-2"><X size={18} /></button>
         </div>
       </div>
 
@@ -285,15 +284,15 @@ export default function AssistantPanel({ onClose }: Props) {
             </div>
           </div>
         )}
-        
+
         {messages.map((msg, i) => {
           // If message has multiple tools, show all as clickable chips
           const allTools = (msg as any).tools || (msg.tool ? [msg.tool] : []);
-          
+
           return (
             <div key={i}>
-              <MessageBubble 
-                role={msg.role} 
+              <MessageBubble
+                role={msg.role}
                 content={msg.content}
                 tool={msg.tool}
                 onToolClick={msg.tool ? () => handleToolClick(msg.tool) : undefined}
@@ -321,7 +320,7 @@ export default function AssistantPanel({ onClose }: Props) {
             </div>
           );
         })}
-        
+
         {isProcessing && (
           <div className="flex items-center gap-2" style={{ color: 'var(--text-muted)' }}>
             <div className="flex gap-1">
@@ -331,7 +330,7 @@ export default function AssistantPanel({ onClose }: Props) {
             </div>
           </div>
         )}
-        
+
         <div ref={messagesEndRef} />
       </div>
 
@@ -345,8 +344,8 @@ export default function AssistantPanel({ onClose }: Props) {
                 key={tool.id}
                 onClick={() => handleToolClick(tool)}
                 className="px-3 py-1.5 text-xs rounded-lg border transition-all hover:scale-105 flex items-center gap-1.5"
-                style={{ 
-                  borderColor: 'var(--border-primary)', 
+                style={{
+                  borderColor: 'var(--border-primary)',
                   color: 'var(--text-primary)',
                   backgroundColor: 'var(--bg-primary)'
                 }}
@@ -385,25 +384,24 @@ export default function AssistantPanel({ onClose }: Props) {
               }}
               placeholder={isListening ? "Listening..." : "Search tools or ask a question..."}
               className="flex-1 input-base py-3 pl-10 pr-4 rounded-2xl"
-              style={{ 
-                backgroundColor: 'var(--bg-elevated)',
-                color: 'var(--text-primary)',
-                borderColor: 'var(--border-primary)'
+              style={{
+                backgroundColor: '#1a1a1a', // Darker input background
+                color: '#ffffff', // Bright white text
+                borderColor: '#444' // Visible border
               }}
               disabled={isListening}
             />
           </div>
-          
+
           {/* Voice Input Button */}
           {speechRecognitionSupported && (
             <button
               onClick={toggleVoiceInput}
               disabled={isProcessing}
-              className={`p-3 rounded-xl transition-all ripple touch-target ${
-                isListening 
-                  ? 'animate-pulse' 
+              className={`p-3 rounded-xl transition-all ripple touch-target ${isListening
+                  ? 'animate-pulse'
                   : ''
-              }`}
+                }`}
               style={{
                 backgroundColor: isListening ? 'var(--brand-primary)' : 'var(--bg-elevated)',
                 color: isListening ? 'white' : 'var(--text-primary)',
@@ -414,7 +412,7 @@ export default function AssistantPanel({ onClose }: Props) {
               {isListening ? <MicOff size={18} /> : <Mic size={18} />}
             </button>
           )}
-          
+
           <button
             onClick={() => handleSend()}
             disabled={!input.trim() || isProcessing || isListening}

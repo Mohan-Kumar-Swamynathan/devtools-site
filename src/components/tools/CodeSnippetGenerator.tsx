@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const snippets: Record<string, Record<string, string>> = {
   javascript: {
@@ -45,8 +47,10 @@ export default function CodeSnippetGenerator() {
     setOutput(snippets[language]?.[snippetType] || 'Snippet not found');
   }, [language, snippetType]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Language</label>
@@ -75,7 +79,7 @@ export default function CodeSnippetGenerator() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

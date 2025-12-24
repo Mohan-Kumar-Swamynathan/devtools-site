@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JsonTypescript() {
   const [input, setInput] = useState('');
@@ -51,17 +53,9 @@ export default function JsonTypescript() {
     }
   }, [input, interfaceName]);
 
-  return (
-    <div className="space-y-6">
-      <CodeEditor
-        value={input}
-        onChange={setInput}
-        language="json"
-        label="JSON Input"
-        placeholder='{"name": "John", "age": 30, "active": true}'
-      />
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <label className="label-inline">Interface name:</label>
           <input
@@ -79,6 +73,36 @@ export default function JsonTypescript() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      <CodeEditor
+        value={input}
+        onChange={setInput}
+        language="json"
+        label="JSON Input"
+        placeholder='{"name": "John", "age": 30, "active": true}'
+      />
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
@@ -89,7 +113,7 @@ export default function JsonTypescript() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

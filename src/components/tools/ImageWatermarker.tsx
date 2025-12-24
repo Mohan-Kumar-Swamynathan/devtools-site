@@ -2,6 +2,8 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { Upload, Download, Trash2, Type, Image as ImageIcon } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface WatermarkSettings {
   type: 'text' | 'image';
@@ -185,11 +187,9 @@ export default function ImageWatermarker() {
     setError('');
   }, []);
 
-  return (
-    <div className="space-y-6">
-      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isProcessing}
@@ -225,6 +225,48 @@ export default function ImageWatermarker() {
           className="hidden"
         />
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {image && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -404,7 +446,7 @@ export default function ImageWatermarker() {
           <li>• Choose position based on your image composition</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 type CommitType = 'feat' | 'fix' | 'docs' | 'style' | 'refactor' | 'perf' | 'test' | 'chore' | 'ci' | 'build' | 'revert';
 
@@ -72,8 +74,31 @@ export default function GitCommitMessageGenerator() {
 
   const selectedType = commitTypes.find(t => t.value === type);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} className="btn-primary">
+          Generate Commit Message
+        </button>
+        <button
+          onClick={() => {
+            setType('feat');
+            setScope('');
+            setSubject('');
+            setBody('');
+            setFooter('');
+            setBreakingChange(false);
+            setOutput('');
+          }}
+          className="btn-ghost"
+        >
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Type *</label>
@@ -172,25 +197,25 @@ export default function GitCommitMessageGenerator() {
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} className="btn-primary">
-          Generate Commit Message
-        </button>
-        <button
-          onClick={() => {
-            setType('feat');
-            setScope('');
-            setSubject('');
-            setBody('');
-            setFooter('');
-            setBreakingChange(false);
-            setOutput('');
-          }}
-          className="btn-ghost"
-        >
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -216,7 +241,7 @@ export default function GitCommitMessageGenerator() {
           &lt;footer&gt;
         </code>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

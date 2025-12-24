@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { Barcode, Download } from 'lucide-react';
 import JsBarcode from 'jsbarcode';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function BarcodeGenerator() {
   const [text, setText] = useState('123456789012');
@@ -36,8 +38,10 @@ export default function BarcodeGenerator() {
     document.body.removeChild(link);
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <h3 className="text-lg font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
@@ -140,7 +144,7 @@ export default function BarcodeGenerator() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JsonCsvConverter() {
   const [input, setInput] = useState('');
@@ -81,8 +83,20 @@ export default function JsonCsvConverter() {
     setError('');
   };
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={convert} disabled={!input} className="btn-primary">
+          Convert
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('json-to-csv')}
@@ -112,14 +126,14 @@ export default function JsonCsvConverter() {
         placeholder={mode === 'json-to-csv' ? '[{"name": "John", "age": 30}]' : 'name,age\nJohn,30'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={convert} disabled={!input} className="btn-primary">
-          Convert
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
@@ -130,7 +144,7 @@ export default function JsonCsvConverter() {
           filename={mode === 'json-to-csv' ? 'output.csv' : 'output.json'}
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, Flag } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function Stopwatch() {
   const [time, setTime] = useState(0);
@@ -20,7 +22,7 @@ export default function Stopwatch() {
       }
     }
 
-    return () => {
+  return () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
@@ -52,8 +54,10 @@ export default function Stopwatch() {
     startTimeRef.current = 0;
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
           <div className="text-6xl font-bold font-mono mb-4" style={{ color: 'var(--text-primary)' }}>
@@ -125,7 +129,7 @@ export default function Stopwatch() {
           </div>
         )}
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

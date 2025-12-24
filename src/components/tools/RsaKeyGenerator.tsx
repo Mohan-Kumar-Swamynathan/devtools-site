@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function RsaKeyGenerator() {
   const [keySize, setKeySize] = useState(2048);
@@ -38,8 +40,20 @@ export default function RsaKeyGenerator() {
     }
   }, [keySize]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} disabled={loading} className="btn-primary">
+          {loading ? 'Generating...' : 'Generate RSA Keys'}
+        </button>
+        <button onClick={() => { setPublicKey(''); setPrivateKey(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-primary)' }}>
         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           <strong>Note:</strong> Keys are generated in JWK format. Keep private keys secure and never share them.
@@ -55,14 +69,14 @@ export default function RsaKeyGenerator() {
         </select>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} disabled={loading} className="btn-primary">
-          {loading ? 'Generating...' : 'Generate RSA Keys'}
-        </button>
-        <button onClick={() => { setPublicKey(''); setPrivateKey(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {publicKey && (
@@ -85,7 +99,7 @@ export default function RsaKeyGenerator() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

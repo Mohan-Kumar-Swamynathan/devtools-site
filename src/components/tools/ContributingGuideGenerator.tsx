@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ContributingGuideGenerator() {
   const [projectName, setProjectName] = useState('');
@@ -62,8 +64,20 @@ export default function ContributingGuideGenerator() {
     setOutput(sections.join('\n'));
   }, [projectName, repoUrl, includeSetup, includeTesting, includeCodeStyle]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} className="btn-primary">
+          Generate Contributing Guide
+        </button>
+        <button onClick={() => { setProjectName(''); setRepoUrl(''); setIncludeSetup(true); setIncludeTesting(true); setIncludeCodeStyle(true); setOutput(''); }} className="btn-ghost">
+          Reset
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Project Name</label>
@@ -120,14 +134,14 @@ export default function ContributingGuideGenerator() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} className="btn-primary">
-          Generate Contributing Guide
-        </button>
-        <button onClick={() => { setProjectName(''); setRepoUrl(''); setIncludeSetup(true); setIncludeTesting(true); setIncludeCodeStyle(true); setOutput(''); }} className="btn-ghost">
-          Reset
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -137,7 +151,7 @@ export default function ContributingGuideGenerator() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

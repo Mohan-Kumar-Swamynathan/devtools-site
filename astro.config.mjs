@@ -44,6 +44,13 @@ export default defineConfig({
             'prism-vendor': ['prism-react-renderer'],
             'reactflow-vendor': ['reactflow']
           }
+        },
+        onwarn(warning, warn) {
+          // Suppress eval warnings from onnxruntime-web (transitive dependency of @xenova/transformers)
+          if (warning.code === 'EVAL' && warning.id?.includes('onnxruntime-web')) {
+            return;
+          }
+          warn(warning);
         }
       }
     },

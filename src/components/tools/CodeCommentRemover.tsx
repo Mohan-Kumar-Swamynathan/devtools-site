@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Copy, Download, RotateCcw } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 export default function CodeCommentRemover() {
@@ -54,9 +55,9 @@ export default function CodeCommentRemover() {
     URL.revokeObjectURL(link.href);
   }, [cleaned, language]);
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={handleClean}
           className="btn-primary"
@@ -92,6 +93,46 @@ export default function CodeCommentRemover() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div>
         <label className="label">Language</label>
@@ -137,6 +178,6 @@ export default function CodeCommentRemover() {
           />
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }

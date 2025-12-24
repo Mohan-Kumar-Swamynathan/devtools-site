@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const loremWords = [
   'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit',
@@ -61,8 +63,10 @@ export default function LoremIpsum() {
     setOutput(result);
   }, [type, count, generateWords, generateSentence, generateParagraph]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <label className="label-inline">Type:</label>
@@ -98,7 +102,7 @@ export default function LoremIpsum() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

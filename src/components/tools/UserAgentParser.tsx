@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Copy, Info } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 export default function UserAgentParser() {
@@ -75,9 +76,9 @@ export default function UserAgentParser() {
     }
   }, [parsed, showToast]);
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={handleParse}
           className="btn-primary flex items-center gap-2"
@@ -95,6 +96,28 @@ export default function UserAgentParser() {
           </button>
         )}
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="space-y-4">
         <div>
@@ -160,6 +183,6 @@ export default function UserAgentParser() {
           </div>
         )}
       </div>
-    </div>
+    </ToolShell>
   );
 }

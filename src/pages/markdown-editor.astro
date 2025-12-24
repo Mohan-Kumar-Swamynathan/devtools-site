@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import MarkdownPreview from '@/components/tools/MarkdownPreview'; 
+
+import { tools } from '@/lib/tools';
+
+const toolData = tools.find(t => t.slug === 'markdown-editor') || tools.find(t => t.id === 'markdown-editor');
+---
+
+<BaseLayout
+  title={toolData?.name || 'markdown-editor'}
+  description={toolData?.description || ''}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <MarkdownPreview client:load />
+  </ToolLayout>
+</BaseLayout>

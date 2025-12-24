@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonToTypescript from '@/components/tools/JsonToTypescript'; 
+
+import { tools } from '@/lib/tools';
+
+const toolData = tools.find(t => t.slug === 'json-to-graphql') || tools.find(t => t.id === 'json-to-graphql');
+---
+
+<BaseLayout
+  title={toolData?.name || 'json-to-graphql'}
+  description={toolData?.description || ''}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <JsonToTypescript client:load />
+  </ToolLayout>
+</BaseLayout>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import SeoAnalyzer from '@/components/tools/SeoAnalyzer';
+import ToolSchema from '@/components/seo/ToolSchema.astro';
+import FAQSchema from '@/components/seo/FAQSchema.astro';
+
+const tool = {
+  name: 'SEO Analyzer',
+  description: 'Free SEO analyzer tool. Check meta tags, structured data, Open Graph, Twitter Cards, and get actionable SEO recommendations to improve your search rankings.',
+  url: 'https://devtools.site/seo-analyzer'
+};
+
+const faqs = [
+  {
+    question: 'What does the SEO Analyzer check?',
+    answer: 'The SEO Analyzer checks title tags, meta descriptions, heading structure, Open Graph tags, Twitter Card tags, canonical URLs, structured data (JSON-LD), and image alt attributes.'
+  },
+  {
+    question: 'What is a good SEO score?',
+    answer: 'A score of 80 or above is excellent, 60-79 is good, and below 60 needs improvement. The score is based on best practices for on-page SEO.'
+  },
+  {
+    question: 'How do I fix SEO issues?',
+    answer: 'Each issue includes a specific recommendation. Common fixes include adding missing meta tags, optimizing title length (50-60 chars), ensuring proper heading hierarchy, and adding structured data.'
+  },
+  {
+    question: 'Why are Open Graph tags important?',
+    answer: 'Open Graph tags control how your content appears when shared on social media platforms like Facebook, LinkedIn, and Slack. They improve click-through rates from social shares.'
+  },
+  {
+    question: 'What is structured data?',
+    answer: 'Structured data (JSON-LD) helps search engines understand your content better. It can enable rich snippets in search results, improving visibility and click-through rates.'
+  }
+];
+---
+
+<BaseLayout
+  title="SEO Analyzer - Free Online SEO Checker Tool"
+  description={tool.description}
+  keywords={['seo analyzer', 'seo checker', 'meta tags analyzer', 'seo audit tool', 'open graph checker', 'structured data validator']}
+>
+  <SeoAnalyzer client:load />
+  <ToolSchema {...tool} />
+  <FAQSchema faqs={faqs} />
+</BaseLayout>

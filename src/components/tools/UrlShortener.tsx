@@ -3,6 +3,8 @@ import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import { Copy, ExternalLink, Trash2 } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface ShortUrl {
   original: string;
@@ -76,8 +78,10 @@ export default function UrlShortener() {
     setShortUrls(prev => prev.filter(s => s.hash !== hash));
   }, []);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="space-y-4">
@@ -198,7 +202,7 @@ export default function UrlShortener() {
           For persistent URL shortening, you would need a backend service. However, you can copy and share these shortened URLs while this page is open.
         </p>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

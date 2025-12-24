@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import { diffLines } from 'diff';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TextDiff() {
   const [text1, setText1] = useState('');
@@ -12,8 +14,20 @@ export default function TextDiff() {
     setDiff(differences);
   }, [text1, text2]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={compare} disabled={!text1 || !text2} className="btn-primary">
+          Compare
+        </button>
+        <button onClick={() => { setText1(''); setText2(''); setDiff([]); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <CodeEditor
           value={text1}
@@ -31,14 +45,14 @@ export default function TextDiff() {
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={compare} disabled={!text1 || !text2} className="btn-primary">
-          Compare
-        </button>
-        <button onClick={() => { setText1(''); setText2(''); setDiff([]); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {diff.length > 0 && (
         <div>
@@ -65,7 +79,7 @@ export default function TextDiff() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

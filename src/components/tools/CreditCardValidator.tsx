@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CreditCardValidator() {
   const [input, setInput] = useState('');
@@ -66,8 +68,20 @@ export default function CreditCardValidator() {
     setResults(results);
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={validate} disabled={!input} className="btn-primary">
+          Validate
+        </button>
+        <button onClick={() => { setInput(''); setResults([]); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-tertiary)', borderColor: 'var(--border-primary)' }}>
         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
           <strong>Note:</strong> This tool only validates card number format using the Luhn algorithm. 
@@ -85,14 +99,14 @@ export default function CreditCardValidator() {
 invalid-card"
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={validate} disabled={!input} className="btn-primary">
-          Validate
-        </button>
-        <button onClick={() => { setInput(''); setResults([]); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {results.length > 0 && (
         <div>
@@ -130,7 +144,7 @@ invalid-card"
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

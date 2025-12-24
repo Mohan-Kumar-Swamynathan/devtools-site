@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function RemoveDuplicates() {
   const [input, setInput] = useState('');
@@ -23,8 +25,10 @@ export default function RemoveDuplicates() {
     setOutput(unique.join('\n'));
   }, [input, caseSensitive]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -58,7 +62,7 @@ export default function RemoveDuplicates() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

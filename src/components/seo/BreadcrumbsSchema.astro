@@ -1,0 +1,46 @@
+---
+const siteUrl = 'https://devtool.site';
+const currentPath = Astro.url.pathname;
+const pathSegments = currentPath.split('/').filter(segment => segment !== '');
+
+interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+const breadcrumbItems: BreadcrumbItem[] = [
+  {
+    name: 'Home',
+    item: siteUrl
+  }
+];
+
+// Generate breadcrumbs from path segments
+let currentUrl = siteUrl;
+pathSegments.forEach((segment) => {
+  currentUrl += `/${segment}`;
+  // Convert slug to readable name (e.g., "json-formatter" -> "Json Formatter")
+  const name = segment
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+    
+  breadcrumbItems.push({
+    name,
+    item: currentUrl
+  });
+});
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbItems.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": item.item
+  }))
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

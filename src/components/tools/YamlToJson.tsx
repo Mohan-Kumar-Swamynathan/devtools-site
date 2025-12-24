@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import * as yaml from 'js-yaml';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function YamlToJson() {
   const [input, setInput] = useState('');
@@ -19,8 +21,20 @@ export default function YamlToJson() {
     }
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={convert} disabled={!input} className="btn-primary">
+          Convert to JSON
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -29,14 +43,14 @@ export default function YamlToJson() {
         placeholder="key: value\nnested:\n  item: test"
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={convert} disabled={!input} className="btn-primary">
-          Convert to JSON
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {error && <div className="alert-error">{error}</div>}
       {output && (
@@ -47,7 +61,7 @@ export default function YamlToJson() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

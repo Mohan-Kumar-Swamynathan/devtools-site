@@ -24,10 +24,10 @@ export default function SuggestionChips({ onSelect }: Props) {
               key={i}
               onClick={() => onSelect(s)}
               className="px-3 py-1.5 text-xs rounded-full border transition-colors hover:bg-[var(--bg-secondary)]"
-              style={{ 
-                borderColor: 'var(--border-primary)', 
-                color: 'var(--text-secondary)',
-                backgroundColor: 'var(--bg-primary)'
+              style={{
+                borderColor: '#444',
+                color: '#e0e0e0',
+                backgroundColor: '#222'
               }}
             >
               {s}
@@ -35,7 +35,7 @@ export default function SuggestionChips({ onSelect }: Props) {
           ))}
         </div>
       </div>
-      
+
       {popularTools.length > 0 && (
         <div>
           <p className="text-xs font-medium mb-2" style={{ color: 'var(--text-muted)' }}>Popular Tools:</p>
@@ -45,8 +45,8 @@ export default function SuggestionChips({ onSelect }: Props) {
                 key={tool.id}
                 onClick={() => onSelect(`Take me to ${tool.name}`)}
                 className="px-3 py-1.5 text-xs rounded-lg border transition-all hover:scale-105 flex items-center gap-1.5"
-                style={{ 
-                  borderColor: 'var(--border-primary)', 
+                style={{
+                  borderColor: 'var(--border-primary)',
                   color: 'var(--text-primary)',
                   backgroundColor: 'var(--bg-primary)'
                 }}

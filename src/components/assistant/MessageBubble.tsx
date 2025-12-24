@@ -10,7 +10,7 @@ interface Props {
 
 export default function MessageBubble({ role, content, tool, onToolClick }: Props) {
   const isUser = role === 'user';
-  
+
   // Simple markdown to HTML conversion
   // marked.parse is synchronous in v14
   let htmlContent = '';
@@ -28,28 +28,28 @@ export default function MessageBubble({ role, content, tool, onToolClick }: Prop
           🤖
         </div>
       )}
-      
+
       <div className={`flex-1 ${isUser ? 'text-right' : ''}`}>
         <div
-          className={`inline-block px-4 py-2.5 rounded-2xl max-w-[85%] ${
-            isUser 
-              ? 'rounded-tr-sm' 
-              : 'rounded-tl-sm'
-          }`}
+          className={`inline-block px-4 py-2.5 rounded-2xl max-w-[85%] ${isUser
+            ? 'rounded-tr-sm'
+            : 'rounded-tl-sm'
+            }`}
           style={{
-            backgroundColor: isUser ? 'var(--brand-primary)' : 'var(--bg-tertiary)',
-            color: isUser ? 'white' : 'var(--text-primary)'
+            backgroundColor: isUser ? 'var(--brand-primary)' : '#2a2a2a',
+            color: isUser ? 'white' : '#ffffff',
+            border: !isUser ? '1px solid #444' : 'none'
           }}
         >
-          <div 
-            className="text-sm leading-relaxed prose prose-sm max-w-none"
+          <div
+            className="text-sm leading-relaxed prose prose-sm max-w-none prose-invert" // Force prose-invert for dark mode
             dangerouslySetInnerHTML={{ __html: htmlContent }}
             style={{
-              color: isUser ? 'white' : 'var(--text-primary)'
+              color: isUser ? 'white' : '#e0e0e0' // High contrast text
             }}
           />
         </div>
-        
+
         {tool && onToolClick && (
           <button
             onClick={onToolClick}
@@ -66,13 +66,15 @@ export default function MessageBubble({ role, content, tool, onToolClick }: Prop
           </button>
         )}
       </div>
-      
-      {isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold"
-          style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-primary)' }}>
-          👤
-        </div>
-      )}
-    </div>
+
+      {
+        isUser && (
+          <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold"
+            style={{ backgroundColor: 'var(--bg-tertiary)', color: 'var(--text-primary)' }}>
+            👤
+          </div>
+        )
+      }
+    </div >
   );
 }

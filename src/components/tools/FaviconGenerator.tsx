@@ -2,6 +2,8 @@ import { useState, useRef, useCallback } from 'react';
 import { Upload, Download, Image as ImageIcon, Trash2 } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface FaviconSize {
   size: number;
@@ -128,8 +130,73 @@ export default function FaviconGenerator() {
     });
   }, []);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button
+          onClick={() => {
+            if (sourceImage) {
+              setIsGenerating(true);
+              (async () => {
+                try {
+                  const favicons = new Map<number, string>();
+                  for (const sizeInfo of faviconSizes.filter(s => selectedSizes.has(s.size))) {
+                    const dataUrl = await generateFavicon(sizeInfo.size);
+                    favicons.set(sizeInfo.size, dataUrl);
+                  }
+                  setGeneratedFavicons(favicons);
+                } catch (e) {
+                  setError(`Generation error: ${(e as Error).message}`);
+                } finally {
+                  setIsGenerating(false);
+                }
+              })();
+            } else {
+              fileInputRef.current?.click();
+            }
+          }}
+          disabled={isGenerating || selectedSizes.size === 0}
+          className="btn-primary flex items-center gap-2"
+        >
+          {isGenerating ? (
+            <>
+              <LoadingSpinner size="sm" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <ImageIcon size={18} />
+              Generate Favicons
+            </>
+          )}
+        </button>
+        {generatedFavicons.size > 0 && (
+          <>
+            <button
+              onClick={handleDownloadAll}
+              className="btn-secondary flex items-center gap-2"
+            >
+              <Download size={18} />
+              Download All ({generatedFavicons.size})
+            </button>
+            <button
+              onClick={() => {
+                setSourceImage(null);
+                setGeneratedFavicons(new Map());
+                setSelectedSizes(new Set([16, 32, 180, 192]));
+              }}
+              className="btn-ghost flex items-center gap-2"
+            >
+              <Trash2 size={18} />
+              Clear
+            </button>
+          </>
+        )}
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -206,67 +273,67 @@ export default function FaviconGenerator() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={() => {
-            if (sourceImage) {
-              setIsGenerating(true);
-              (async () => {
-                try {
-                  const favicons = new Map<number, string>();
-                  for (const sizeInfo of faviconSizes.filter(s => selectedSizes.has(s.size))) {
-                    const dataUrl = await generateFavicon(sizeInfo.size);
-                    favicons.set(sizeInfo.size, dataUrl);
-                  }
-                  setGeneratedFavicons(favicons);
-                } catch (e) {
-                  setError(`Generation error: ${(e as Error).message}`);
-                } finally {
-                  setIsGenerating(false);
-                }
-              })();
-            } else {
-              fileInputRef.current?.click();
-            }
-          }}
-          disabled={isGenerating || selectedSizes.size === 0}
-          className="btn-primary flex items-center gap-2"
-        >
-          {isGenerating ? (
-            <>
-              <LoadingSpinner size="sm" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <ImageIcon size={18} />
-              Generate Favicons
-            </>
-          )}
-        </button>
-        {generatedFavicons.size > 0 && (
-          <>
-            <button
-              onClick={handleDownloadAll}
-              className="btn-secondary flex items-center gap-2"
-            >
-              <Download size={18} />
-              Download All ({generatedFavicons.size})
-            </button>
-            <button
-              onClick={() => {
-                setSourceImage(null);
-                setGeneratedFavicons(new Map());
-                setSelectedSizes(new Set([16, 32, 180, 192]));
-              }}
-              className="btn-ghost flex items-center gap-2"
-            >
-              <Trash2 size={18} />
-              Clear
-            </button>
-          </>
-        )}
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {generatedFavicons.size > 0 && (
         <div className="space-y-4">
@@ -327,7 +394,7 @@ export default function FaviconGenerator() {
           <li>• Upload a square image (1:1 ratio) for best results</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

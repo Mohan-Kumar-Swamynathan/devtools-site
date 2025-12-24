@@ -1,8 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Upload, Trash2, Copy, Download, FileText } from 'lucide-react';
-import { useToast } from '@/hooks/useToast';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 let pdfjsLib: any = null;
 
@@ -93,11 +94,9 @@ export default function PdfToText() {
     URL.revokeObjectURL(link.href);
   }, [text, pdf]);
 
-  return (
-    <div className="space-y-6">
-      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isProcessing}
@@ -153,6 +152,68 @@ export default function PdfToText() {
           className="hidden"
         />
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {pdf && !text && !isProcessing && (
         <div className="p-4 rounded-xl border text-center" style={{
@@ -177,7 +238,7 @@ export default function PdfToText() {
           />
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

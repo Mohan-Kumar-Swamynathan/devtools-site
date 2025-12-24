@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function JwtDecoder() {
   const [token, setToken] = useState('');
@@ -50,8 +52,20 @@ export default function JwtDecoder() {
     }
   }, [token]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={decode} disabled={!token} className="btn-primary">
+          Decode
+        </button>
+        <button onClick={() => { setToken(''); setHeader(''); setPayload(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={token}
         onChange={setToken}
@@ -61,14 +75,14 @@ export default function JwtDecoder() {
       />
 
       {/* Actions */}
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={decode} disabled={!token} className="btn-primary">
-          Decode
-        </button>
-        <button onClick={() => { setToken(''); setHeader(''); setPayload(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {/* Error */}
       {error && <div className="alert-error">{error}</div>}
@@ -92,7 +106,7 @@ export default function JwtDecoder() {
           showLineNumbers 
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function DependencyParser() {
   const [input, setInput] = useState('');
@@ -32,8 +34,20 @@ export default function DependencyParser() {
     }
   }, [input, type]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={parse} disabled={!input} className="btn-primary">
+          Parse Dependencies
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">File Type</label>
         <select value={type} onChange={(e) => { setType(e.target.value as any); setInput(''); setOutput(''); }} className="input-base">
@@ -52,14 +66,14 @@ export default function DependencyParser() {
         placeholder={type === 'package.json' ? '{"dependencies": {"react": "^18.0.0"}}' : 'react==18.0.0\nvue==3.0.0'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={parse} disabled={!input} className="btn-primary">
-          Parse Dependencies
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -69,7 +83,7 @@ export default function DependencyParser() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

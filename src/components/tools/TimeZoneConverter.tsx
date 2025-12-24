@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const timeZones = [
   'UTC', 'America/New_York', 'America/Chicago', 'America/Denver', 'America/Los_Angeles',
@@ -26,8 +28,20 @@ export default function TimeZoneConverter() {
     }
   }, [dateTime, fromZone, toZone]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={convert} className="btn-primary">
+          Convert
+        </button>
+        <button onClick={() => { setDateTime(''); setResult(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Date & Time (leave empty for now)</label>
         <input
@@ -57,14 +71,14 @@ export default function TimeZoneConverter() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={convert} className="btn-primary">
-          Convert
-        </button>
-        <button onClick={() => { setDateTime(''); setResult(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {result && (
         <OutputPanel
@@ -73,7 +87,7 @@ export default function TimeZoneConverter() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

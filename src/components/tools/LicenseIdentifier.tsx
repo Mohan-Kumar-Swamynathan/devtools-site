@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const licensePatterns: Record<string, RegExp[]> = {
   'MIT': [/MIT License/i, /MIT/i, /The MIT License/i],
@@ -36,8 +38,20 @@ export default function LicenseIdentifier() {
     setResult({ licenses: matches, confidence });
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={identify} disabled={!input} className="btn-primary">
+          Identify License
+        </button>
+        <button onClick={() => { setInput(''); setResult(null); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -50,14 +64,14 @@ Copyright (c) 2024
 Permission is hereby granted..."
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={identify} disabled={!input} className="btn-primary">
-          Identify License
-        </button>
-        <button onClick={() => { setInput(''); setResult(null); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {result && (
         <div className="space-y-4">
@@ -85,7 +99,7 @@ Permission is hereby granted..."
           )}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CodeLineCounter() {
   const [input, setInput] = useState('');
@@ -52,8 +54,10 @@ export default function CodeLineCounter() {
     });
   }, [input]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={(v) => { setInput(v); count(); }}
@@ -95,7 +99,7 @@ function example() {
           <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Classes</div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TextShuffler() {
   const [input, setInput] = useState('');
@@ -32,8 +34,20 @@ export default function TextShuffler() {
     }
   }, [input, mode]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={shuffle} disabled={!input} className="btn-primary">
+          Shuffle
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Shuffle Mode</label>
         <select value={mode} onChange={(e) => { setMode(e.target.value as any); shuffle(); }} className="input-base">
@@ -51,14 +65,14 @@ export default function TextShuffler() {
         placeholder={mode === 'lines' ? 'Line 1\nLine 2\nLine 3' : 'Hello World Example'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={shuffle} disabled={!input} className="btn-primary">
-          Shuffle
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -67,7 +81,7 @@ export default function TextShuffler() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,0 +1,11 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import JwtDebugger from '../components/tools/JwtDebugger';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('jwt-debugger')!;
+---
+
+<ToolLayout tool={tool}>
+  <JwtDebugger client:load />
+</ToolLayout>

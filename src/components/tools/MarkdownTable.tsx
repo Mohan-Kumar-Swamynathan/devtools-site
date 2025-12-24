@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function MarkdownTable() {
   const [rows, setRows] = useState(3);
@@ -36,8 +38,10 @@ export default function MarkdownTable() {
     setOutput(lines.join('\n'));
   }, [data]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex items-center gap-2">
           <label className="label-inline">Rows:</label>
@@ -99,7 +103,7 @@ export default function MarkdownTable() {
           language="markdown"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

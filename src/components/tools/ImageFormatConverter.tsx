@@ -2,6 +2,8 @@ import { useState, useRef, useCallback } from 'react';
 import { Upload, Download, Trash2, Image as ImageIcon } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface ConvertedImage {
   file: File;
@@ -29,10 +31,10 @@ export default function ImageFormatConverter() {
   const convertImage = useCallback((file: File, format: string): Promise<ConvertedImage> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      
+
       reader.onload = (e) => {
         const img = new Image();
-        
+
         img.onload = () => {
           const canvas = document.createElement('canvas');
           canvas.width = img.width;
@@ -91,7 +93,7 @@ export default function ImageFormatConverter() {
     setIsConverting(true);
 
     try {
-      const imageFiles = Array.from(files).filter(file => 
+      const imageFiles = Array.from(files).filter(file =>
         file.type.startsWith('image/')
       );
 
@@ -128,12 +130,60 @@ export default function ImageFormatConverter() {
 
   const formatSize = (bytes: number) => {
     if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
-    return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    if (bytes < 1024 * 1024)
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   };
 
+  const controls = (
+    <div className="flex items-center gap-3">
+      <button
+        onClick={() => fileInputRef.current?.click()}
+        disabled={isConverting}
+        className="btn-primary flex items-center gap-2"
+      >
+        {isConverting ? (
+          <>
+            <LoadingSpinner size="sm" />
+            Converting...
+          </>
+        ) : (
+          <>
+            <Upload size={18} />
+            Select Images
+          </>
+        )}
+      </button>
+      {images.length > 0 && (
+        <>
+          <button
+            onClick={handleDownloadAll}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <Download size={18} />
+            Download All ({images.length})
+          </button>
+          <button
+            onClick={() => setImages([])}
+            className="btn-ghost flex items-center gap-2"
+          >
+            <Trash2 size={18} />
+            Clear All
+          </button>
+        </>
+      )}
+      <input
+        ref={fileInputRef}
+        type="file"
+        multiple
+        accept="image/*"
+        onChange={(e) => handleFileSelect(e.target.files)}
+        className="hidden"
+      />
+    </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -169,51 +219,51 @@ export default function ImageFormatConverter() {
         )}
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          disabled={isConverting}
-          className="btn-primary flex items-center gap-2"
-        >
-          {isConverting ? (
-            <>
-              <LoadingSpinner size="sm" />
-              Converting...
-            </>
-          ) : (
-            <>
-              <Upload size={18} />
-              Select Images
-            </>
-          )}
-        </button>
-        {images.length > 0 && (
-          <>
-            <button
-              onClick={handleDownloadAll}
-              className="btn-secondary flex items-center gap-2"
-            >
-              <Download size={18} />
-              Download All ({images.length})
-            </button>
-            <button
-              onClick={() => setImages([])}
-              className="btn-ghost flex items-center gap-2"
-            >
-              <Trash2 size={18} />
-              Clear All
-            </button>
-          </>
-        )}
-        <input
-          ref={fileInputRef}
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={(e) => handleFileSelect(e.target.files)}
-          className="hidden"
-        />
-      </div>
+      {/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {images.length > 0 && (
         <div className="space-y-4">
@@ -262,9 +312,9 @@ export default function ImageFormatConverter() {
         </div>
       )}
 
-      <div className="p-4 rounded-xl border text-sm" style={{ 
-        backgroundColor: 'var(--bg-secondary)', 
-        borderColor: 'var(--border-primary)' 
+      <div className="p-4 rounded-xl border text-sm" style={{
+        backgroundColor: 'var(--bg-secondary)',
+        borderColor: 'var(--border-primary)'
       }}>
         <h3 className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
           Supported Formats:
@@ -276,7 +326,7 @@ export default function ImageFormatConverter() {
           <li>• <strong>BMP:</strong> Uncompressed bitmap format</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

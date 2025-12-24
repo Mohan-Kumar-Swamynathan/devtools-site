@@ -5,7 +5,8 @@
   "description": "Free online developer tools",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/build.js",
+    "build:clean": "rm -rf dist && npm run build",
     "preview": "astro preview",
     "astro": "astro",
     "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.astro",

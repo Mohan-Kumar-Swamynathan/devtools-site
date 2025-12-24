@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function BorderRadiusGenerator() {
   const [topLeft, setTopLeft] = useState(8);
@@ -22,8 +24,10 @@ export default function BorderRadiusGenerator() {
     setBottomLeft(value);
   }, []);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="flex items-center gap-2 cursor-pointer mb-4">
           <input
@@ -112,7 +116,7 @@ export default function BorderRadiusGenerator() {
         label="CSS Code"
         language="css"
       />
-    </div>
+    </ToolShell>
   );
 }
 

@@ -8,7 +8,7 @@ const tool = getToolBySlug('flow-builder')!;
 const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).slice(0, 4);
 ---
 
-<ToolLayout tool={tool} fullScreen={true}>
+<ToolLayout tool={tool}>
   <FlowBuilder client:load />
 
   <Fragment slot="seo-content">

@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
 import { Key, Copy, Check } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 const CHARSETS = {
@@ -50,8 +51,24 @@ export default function ApiKeyGenerator() {
     }
   }, [showToast]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generateKey} className="btn-primary flex items-center gap-2">
+          <Key size={16} />
+          Generate API Keys
+        </button>
+        <button
+          onClick={() => { setKeys([]); setPrefix(''); setSuffix(''); }}
+          className="btn-ghost"
+        >
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {/* Configuration */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -115,18 +132,18 @@ export default function ApiKeyGenerator() {
       </div>
 
       {/* Actions */}
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generateKey} className="btn-primary flex items-center gap-2">
-          <Key size={16} />
-          Generate API Keys
-        </button>
-        <button
-          onClick={() => { setKeys([]); setPrefix(''); setSuffix(''); }}
-          className="btn-ghost"
-        >
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Output */}
       {keys.length > 0 && (
@@ -164,7 +181,7 @@ export default function ApiKeyGenerator() {
           />
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ColorConverter() {
   const [hex, setHex] = useState('#3b82f6');
@@ -63,8 +65,10 @@ export default function ColorConverter() {
     }
   }, []);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
           <label className="label">HEX</label>
@@ -116,7 +120,7 @@ export default function ColorConverter() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

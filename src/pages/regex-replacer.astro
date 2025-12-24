@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TextReplacer from '@/components/tools/TextReplacer'; 
+
+import { tools } from '@/lib/tools';
+
+const toolData = tools.find(t => t.slug === 'regex-replacer') || tools.find(t => t.id === 'regex-replacer');
+---
+
+<BaseLayout
+  title={toolData?.name || 'regex-replacer'}
+  description={toolData?.description || ''}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <TextReplacer client:load />
+  </ToolLayout>
+</BaseLayout>

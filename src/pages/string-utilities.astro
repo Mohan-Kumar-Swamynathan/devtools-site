@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import StringUtilities from '@/components/tools/StringUtilities';
+import ToolSchema from '@/components/seo/ToolSchema.astro';
+import FAQSchema from '@/components/seo/FAQSchema.astro';
+
+const tool = {
+  name: 'String Utilities',
+  description: 'String manipulation tools. Reverse, shuffle, sort, change case, trim, remove duplicates, and count characters, words, and lines.',
+  url: 'https://devtools.site/string-utilities'
+};
+
+const faqs = [
+  {
+    question: 'What operations can I perform on strings?',
+    answer: 'You can reverse, shuffle, sort lines, change case (uppercase, lowercase, capitalize), trim whitespace, remove duplicate lines, remove all spaces, and count characters, words, and lines.'
+  },
+  {
+    question: 'How does the shuffle operation work?',
+    answer: 'The shuffle operation randomly rearranges all characters in your text using a Fisher-Yates shuffle algorithm.'
+  },
+  {
+    question: 'Can I count words in multiple languages?',
+    answer: 'Yes! The word counter splits text by whitespace, so it works with most languages that use spaces to separate words.'
+  },
+  {
+    question: 'What does "Remove Duplicate Lines" do?',
+    answer: 'This operation keeps only unique lines in your text, removing any lines that appear more than once while preserving the order of first occurrence.'
+  },
+  {
+    question: 'Is there a character limit?',
+    answer: 'No, there is no character limit. However, very large texts (>1MB) may take longer to process depending on your device.'
+  }
+];
+---
+
+<BaseLayout
+  title="String Utilities - Free Text Manipulation Tools"
+  description={tool.description}
+  keywords={['string utilities', 'text manipulation', 'reverse string', 'shuffle text', 'sort lines', 'character counter', 'word counter', 'string tools', 'text tools']}
+>
+  <StringUtilities client:load />
+  <ToolSchema {...tool} />
+  <FAQSchema faqs={faqs} />
+</BaseLayout>

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TextToBinary() {
   const [input, setInput] = useState('');
@@ -37,8 +39,24 @@ export default function TextToBinary() {
     setOutput('');
   };
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button 
+          onClick={mode === 'text-to-binary' ? textToBinary : binaryToText} 
+          disabled={!input} 
+          className="btn-primary"
+        >
+          Convert
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('text-to-binary')}
@@ -68,18 +86,18 @@ export default function TextToBinary() {
         placeholder={mode === 'text-to-binary' ? 'Hello World' : '01001000 01100101 01101100 01101100 01101111'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button 
-          onClick={mode === 'text-to-binary' ? textToBinary : binaryToText} 
-          disabled={!input} 
-          className="btn-primary"
-        >
-          Convert
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -88,7 +106,7 @@ export default function TextToBinary() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

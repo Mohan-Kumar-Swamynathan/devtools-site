@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function XmlValidator() {
   const [input, setInput] = useState('');
@@ -28,8 +30,20 @@ export default function XmlValidator() {
     }
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={validate} disabled={!input} className="btn-primary">
+          Validate XML
+        </button>
+        <button onClick={() => { setInput(''); setResult(null); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -38,14 +52,14 @@ export default function XmlValidator() {
         placeholder='<?xml version="1.0"?><root><item>value</item></root>'
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={validate} disabled={!input} className="btn-primary">
-          Validate XML
-        </button>
-        <button onClick={() => { setInput(''); setResult(null); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {result && (
         <div className={`p-4 rounded-xl border ${result.valid ? 'alert-success' : 'alert-error'}`}>
@@ -59,7 +73,7 @@ export default function XmlValidator() {
           )}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

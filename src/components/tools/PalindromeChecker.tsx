@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function PalindromeChecker() {
   const [input, setInput] = useState('');
@@ -19,8 +21,20 @@ export default function PalindromeChecker() {
     setResults(results);
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={check} disabled={!input} className="btn-primary">
+          Check Palindromes
+        </button>
+        <button onClick={() => { setInput(''); setResults([]); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -31,14 +45,14 @@ A man a plan a canal Panama
 hello"
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={check} disabled={!input} className="btn-primary">
-          Check Palindromes
-        </button>
-        <button onClick={() => { setInput(''); setResults([]); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {results.length > 0 && (
         <div className="space-y-2">
@@ -59,7 +73,7 @@ hello"
           ))}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

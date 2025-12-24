@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ColorPicker() {
   const [color, setColor] = useState('#000000');
@@ -51,8 +53,10 @@ export default function ColorPicker() {
     });
   }, []);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Color Picker</label>
         <div className="flex items-center gap-4">
@@ -94,7 +98,7 @@ export default function ColorPicker() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

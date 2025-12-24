@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TextCounter() {
   const [input, setInput] = useState('');
@@ -34,8 +36,10 @@ export default function TextCounter() {
     count();
   }, [count]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={(v) => { setInput(v); count(); }}
@@ -70,7 +74,7 @@ export default function TextCounter() {
           <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>Lines</div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,7 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Breadcrumb from '@/components/common/Breadcrumb.astro';
-import AdSlot from '@/components/common/AdSlot.astro';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import Breadcrumbs from '@/components/seo/Breadcrumbs.astro';
 import FaqSchema from '@/components/seo/FaqSchema.astro';
@@ -94,14 +93,14 @@ const siteUrl = 'https://devtool.site';
   )}
   
   <!-- Tool Component -->
-  <div class={fullScreen ? "tool-panel-fullscreen" : "tool-panel mb-10 elevation-1 rounded-3xl overflow-hidden"}>
+  <div class={fullScreen ? "tool-panel-fullscreen" : "tool-panel mb-10"}>
     <slot />
   </div>
   
   {!fullScreen && (
     <>
       <!-- Ad Slot -->
-      <AdSlot slot="footer" class="mb-8" />
+
       
       <!-- SEO Content -->
       <section class="prose prose-slate dark:prose-invert max-w-none mb-10">

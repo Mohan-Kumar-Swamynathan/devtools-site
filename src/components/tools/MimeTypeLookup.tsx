@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Search, Copy, Info } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 // Common MIME types
@@ -44,8 +45,10 @@ export default function MimeTypeLookup() {
     });
   }, [showToast]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="space-y-4">
         <div>
           <label className="label">Search MIME Types</label>
@@ -143,7 +146,7 @@ export default function MimeTypeLookup() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

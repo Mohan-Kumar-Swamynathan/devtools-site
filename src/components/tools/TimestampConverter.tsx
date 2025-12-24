@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TimestampConverter() {
   const [timestamp, setTimestamp] = useState('');
@@ -50,8 +52,10 @@ export default function TimestampConverter() {
     setError('');
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {/* Mode Toggle */}
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
@@ -114,7 +118,7 @@ export default function TimestampConverter() {
           )}
         </>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

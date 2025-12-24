@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ClipPathGenerator from '@/components/tools/ClipPathGenerator'; 
+
+import { tools } from '@/lib/tools';
+
+const toolData = tools.find(t => t.slug === 'css-clip-path-generator') || tools.find(t => t.id === 'css-clip-path-generator');
+---
+
+<BaseLayout
+  title={toolData?.name || 'css-clip-path-generator'}
+  description={toolData?.description || ''}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <ClipPathGenerator client:load />
+  </ToolLayout>
+</BaseLayout>

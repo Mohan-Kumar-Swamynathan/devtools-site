@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function GradientGenerator() {
   const [type, setType] = useState<'linear' | 'radial'>('linear');
@@ -17,8 +19,10 @@ export default function GradientGenerator() {
     }
   }, [type, angle, color1, color2, stop1, stop2]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Gradient Type</label>
         <select value={type} onChange={(e) => setType(e.target.value as any)} className="input-base">
@@ -114,7 +118,7 @@ export default function GradientGenerator() {
         label="CSS Code"
         language="css"
       />
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,4 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface ContrastResult {
   ratio: number;
@@ -30,6 +32,7 @@ function getContrastRatio(color1: { r: number; g: number; b: number }, color2: {
   const lum2 = getLuminance(color2.r, color2.g, color2.b);
   const lighter = Math.max(lum1, lum2);
   const darker = Math.min(lum1, lum2);
+
   return (lighter + 0.05) / (darker + 0.05);
 }
 
@@ -89,8 +92,10 @@ export default function ColorContrastChecker() {
     }
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label className="label">Foreground Color</label>
@@ -249,7 +254,7 @@ export default function ColorContrastChecker() {
           <li>• <strong>AAA (Large):</strong> 4.5:1 contrast ratio</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

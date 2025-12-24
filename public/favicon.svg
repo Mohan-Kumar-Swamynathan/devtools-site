@@ -1,12 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0ea5e9"/>
-      <stop offset="100%" style="stop-color:#0284c7"/>
+    <linearGradient id="primary_gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#2563eb" />
     </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.2"/>
+    </filter>
   </defs>
-  <rect width="100" height="100" rx="22" fill="url(#grad)"/>
-  <text x="50" y="68" font-size="50" text-anchor="middle" fill="white" font-family="system-ui,-apple-system,sans-serif" font-weight="700">&lt;/&gt;</text>
+  
+  <rect width="512" height="512" rx="128" fill="url(#primary_gradient)" />
+  
+  <g filter="url(#shadow)" transform="translate(106, 106) scale(0.585)">
+    <!-- Main Wrench/Gear simplified iconic representation -->
+    <path d="M464.3 226.7C468.2 216.9 470.4 206.3 470.4 195.2C470.4 116.8 406.8 53.2 328.4 53.2C279.7 53.2 236.8 77.5 210.8 114.6L272.7 176.6C262.3 176.6 251.9 176.6 241.5 176.6L145.2 80.3C130.3 89.3 116.3 100.2 103.7 112.8C65.5 151 51.5 204.9 61.6 256.7L194.5 123.8C194.5 123.8 245.9 175.2 245.9 175.2C245.9 175.2 201.3 219.8 201.3 219.8L68.4 352.7C76.9 367.6 87.8 381.6 100.4 394.2C138.6 432.4 192.5 446.4 244.3 436.3L111.4 303.4C111.4 303.4 156 258.8 156 258.8C156 258.8 207.4 310.2 207.4 310.2L340.3 443.1C355.2 434.1 369.2 423.2 381.8 410.6C420 372.4 434 318.5 423.9 266.7L291 399.6L239.6 348.2L301.6 286.2C338.7 260.2 363 217.3 363 168.6C363 157.5 360.8 146.9 356.9 137.1L464.3 226.7Z" fill="white" stroke="white" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>
-
-

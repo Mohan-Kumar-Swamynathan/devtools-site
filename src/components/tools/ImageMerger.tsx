@@ -2,6 +2,8 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { Upload, Download, Trash2, Grid3x3, LayoutList, Columns } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 type Layout = 'horizontal' | 'vertical' | 'grid';
 
@@ -165,11 +167,9 @@ export default function ImageMerger() {
     }
   }, [images, layout, spacing, backgroundColor, mergeImages]);
 
-  return (
-    <div className="space-y-6">
-      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isProcessing}
@@ -206,6 +206,49 @@ export default function ImageMerger() {
           className="hidden"
         />
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {images.length > 0 && (
         <div className="space-y-4">
@@ -343,7 +386,7 @@ export default function ImageMerger() {
           <li>• Set background color for areas not covered by images</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

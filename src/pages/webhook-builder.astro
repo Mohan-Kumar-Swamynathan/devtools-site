@@ -1,0 +1,19 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ApiMockBuilder from '@/components/tools/ApiMockBuilder'; 
+
+import { tools } from '@/lib/tools';
+
+const toolData = tools.find(t => t.slug === 'webhook-builder') || tools.find(t => t.id === 'webhook-builder');
+---
+
+<BaseLayout
+  title={toolData?.name || 'webhook-builder'}
+  description={toolData?.description || ''}
+  toolData={toolData}
+>
+  <ToolLayout tool={toolData}>
+    <ApiMockBuilder client:load />
+  </ToolLayout>
+</BaseLayout>

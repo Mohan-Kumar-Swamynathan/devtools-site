@@ -3,6 +3,8 @@ import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import { Mic, Square, Copy, Download, Globe } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function SpeechToText() {
   const [transcript, setTranscript] = useState('');
@@ -165,8 +167,10 @@ export default function SpeechToText() {
 
   const wordCount = transcript.trim().split(/\s+/).filter(Boolean).length;
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} type={isSupported ? 'error' : 'warning'} />}
       
       {!isSupported && (
@@ -319,7 +323,7 @@ export default function SpeechToText() {
           <li>• Pause briefly between sentences for better recognition</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

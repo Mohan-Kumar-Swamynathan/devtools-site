@@ -13,19 +13,30 @@ const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
 
 <a 
   href={`/${slug}`} 
-  class="tool-card group block relative overflow-hidden transition-all duration-300 animate-fade-in-scale elevation-1 hover:elevation-4 rounded-3xl"
+  class="tool-card group block relative overflow-hidden transition-all duration-300 animate-fade-in-scale rounded-3xl"
   aria-label={`${name} - ${tagline}`}
   data-tool-slug={slug}
-  style="animation-fill-mode: both; background-color: var(--bg-elevated); border: 1px solid var(--border-primary);"
+  style="animation-fill-mode: both; background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-secondary) 100%); border: 1px solid var(--border-primary);"
 >
-  <div class="relative z-10 h-full flex flex-col p-6">
+  <!-- Gradient overlay for depth -->
+  <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  
+  <!-- Shimmer effect on hover -->
+  <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+    <div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+  </div>
+
+  <!-- Subtle glow on hover -->
+  <div class="absolute -inset-[1px] rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1)); z-index: -1;"></div>
+
+  <div class="relative z-10 h-full flex flex-col p-5">
     <!-- Header with icon and badges -->
-    <div class="flex items-start justify-between mb-5">
-      <div class="w-12 h-12 rounded-2xl flex items-center justify-center elevation-1 transition-all duration-200 group-hover:elevation-2" style="background-color: var(--bg-secondary);">
+    <div class="flex items-start justify-between mb-3">
+      <div class="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-3" style="background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary)); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
         <span 
-          class="text-3xl transition-transform duration-200 group-hover:scale-110 flex-shrink-0"
+          class="text-2xl transition-transform duration-300 group-hover:scale-110 flex-shrink-0"
           aria-hidden="true"
-          style="line-height: 1;"
+          style="line-height: 1; filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));"
         >
           {icon}
         </span>
@@ -33,7 +44,8 @@ const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
       <div class="flex gap-1.5 items-start flex-shrink-0" aria-label={isNew && isPopular ? 'New and Popular tool' : isNew ? 'New tool' : isPopular ? 'Popular tool' : ''}>
         {isNew && (
           <span 
-            class="badge-primary text-[10px] px-2.5 py-1 rounded-full font-semibold uppercase tracking-wide whitespace-nowrap" 
+            class="text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wide whitespace-nowrap transition-all duration-200 hover:scale-105" 
+            style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.25)); color: var(--brand-primary); border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);"
             aria-label="New"
           >
             New
@@ -41,39 +53,54 @@ const { name, slug, tagline, icon, isPopular, isNew } = Astro.props;
         )}
         {isPopular && (
           <span 
-            class="badge-warning text-[10px] px-2.5 py-1 rounded-full font-semibold uppercase tracking-wide whitespace-nowrap" 
+            class="text-[10px] px-2.5 py-1 rounded-full font-bold uppercase tracking-wide whitespace-nowrap transition-all duration-200 hover:scale-105" 
+            style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(245, 158, 11, 0.25)); color: var(--color-warning); border: 1px solid rgba(245, 158, 11, 0.3); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);"
             aria-label="Popular"
           >
-            Popular
+            ⭐ Hot
           </span>
         )}
       </div>
     </div>
     
     <!-- Content area - flex-grow to push footer down -->
-    <div class="flex-grow flex flex-col min-h-[80px]">
+    <div class="flex-grow flex flex-col min-h-[100px]">
       <h3 
-        class="font-semibold text-lg mb-2 transition-colors duration-200 group-hover:text-[var(--brand-primary)] line-clamp-2 leading-tight"
+        class="font-bold text-lg mb-2.5 transition-all duration-200 group-hover:text-[var(--brand-primary)] line-clamp-2 leading-tight tracking-tight"
         style="color: var(--text-primary);"
       >
         {name}
       </h3>
       <p 
         class="text-sm line-clamp-2 leading-relaxed" 
-        style="color: var(--text-muted);"
+        style="color: var(--text-secondary);"
       >
         {tagline}
       </p>
     </div>
     
     <!-- Arrow indicator on hover -->
-    <div class="mt-5 pt-4 border-t opacity-0 group-hover:opacity-100 transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 flex items-center justify-between" style="border-color: var(--border-primary);">
-      <span class="text-sm font-medium" style="color: var(--brand-primary);">Open tool</span>
-      <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--brand-primary);">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    <div class="mt-4 pt-3.5 border-t opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 flex items-center justify-between" style="border-color: var(--border-secondary);">
+      <span class="text-sm font-semibold tracking-tight" style="color: var(--brand-primary);">Open tool</span>
+      <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--brand-primary);">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
       </svg>
     </div>
   </div>
 </a>
 
+<style>
+  .tool-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--border-secondary);
+  }
+
+  .tool-card:active {
+    transform: translateY(-2px);
+  }
+</style>
 

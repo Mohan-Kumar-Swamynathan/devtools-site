@@ -14,6 +14,7 @@ interface Props {
   showLineNumbers?: boolean;
   showToolbar?: boolean;
   maxHeight?: string;
+  minHeight?: string;
   className?: string;
 }
 
@@ -31,6 +32,7 @@ export default function CodeEditor({
   showLineNumbers = false,
   showToolbar = true,
   maxHeight = '500px',
+  minHeight,
   className = ''
 }: Props) {
   const [copied, setCopied] = useState(false);
@@ -131,17 +133,17 @@ export default function CodeEditor({
   // Sync textarea scroll with highlight container
   useEffect(() => {
     if (!shouldHighlight || !textareaRef.current || !containerRef.current) return;
-    
+
     const textarea = textareaRef.current;
     const container = containerRef.current;
-    
+
     const handleTextareaScroll = () => {
       container.scrollTop = textarea.scrollTop;
       container.scrollLeft = textarea.scrollLeft;
     };
-    
+
     textarea.addEventListener('scroll', handleTextareaScroll);
-    
+
     return () => {
       textarea.removeEventListener('scroll', handleTextareaScroll);
     };
@@ -155,7 +157,7 @@ export default function CodeEditor({
     styles: [
       {
         types: ['comment', 'prolog', 'doctype', 'cdata'],
-        style: { color: 'var(--syntax-comment)', fontStyle: 'italic' }
+        style: { color: 'var(--syntax-comment)', fontStyle: 'italic' as const }
       },
       {
         types: ['punctuation'],
@@ -194,7 +196,7 @@ export default function CodeEditor({
       {(label || showToolbar) && (
         <div className="flex items-center justify-between mb-2">
           {label && <label className="label">{label}</label>}
-          
+
           {showToolbar && (
             <div className="flex items-center gap-1">
               {!readOnly && (
@@ -210,16 +212,16 @@ export default function CodeEditor({
                   <input ref={fileInputRef} type="file" className="hidden" onChange={handleFileUpload} accept=".txt,.json,.js,.ts,.html,.css,.sql,.xml,.yaml,.yml,.md" />
                 </>
               )}
-              <button 
-                onClick={handleCopy} 
-                className="btn-icon p-1.5 relative" 
+              <button
+                onClick={handleCopy}
+                className="btn-icon p-1.5 relative"
                 title={copied ? 'Copied!' : 'Copy'}
                 aria-label={copied ? 'Copied!' : 'Copy'}
               >
                 {copied ? (
                   <>
-                    <Check size={16} className="text-green-500 animate-fade-in" />
-                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs whitespace-nowrap animate-fade-in" 
+                    <Check size={16} className="animate-fade-in" style={{ color: 'var(--color-success)' }} />
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 rounded text-xs whitespace-nowrap animate-fade-in"
                       style={{ backgroundColor: 'var(--bg-elevated)', color: 'var(--text-primary)', border: '1px solid var(--border-primary)' }}>
                       Copied!
                     </span>
@@ -245,13 +247,13 @@ export default function CodeEditor({
       )}
 
       {/* Editor */}
-      <div 
+      <div
         ref={containerRef}
         className={clsx(
           'relative rounded-xl border overflow-auto animate-fade-in',
           showLineNumbers && 'pl-14'
         )}
-        style={{ 
+        style={{
           backgroundColor: 'var(--bg-primary)',
           borderColor: 'var(--border-primary)',
           maxHeight: isExpanded ? 'none' : maxHeight,
@@ -259,10 +261,10 @@ export default function CodeEditor({
         }}
       >
         {showLineNumbers && (
-          <div 
+          <div
             className="absolute left-0 top-0 bottom-0 w-12 flex flex-col items-end pr-3 pt-4 text-xs font-mono select-none overflow-hidden animate-slide-in-left z-10"
-            style={{ 
-              color: 'var(--text-muted)', 
+            style={{
+              color: 'var(--text-muted)',
               backgroundColor: 'var(--bg-tertiary)',
               borderRight: '1px solid var(--border-primary)',
               borderRadius: '0.75rem 0 0 0.75rem'
@@ -273,7 +275,7 @@ export default function CodeEditor({
             ))}
           </div>
         )}
-        
+
         {shouldHighlight ? (
           <div className="relative w-full" style={{ minHeight: '200px' }}>
             <Highlight
@@ -282,14 +284,14 @@ export default function CodeEditor({
               theme={theme}
             >
               {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                <pre 
-                  className={className} 
-                  style={{ 
-                    ...style, 
-                    margin: 0, 
-                    padding: '1rem', 
-                    fontFamily: 'JetBrains Mono, monospace', 
-                    fontSize: '0.875rem', 
+                <pre
+                  className={className}
+                  style={{
+                    ...style,
+                    margin: 0,
+                    padding: '1rem',
+                    fontFamily: 'JetBrains Mono, monospace',
+                    fontSize: '0.875rem',
                     lineHeight: '1.75',
                     position: 'absolute',
                     top: 0,
@@ -344,12 +346,12 @@ export default function CodeEditor({
             rows={rows}
             spellCheck={false}
             className={clsx(
-              'code-editor w-full p-4 transition-all duration-200',
+              'input-base font-mono w-full p-4 transition-all duration-200',
               isExpanded && 'h-[80vh]'
             )}
-            style={{ 
+            style={{
               maxHeight: isExpanded ? 'none' : maxHeight,
-              minHeight: '200px'
+              minHeight: minHeight || '200px'
             }}
           />
         )}

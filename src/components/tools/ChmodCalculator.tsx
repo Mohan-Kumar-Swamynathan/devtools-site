@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ChmodCalculator() {
   const [ownerRead, setOwnerRead] = useState(true);
@@ -34,8 +36,10 @@ export default function ChmodCalculator() {
 
   const result = calculate();
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
           <h3 className="font-medium mb-3">Owner</h3>
@@ -108,7 +112,7 @@ export default function ChmodCalculator() {
         label="Command"
         language="bash"
       />
-    </div>
+    </ToolShell>
   );
 }
 

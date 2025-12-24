@@ -6,6 +6,9 @@ import OnboardingManager from '@/components/onboarding/OnboardingManager.tsx';
 import KeyboardShortcuts from '@/components/common/KeyboardShortcuts.tsx';
 import JsonLd from '@/components/seo/JsonLd.astro';
 import OrganizationSchema from '@/components/seo/OrganizationSchema.astro';
+import FAQSchema from '@/components/seo/FAQSchema.astro';
+import ToolSchema from '@/components/seo/ToolSchema.astro';
+import BreadcrumbsSchema from '@/components/seo/BreadcrumbsSchema.astro';
 import '@/styles/global.css';
 
 interface Props {
@@ -15,6 +18,15 @@ interface Props {
   canonical?: string;
   ogImage?: string;
   noindex?: boolean;
+  faqs?: { question: string; answer: string }[];
+  toolData?: {
+    name: string;
+    description: string;
+    applicationCategory?: string;
+    operatingSystem?: string;
+    featureList?: string[];
+    screenshot?: string;
+  };
 }
 
 const { 
@@ -23,7 +35,9 @@ const {
   keywords = [], 
   canonical,
   ogImage = '/og-image.png',
-  noindex = false
+  noindex = false,
+  faqs,
+  toolData
 } = Astro.props;
 
 const siteTitle = title === 'Home' 
@@ -102,8 +116,9 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#0ea5e9" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
+  <!-- Theme colors handled by global.css vars, but meta tags updated for potential mobile browser support -->
+  <meta name="theme-color" content="#0f0f0f" />
+  
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -116,16 +131,9 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <!-- Theme Script (Prevents Flash) -->
   <script is:inline>
     (function() {
-      try {
-        const theme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (theme === 'dark' || (!theme && prefersDark)) {
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) {
-        // Fallback if localStorage is not available
-        console.warn('Theme initialization failed:', e);
-      }
+      // Force dark mode always (Cred theme)
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
     })();
   </script>
   
@@ -133,17 +141,14 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <script is:inline>
     if ('PerformanceObserver' in window) {
       try {
-        // Monitor Largest Contentful Paint (LCP)
         new PerformanceObserver((list) => {
           const entries = list.getEntries();
           const lastEntry = entries[entries.length - 1];
           if (lastEntry) {
-            // Log to analytics if needed
             console.debug('LCP:', lastEntry.renderTime || lastEntry.loadTime);
           }
         }).observe({ entryTypes: ['largest-contentful-paint'] });
         
-        // Monitor First Input Delay (FID)
         new PerformanceObserver((list) => {
           const entries = list.getEntries();
           entries.forEach((entry) => {
@@ -157,6 +162,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   </script>
   
   <!-- Structured Data -->
+  {/* WebSite Schema always present */}
   <JsonLd 
     type="WebSite"
     name="DevTools"
@@ -190,11 +196,16 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   
   <!-- Organization Schema -->
   <OrganizationSchema />
+
+  <!-- AEO Schemas -->
+  {faqs && <FAQSchema faqs={faqs} />}
+  {toolData && <ToolSchema {...toolData} />}
+  <BreadcrumbsSchema />
   
   <!-- Additional head content -->
   <slot name="head" />
 </head>
-<body class="min-h-screen flex flex-col safe-top">
+<body class="min-h-screen flex flex-col safe-top bg-background text-background-on transition-colors duration-300">
   <!-- Skip to main content (Accessibility) -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 btn-primary z-50">
     Skip to main content
@@ -203,7 +214,7 @@ const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
   <Header />
   
   <main id="main-content" class="flex-1 w-full">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-7xl" id="main-container">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 max-w-6xl" id="main-container">
       <slot />
     </div>
   </main>

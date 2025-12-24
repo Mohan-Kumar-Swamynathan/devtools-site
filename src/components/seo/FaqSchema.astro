@@ -9,10 +9,8 @@ interface Props {
 }
 
 const { faqs } = Astro.props;
-const siteUrl = 'https://devtool.site';
-const currentUrl = new URL(Astro.url.pathname, siteUrl).href;
 
-const faqSchema = {
+const schema = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": faqs.map(faq => ({
@@ -26,10 +24,4 @@ const faqSchema = {
 };
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-
-
-
-
-
-
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function EpochConverter() {
   const [input, setInput] = useState('');
@@ -52,8 +54,23 @@ Time: ${String(formats.hour).padStart(2, '0')}:${String(formats.minute).padStart
     convert();
   }, [unit, convert]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={convert} disabled={!input} className="btn-primary">
+          Convert
+        </button>
+        <button onClick={convertNow} className="btn-secondary">
+          Use Current Time
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Timestamp</label>
@@ -75,17 +92,17 @@ Time: ${String(formats.hour).padStart(2, '0')}:${String(formats.minute).padStart
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={convert} disabled={!input} className="btn-primary">
-          Convert
-        </button>
-        <button onClick={convertNow} className="btn-secondary">
-          Use Current Time
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -95,7 +112,7 @@ Time: ${String(formats.hour).padStart(2, '0')}:${String(formats.minute).padStart
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

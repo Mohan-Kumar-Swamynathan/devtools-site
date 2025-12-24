@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { Upload, Download, Copy, Trash2 } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 const ASCII_CHARS = '@%#*+=-:. ';
@@ -125,11 +126,9 @@ export default function ImageToAscii() {
     }
   }, [image, density, useColor, convertToAscii]);
 
-  return (
-    <div className="space-y-6">
-      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isProcessing}
@@ -180,6 +179,63 @@ export default function ImageToAscii() {
           className="hidden"
         />
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {image && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -271,7 +327,7 @@ export default function ImageToAscii() {
           <li>• Higher contrast images produce better results</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

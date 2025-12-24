@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const statusCodes: Record<number, { name: string; description: string; category: string }> = {
   100: { name: 'Continue', description: 'The server has received the request headers', category: 'Informational' },
@@ -34,8 +36,10 @@ export default function HttpStatusCodeLookup() {
     setResult(statusCodes[codeNum] || null);
   }, [code]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">HTTP Status Code</label>
         <input
@@ -66,7 +70,7 @@ export default function HttpStatusCodeLookup() {
           Status code {code} not found in database
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface EnvVar {
   key: string;
@@ -91,8 +93,20 @@ export default function EnvFileGenerator() {
     }
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} className="btn-primary">
+          Generate .env File
+        </button>
+        <button onClick={() => { setVars([{ key: '', value: '', comment: '' }]); setOutput(''); }} className="btn-ghost">
+          Clear All
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="space-y-4">
@@ -158,14 +172,14 @@ export default function EnvFileGenerator() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} className="btn-primary">
-          Generate .env File
-        </button>
-        <button onClick={() => { setVars([{ key: '', value: '', comment: '' }]); setOutput(''); }} className="btn-ghost">
-          Clear All
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -192,7 +206,7 @@ export default function EnvFileGenerator() {
           Load from Text
         </button>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

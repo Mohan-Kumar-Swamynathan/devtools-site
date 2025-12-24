@@ -5,6 +5,8 @@ import { Sparkles, Loader, AlertCircle } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { initModel, isModelReady, isModelLoading, generateResponse } from '@/lib/assistant/browserLLM';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const PROMPTS = [
   { label: 'Blog Post', value: 'Write a blog post about: ' },
@@ -80,8 +82,38 @@ export default function TextGenerator() {
     }
   }, [input, promptType, modelReady]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button
+          onClick={generate}
+          disabled={!input.trim() || isGenerating || !modelReady}
+          className="btn-primary flex items-center gap-2"
+        >
+          {isGenerating ? (
+            <>
+              <Loader size={16} className="animate-spin" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Sparkles size={16} />
+              Generate Text
+            </>
+          )}
+        </button>
+        <button
+          onClick={() => { setInput(''); setOutput(''); setError(''); }}
+          className="btn-ghost"
+          disabled={isGenerating}
+        >
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {/* Model Status */}
       {!modelReady && !modelLoading && (
         <div className="p-4 rounded-xl border" style={{ backgroundColor: 'var(--bg-secondary)', borderColor: 'var(--border-primary)' }}>
@@ -150,32 +182,32 @@ export default function TextGenerator() {
       />
 
       {/* Actions */}
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={generate}
-          disabled={!input.trim() || isGenerating || !modelReady}
-          className="btn-primary flex items-center gap-2"
-        >
-          {isGenerating ? (
-            <>
-              <Loader size={16} className="animate-spin" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <Sparkles size={16} />
-              Generate Text
-            </>
-          )}
-        </button>
-        <button
-          onClick={() => { setInput(''); setOutput(''); setError(''); }}
-          className="btn-ghost"
-          disabled={isGenerating}
-        >
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {/* Error */}
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
@@ -188,7 +220,7 @@ export default function TextGenerator() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

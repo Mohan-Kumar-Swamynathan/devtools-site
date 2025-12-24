@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ApiDocumentationGenerator() {
   const [endpoint, setEndpoint] = useState('');
@@ -48,8 +50,20 @@ curl -X ${method} ${endpoint}
     setOutput(doc);
   }, [endpoint, method, description, params, response]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} className="btn-primary">
+          Generate Documentation
+        </button>
+        <button onClick={() => { setEndpoint(''); setDescription(''); setParams([]); setResponse(''); setOutput(''); }} className="btn-ghost">
+          Reset
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Endpoint</label>
@@ -141,14 +155,14 @@ curl -X ${method} ${endpoint}
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} className="btn-primary">
-          Generate Documentation
-        </button>
-        <button onClick={() => { setEndpoint(''); setDescription(''); setParams([]); setResponse(''); setOutput(''); }} className="btn-ghost">
-          Reset
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -158,7 +172,7 @@ curl -X ${method} ${endpoint}
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

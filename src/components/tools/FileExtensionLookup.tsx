@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Search, Copy } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 // Common file extensions
@@ -50,8 +51,10 @@ export default function FileExtensionLookup() {
     });
   }, [showToast]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="space-y-4">
         <div>
           <label className="label">Search File Extensions</label>
@@ -98,6 +101,6 @@ export default function FileExtensionLookup() {
           ))}
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }

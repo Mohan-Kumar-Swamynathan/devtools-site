@@ -3,6 +3,8 @@ import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import { CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface ValidationIssue {
   line: number;
@@ -85,8 +87,20 @@ export default function EnvFileValidator() {
     setIsValid(newIssues.filter(i => i.type === 'error').length === 0);
   }, [input]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={validate} disabled={!input} className="btn-primary">
+          Validate
+        </button>
+        <button onClick={() => { setInput(''); setIssues([]); setIsValid(null); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -98,14 +112,14 @@ DEBUG=true"
         rows={12}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={validate} disabled={!input} className="btn-primary">
-          Validate
-        </button>
-        <button onClick={() => { setInput(''); setIssues([]); setIsValid(null); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {/* Validation Results */}
       {isValid !== null && (
@@ -175,9 +189,11 @@ DEBUG=true"
           )}
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
+
+
 
 
 

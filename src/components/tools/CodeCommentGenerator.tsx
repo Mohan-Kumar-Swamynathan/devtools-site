@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function CodeCommentGenerator() {
   const [code, setCode] = useState('');
@@ -55,8 +57,20 @@ export default function CodeCommentGenerator() {
     setOutput(commented.join('\n'));
   }, [code, language, style]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} disabled={!code} className="btn-primary">
+          Generate Comments
+        </button>
+        <button onClick={() => { setCode(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Language</label>
@@ -85,14 +99,14 @@ export default function CodeCommentGenerator() {
         placeholder={language === 'javascript' ? 'function example() {\n  return "hello";\n}' : 'def example():\n    return "hello"'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} disabled={!code} className="btn-primary">
-          Generate Comments
-        </button>
-        <button onClick={() => { setCode(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -102,7 +116,7 @@ export default function CodeCommentGenerator() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

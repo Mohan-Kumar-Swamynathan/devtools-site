@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Copy, RotateCcw } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 export default function HttpHeadersParser() {
@@ -35,9 +36,9 @@ export default function HttpHeadersParser() {
     });
   }, [parsed, showToast]);
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={parseHeaders}
           className="btn-primary"
@@ -64,6 +65,37 @@ export default function HttpHeadersParser() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
@@ -105,6 +137,6 @@ export default function HttpHeadersParser() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }

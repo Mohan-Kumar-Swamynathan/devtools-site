@@ -2,6 +2,8 @@ import { useState, useRef, useCallback } from 'react';
 import { Upload, Download, Trash2, Image as ImageIcon } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface Thumbnail {
   dataUrl: string;
@@ -162,11 +164,9 @@ export default function VideoThumbnailGenerator() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  return (
-    <div className="space-y-6">
-      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
-
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={isProcessing}
@@ -202,6 +202,48 @@ export default function VideoThumbnailGenerator() {
           className="hidden"
         />
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+      {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
+
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {video && (
         <div className="space-y-4">
@@ -319,7 +361,7 @@ export default function VideoThumbnailGenerator() {
           <li>• Thumbnails are saved as PNG images</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function PathNormalizer() {
   const [input, setInput] = useState('');
@@ -35,8 +37,10 @@ export default function PathNormalizer() {
     setOutput(normalized);
   }, [input, target]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Target Platform</label>
         <select value={target} onChange={(e) => { setTarget(e.target.value as any); normalize(); }} className="input-base">
@@ -61,7 +65,7 @@ export default function PathNormalizer() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

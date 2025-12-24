@@ -1,5 +1,4 @@
 ---
-import ThemeToggle from './ThemeToggle.tsx';
 import SearchBox from '@/components/common/SearchBox.tsx';
 import MobileMenu from './MobileMenu.tsx';
 import HelpButton from '@/components/onboarding/HelpButton.tsx';
@@ -8,113 +7,122 @@ import { tools, categories, getToolBySlug } from '@/lib/tools';
 const flowBuilderTool = getToolBySlug('flow-builder');
 ---
 
-<header class="sticky top-0 z-50 border-b backdrop-blur-xl" style="background-color: var(--bg-primary); border-color: var(--border-primary); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-    <div class="flex items-center justify-between h-16 sm:h-18 gap-2 sm:gap-4">
-      
-      <!-- Logo -->
-      <a 
-        href="/" 
-        class="flex items-center gap-2 sm:gap-3 font-medium text-lg sm:text-xl group transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded-lg px-2 sm:px-3 py-1.5 -ml-2 hover:bg-[var(--bg-secondary)] flex-shrink-0"
-        aria-label="DevTools Home"
-      >
-        <span class="text-2xl sm:text-3xl transition-transform duration-200 group-hover:scale-110 inline-block" role="img" aria-hidden="true">🛠️</span>
-        <span class="hidden sm:inline transition-colors duration-200 font-semibold" style="color: var(--text-primary);">DevTools</span>
-      </a>
-      
-      <!-- Flow Builder Featured Button (Mobile/Tablet) -->
-      {flowBuilderTool && (
-        <a
-          href={`/${flowBuilderTool.slug}`}
-          class="lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 relative shadow-md hover:shadow-lg flex-shrink-0"
-          style="background: linear-gradient(135deg, var(--brand-primary) 0%, #7dd3fc 100%); color: white;"
-          aria-label="Flow Builder"
-        >
-          <span class="text-sm">{flowBuilderTool.icon}</span>
-          <span class="hidden sm:inline">Flow</span>
-          <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] font-bold px-1 py-0.5 rounded-full">
-            New
-          </span>
-        </a>
-      )}
-      
-      <!-- Desktop Navigation -->
-      <nav class="hidden lg:flex items-center gap-0.5 flex-1 justify-center max-w-2xl" aria-label="Main navigation">
-        <!-- Flow Builder Featured Button (Desktop) -->
-        {flowBuilderTool && (
-          <a
-            href={`/${flowBuilderTool.slug}`}
-            class="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 relative mr-2 shadow-md hover:shadow-lg flex-shrink-0"
-            style="background: linear-gradient(135deg, var(--brand-primary) 0%, #7dd3fc 100%); color: white;"
-            aria-label="Flow Builder - Visual Flowchart Builder"
-          >
-            <span class="text-sm">{flowBuilderTool.icon}</span>
-            <span class="hidden xl:inline">Flow Builder</span>
-            <span class="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-[9px] font-bold px-1 py-0.5 rounded-full">
-              New
-            </span>
-          </a>
-        )}
-        {Object.values(categories).slice(0, 5).map((cat) => (
-          <a 
-            href={`/#${cat.id}`} 
-            class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-[var(--bg-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2"
-            style="color: var(--text-primary);"
-            aria-label={`Navigate to ${cat.name} category`}
-          >
-            {cat.name}
-          </a>
-        ))}
+<div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4 sm:pt-6 pointer-events-none transition-transform duration-300 transform" id="header-container">
+  <header 
+    class="pointer-events-auto rounded-full border backdrop-blur-xl transition-all duration-300 w-full max-w-6xl shadow-lg hover:shadow-xl" 
+    style="background-color: rgba(var(--md-sys-color-surface), 0.85); border-color: var(--md-sys-color-outline-variant);"
+  >
+    <div class="px-3 sm:px-6">
+      <div class="flex items-center justify-between h-14 sm:h-16 gap-3">
+        
+        <!-- Logo -->
         <a 
-          href="/about" 
-          class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 hover:bg-[var(--bg-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2"
-          style="color: var(--text-primary);"
-          aria-label="About DevTools"
+          href="/" 
+          class="flex items-center gap-2 group transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 rounded-full px-2 py-1.5 hover:bg-[var(--bg-secondary)] flex-shrink-0"
+          aria-label="DevTools Home"
         >
-          About
+          <span class="text-2xl transition-transform duration-200 group-hover:scale-110 inline-block mb-1" role="img" aria-hidden="true">🛠️</span>
+          <span class="hidden sm:inline transition-colors duration-200 font-semibold text-lg" style="color: var(--text-primary);">DevTools</span>
         </a>
-      </nav>
-      
-      <!-- Search + Actions -->
-      <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Search (Desktop) -->
-        <div class="hidden sm:block w-64 lg:w-80">
-          <SearchBox client:load tools={tools} />
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden lg:flex items-center gap-1 xl:gap-2 overflow-x-auto no-scrollbar mask-gradient" aria-label="Main navigation">
+          
+          <!-- Flow Builder Featured Button -->
+          {flowBuilderTool && (
+            <a
+              href={`/${flowBuilderTool.slug}`}
+              class="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 relative flex-shrink-0 mr-2"
+              style="background: linear-gradient(135deg, var(--brand-primary) 0%, #3b82f6 100%); color: white; box-shadow: 0 2px 8px rgba(59, 130, 246, 0.25);"
+              aria-label="Flow Builder"
+            >
+              <span class="text-base">{flowBuilderTool.icon}</span>
+              <span class="whitespace-nowrap">Flow Builder</span>
+              <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm animate-pulse-slow">
+                New
+              </span>
+            </a>
+          )}
+
+          {Object.values(categories).slice(0, 5).map((cat) => (
+            <a 
+              href={`/#${cat.id}`} 
+              class="px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 hover:bg-[var(--bg-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)] focus:ring-offset-2 whitespace-nowrap"
+              style="color: var(--text-primary);"
+              aria-label={`Navigate to ${cat.name}`}
+            >
+              {cat.name}
+            </a>
+          ))}
+        </nav>
+        
+        <!-- Search + Actions -->
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+          <!-- Search (Desktop) -->
+          <div class="hidden md:block w-48 lg:w-64 xl:w-72 transition-all duration-300">
+            <SearchBox client:load tools={tools} />
+          </div>
+          
+          <!-- Search Icon (Mobile/Tablet) -->
+          <button 
+            id="mobile-search-btn"
+            class="md:hidden btn-icon touch-target w-10 h-10 flex items-center justify-center rounded-full hover:bg-[var(--bg-secondary)] transition-colors"
+            style="color: var(--text-primary);"
+            aria-label="Search tools"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+          
+          <div class="w-px h-6 bg-[var(--outline-variant)] hidden sm:block"></div>
+          
+          <!-- Help Button -->
+          <HelpButton client:load />
+          
+
+          
+          <!-- Mobile Menu Button -->
+          <MobileMenu client:load tools={tools} categories={Object.values(categories)} />
         </div>
-        
-        <!-- Search Icon (Mobile) -->
-        <button 
-          id="mobile-search-btn"
-          class="sm:hidden btn-icon touch-target"
-          style="color: var(--text-primary);"
-          aria-label="Search tools"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </button>
-        
-        <!-- Help Button -->
-        <HelpButton client:load />
-        
-        <!-- Theme Toggle -->
-        <ThemeToggle client:load />
-        
-        <!-- Mobile Menu Button -->
-        <MobileMenu client:load tools={tools} categories={Object.values(categories)} />
+      </div>
+      
+      <!-- Mobile Search (Expandable) -->
+      <div id="mobile-search" class="md:hidden pb-4 hidden px-1 transition-all duration-300">
+        <SearchBox client:load tools={tools} />
       </div>
     </div>
-    
-    <!-- Mobile Search (Expandable) -->
-    <div id="mobile-search" class="sm:hidden pb-4 hidden">
-      <SearchBox client:load tools={tools} />
-    </div>
-  </div>
-</header>
+  </header>
+</div>
 
 <script is:inline>
   document.getElementById('mobile-search-btn')?.addEventListener('click', () => {
     document.getElementById('mobile-search')?.classList.toggle('hidden');
+  });
+
+  // Hide header on scroll down, show on scroll up (Mobile Optimization)
+  const headerContainer = document.getElementById('header-container');
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY;
+        
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          // Scrolling down
+          headerContainer.style.transform = 'translateY(-120%)';
+        } else {
+          // Scrolling up
+          headerContainer.style.transform = 'translateY(0)';
+        }
+        
+        lastScrollY = currentScrollY;
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
 </script>
 

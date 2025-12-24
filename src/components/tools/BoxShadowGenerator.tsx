@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function BoxShadowGenerator() {
   const [offsetX, setOffsetX] = useState(0);
@@ -23,8 +25,10 @@ export default function BoxShadowGenerator() {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Offset X: {offsetX}px</label>
@@ -121,7 +125,7 @@ export default function BoxShadowGenerator() {
         label="CSS Code"
         language="css"
       />
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
 import { randomString } from '@/lib/utils';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function RandomString() {
   const [output, setOutput] = useState('');
@@ -30,8 +32,20 @@ export default function RandomString() {
     setOutput(strings.join('\n'));
   }, [length, includeUppercase, includeLowercase, includeNumbers, includeSymbols, count]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={generate} className="btn-primary">
+          Generate
+        </button>
+        <button onClick={() => setOutput('')} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Length</label>
@@ -99,14 +113,14 @@ export default function RandomString() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={generate} className="btn-primary">
-          Generate
-        </button>
-        <button onClick={() => setOutput('')} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel
@@ -115,7 +129,7 @@ export default function RandomString() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

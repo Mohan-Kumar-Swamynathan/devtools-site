@@ -1,5 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Maximize2, Minimize2, RotateCcw, Smartphone, Tablet, Monitor } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const PRESETS = [
   { name: 'iPhone SE', width: 375, height: 667 },
@@ -47,12 +49,13 @@ export default function ViewportTester() {
       setIsFullscreen(!!document.fullscreenElement);
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    
+
+  return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
   }, []);
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+    const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={toggleFullscreen}
           className="btn-secondary flex items-center gap-2"
@@ -73,6 +76,31 @@ export default function ViewportTester() {
           Reset
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-4">
@@ -185,7 +213,7 @@ export default function ViewportTester() {
           </div>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

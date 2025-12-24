@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function BusinessDaysCalculator() {
   const [startDate, setStartDate] = useState('');
@@ -39,8 +41,10 @@ export default function BusinessDaysCalculator() {
     setResult({ businessDays, totalDays, weekends });
   }, [startDate, endDate]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label className="label">Start Date</label>
@@ -80,7 +84,7 @@ export default function BusinessDaysCalculator() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

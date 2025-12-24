@@ -5,21 +5,62 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Roboto', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace']
       },
       colors: {
+        // Material Design 3 Semantic Colors
+        primary: {
+          DEFAULT: 'var(--md-sys-color-primary)',
+          container: 'var(--md-sys-color-primary-container)',
+          on: 'var(--md-sys-color-on-primary)',
+          'on-container': 'var(--md-sys-color-on-primary-container)',
+        },
+        secondary: {
+          DEFAULT: 'var(--md-sys-color-secondary)',
+          container: 'var(--md-sys-color-secondary-container)',
+          on: 'var(--md-sys-color-on-secondary)',
+          'on-container': 'var(--md-sys-color-on-secondary-container)',
+        },
+        tertiary: {
+          DEFAULT: 'var(--md-sys-color-tertiary)',
+          container: 'var(--md-sys-color-tertiary-container)',
+          on: 'var(--md-sys-color-on-tertiary)',
+          'on-container': 'var(--md-sys-color-on-tertiary-container)',
+        },
+        error: {
+          DEFAULT: 'var(--md-sys-color-error)',
+          container: 'var(--md-sys-color-error-container)',
+          on: 'var(--md-sys-color-on-error)',
+          'on-container': 'var(--md-sys-color-on-error-container)',
+        },
+        background: {
+          DEFAULT: 'var(--md-sys-color-background)',
+          on: 'var(--md-sys-color-on-background)',
+        },
+        surface: {
+          DEFAULT: 'var(--md-sys-color-surface)',
+          on: 'var(--md-sys-color-on-surface)',
+          variant: 'var(--md-sys-color-surface-variant)',
+          'on-variant': 'var(--md-sys-color-on-surface-variant)',
+          container: 'var(--md-sys-color-surface-container)',
+        },
+        outline: {
+          DEFAULT: 'var(--md-sys-color-outline)',
+          variant: 'var(--md-sys-color-outline-variant)',
+        },
+        // Valid legacy colors for compatibility (mapped to M3)
         brand: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
+          50: 'var(--md-sys-color-surface)',
+          100: 'var(--md-sys-color-surface-container)',
+          200: 'var(--md-sys-color-primary-container)',
           300: '#7dd3fc',
           400: '#38bdf8',
-          500: '#0ea5e9',
+          500: 'var(--md-sys-color-primary)',
           600: '#0284c7',
           700: '#0369a1',
           800: '#075985',
-          900: '#0c4a6e'
+          900: 'var(--md-sys-color-primary)'
         }
       },
       screens: {

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function StringEscape() {
   const [input, setInput] = useState('');
@@ -35,8 +37,24 @@ export default function StringEscape() {
     setOutput('');
   };
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button 
+          onClick={mode === 'escape' ? escape : unescape} 
+          disabled={!input} 
+          className="btn-primary"
+        >
+          {mode === 'escape' ? 'Escape' : 'Unescape'}
+        </button>
+        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="flex gap-2 p-1 rounded-xl" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <button
           onClick={() => handleModeChange('escape')}
@@ -66,18 +84,18 @@ export default function StringEscape() {
         placeholder={mode === 'escape' ? 'Hello "World"\nNew line' : 'Hello \\"World\\"\\nNew line'}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button 
-          onClick={mode === 'escape' ? escape : unescape} 
-          disabled={!input} 
-          className="btn-primary"
-        >
-          {mode === 'escape' ? 'Escape' : 'Unescape'}
-        </button>
-        <button onClick={() => { setInput(''); setOutput(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
 
       {output && (
         <OutputPanel 
@@ -86,7 +104,7 @@ export default function StringEscape() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Copy, Download, RotateCcw, Minimize2 } from 'lucide-react';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 export default function JavascriptMinifier() {
@@ -61,9 +62,9 @@ export default function JavascriptMinifier() {
   const minifiedSize = minified.length;
   const savings = originalSize > 0 ? ((1 - minifiedSize / originalSize) * 100).toFixed(1) : '0';
 
-  return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
+  
+  const controls = (
+          <div className="flex items-center gap-3">
         <button
           onClick={handleMinify}
           className="btn-primary flex items-center gap-2"
@@ -100,6 +101,47 @@ export default function JavascriptMinifier() {
           Clear
         </button>
       </div>
+  );
+
+  return (
+    <ToolShell className="space-y-6" controls={controls}>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
@@ -197,7 +239,7 @@ export default function JavascriptMinifier() {
           </label>
         </div>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

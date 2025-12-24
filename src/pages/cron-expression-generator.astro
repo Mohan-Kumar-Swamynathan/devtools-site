@@ -1,0 +1,11 @@
+---
+import ToolLayout from '../layouts/ToolLayout.astro';
+import CronExpressionGenerator from '../components/tools/CronExpressionGenerator';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('cron-expression-generator')!;
+---
+
+<ToolLayout tool={tool}>
+  <CronExpressionGenerator client:load />
+</ToolLayout>

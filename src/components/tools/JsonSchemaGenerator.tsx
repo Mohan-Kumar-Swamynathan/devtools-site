@@ -3,6 +3,8 @@ import CodeEditor from '@/components/common/CodeEditor';
 import OutputPanel from '@/components/common/OutputPanel';
 import { FileCode, AlertCircle } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface JsonSchema {
   $schema?: string;
@@ -63,8 +65,21 @@ export default function JsonSchemaGenerator() {
     }
   }, [input, generateSchema]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={handleGenerate} disabled={!input} className="btn-primary flex items-center gap-2">
+          <FileCode size={16} />
+          Generate Schema
+        </button>
+        <button onClick={() => { setInput(''); setSchema(''); setError(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <CodeEditor
         value={input}
         onChange={setInput}
@@ -74,15 +89,15 @@ export default function JsonSchemaGenerator() {
         rows={12}
       />
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={handleGenerate} disabled={!input} className="btn-primary flex items-center gap-2">
-          <FileCode size={16} />
-          Generate Schema
-        </button>
-        <button onClick={() => { setInput(''); setSchema(''); setError(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
 
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
@@ -94,9 +109,11 @@ export default function JsonSchemaGenerator() {
           showLineNumbers
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
+
+
 
 
 

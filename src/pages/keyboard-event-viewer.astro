@@ -1,0 +1,16 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import KeyboardEventViewer from '@/components/tools/KeyboardEventViewer';
+import { tools } from '@/lib/tools';
+
+const tool = tools.find((t) => t.id === 'keyboard-event-viewer');
+---
+
+<BaseLayout title={tool?.name} description={tool?.description} toolData={tool}>
+  {tool && (
+    <ToolLayout tool={tool}>
+      <KeyboardEventViewer client:load />
+    </ToolLayout>
+  )}
+</BaseLayout>

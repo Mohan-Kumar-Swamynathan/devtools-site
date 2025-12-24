@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function AgeCalculator() {
   const [birthDate, setBirthDate] = useState('');
@@ -39,8 +41,10 @@ export default function AgeCalculator() {
     setResult({ years, months, days, totalDays });
   }, [birthDate]);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Birth Date</label>
         <input
@@ -73,7 +77,7 @@ export default function AgeCalculator() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

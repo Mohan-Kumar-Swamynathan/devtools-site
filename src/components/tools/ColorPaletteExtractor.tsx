@@ -1,5 +1,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { Upload, X } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ColorPaletteExtractor() {
   const [imageUrl, setImageUrl] = useState('');
@@ -67,8 +69,10 @@ export default function ColorPaletteExtractor() {
     }
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Upload Image</label>
         <div className="flex items-center gap-3">
@@ -125,7 +129,7 @@ export default function ColorPaletteExtractor() {
           </div>
         </>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

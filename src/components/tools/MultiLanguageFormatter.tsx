@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Copy, Download, RotateCcw } from 'lucide-react';
+import CollapsibleSection from '@/components/common/CollapsibleSection';
+import ToolShell from './ToolShell';
 import { useToast } from '@/hooks/useToast';
 
 export default function MultiLanguageFormatter() {
@@ -53,44 +55,84 @@ export default function MultiLanguageFormatter() {
     URL.revokeObjectURL(link.href);
   }, [formatted, language]);
 
+
+  const controls = (
+    <div className="flex items-center gap-3">
+      <button
+        onClick={handleFormat}
+        className="btn-primary"
+      >
+        Format Code
+      </button>
+      {formatted && (
+        <>
+          <button
+            onClick={handleCopy}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <Copy size={18} />
+            Copy
+          </button>
+          <button
+            onClick={handleDownload}
+            className="btn-secondary flex items-center gap-2"
+          >
+            <Download size={18} />
+            Download
+          </button>
+        </>
+      )}
+      <button
+        onClick={() => {
+          setCode('');
+          setFormatted('');
+        }}
+        className="btn-ghost flex items-center gap-2"
+      >
+        <RotateCcw size={18} />
+        Clear
+      </button>
+    </div>
+  );
+
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={handleFormat}
-          className="btn-primary"
-        >
-          Format Code
-        </button>
-        {formatted && (
-          <>
-            <button
-              onClick={handleCopy}
-              className="btn-secondary flex items-center gap-2"
-            >
-              <Copy size={18} />
-              Copy
-            </button>
-            <button
-              onClick={handleDownload}
-              className="btn-secondary flex items-center gap-2"
-            >
-              <Download size={18} />
-              Download
-            </button>
-          </>
-        )}
-        <button
-          onClick={() => {
-            setCode('');
-            setFormatted('');
-          }}
-          className="btn-ghost flex items-center gap-2"
-        >
-          <RotateCcw size={18} />
-          Clear
-        </button>
-      </div>
+    <ToolShell className="space-y-6" controls={controls}>
+      {/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <div>
         <label className="label">Language</label>
@@ -106,30 +148,32 @@ export default function MultiLanguageFormatter() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-            Original Code
-          </h3>
+        <CollapsibleSection
+          title="Original Code"
+          persistKey="multi-language-formatter-input-expanded"
+          defaultExpanded={true}
+        >
           <textarea
             value={code}
             onChange={(e) => setCode(e.target.value)}
             className="input w-full h-96 font-mono text-sm"
             placeholder="Paste your code here..."
           />
-        </div>
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-            Formatted Code
-          </h3>
+        </CollapsibleSection>
+        <CollapsibleSection
+          title="Formatted Code"
+          persistKey="multi-language-formatter-output-expanded"
+          defaultExpanded={true}
+        >
           <textarea
             value={formatted}
             readOnly
             className="input w-full h-96 font-mono text-sm"
             placeholder="Formatted code will appear here..."
           />
-        </div>
+        </CollapsibleSection>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

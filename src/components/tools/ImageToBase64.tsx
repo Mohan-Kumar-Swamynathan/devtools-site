@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react';
 import { Upload, X } from 'lucide-react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function ImageToBase64() {
   const [base64, setBase64] = useState('');
@@ -36,8 +38,10 @@ export default function ImageToBase64() {
     }
   };
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Upload Image</label>
         <div className="flex items-center gap-3">
@@ -90,7 +94,7 @@ export default function ImageToBase64() {
           />
         </>
       )}
-    </div>
+    </ToolShell>
   );
 }
 

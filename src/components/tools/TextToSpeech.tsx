@@ -3,6 +3,8 @@ import CodeEditor from '@/components/common/CodeEditor';
 import { Play, Square, Volume2, Download, Copy } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function TextToSpeech() {
   const [input, setInput] = useState('Hello! This is a text to speech converter. You can adjust the voice, rate, pitch, and volume.');
@@ -114,8 +116,45 @@ export default function TextToSpeech() {
   const wordCount = input.trim().split(/\s+/).filter(Boolean).length;
   const charCount = input.length;
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button
+          onClick={isSpeaking ? stop : speak}
+          disabled={!input.trim() || !isSupported || isLoading}
+          className={`btn-primary flex items-center gap-2 transition-all duration-200 ${
+            isSpeaking ? 'bg-red-500 hover:bg-red-600 animate-pulse' : ''
+          }`}
+        >
+          {isLoading ? (
+            <>
+              <LoadingSpinner size="sm" />
+              Preparing...
+            </>
+          ) : isSpeaking ? (
+            <>
+              <Square size={18} />
+              Stop Speaking
+            </>
+          ) : (
+            <>
+              <Play size={18} />
+              Speak Text
+            </>
+          )}
+        </button>
+        <button 
+          onClick={() => { setInput(''); stop(); setError(''); }} 
+          className="btn-ghost"
+          disabled={isSpeaking}
+        >
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
       
       {!isSupported && (
@@ -210,39 +249,39 @@ export default function TextToSpeech() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={isSpeaking ? stop : speak}
-          disabled={!input.trim() || !isSupported || isLoading}
-          className={`btn-primary flex items-center gap-2 transition-all duration-200 ${
-            isSpeaking ? 'bg-red-500 hover:bg-red-600 animate-pulse' : ''
-          }`}
-        >
-          {isLoading ? (
-            <>
-              <LoadingSpinner size="sm" />
-              Preparing...
-            </>
-          ) : isSpeaking ? (
-            <>
-              <Square size={18} />
-              Stop Speaking
-            </>
-          ) : (
-            <>
-              <Play size={18} />
-              Speak Text
-            </>
-          )}
-        </button>
-        <button 
-          onClick={() => { setInput(''); stop(); setError(''); }} 
-          className="btn-ghost"
-          disabled={isSpeaking}
-        >
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {isSpeaking && (
         <div className="p-4 rounded-xl border animate-fade-in" style={{ 
@@ -282,7 +321,7 @@ export default function TextToSpeech() {
           <li>• Volume controls the output loudness</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

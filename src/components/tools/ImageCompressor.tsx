@@ -2,6 +2,8 @@ import { useState, useRef, useCallback } from 'react';
 import { Upload, Download, Trash2, Image as ImageIcon, Loader } from 'lucide-react';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 interface CompressedImage {
   file: File;
@@ -130,7 +132,9 @@ export default function ImageCompressor() {
 
   const formatSize = (bytes: number) => {
     if (bytes < 1024) return bytes + ' B';
-    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
+    if (bytes < 1024 * 1024) 
+
+  return (bytes / 1024).toFixed(2) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   };
 
@@ -138,8 +142,56 @@ export default function ImageCompressor() {
     return ((1 - compressed / original) * 100).toFixed(1);
   };
 
+    const controls = (
+          <div className="flex items-center gap-3">
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isCompressing}
+          className="btn-primary flex items-center gap-2"
+        >
+          {isCompressing ? (
+            <>
+              <LoadingSpinner size="sm" />
+              Compressing...
+            </>
+          ) : (
+            <>
+              <Upload size={18} />
+              Select Images
+            </>
+          )}
+        </button>
+        {images.length > 0 && (
+          <>
+            <button
+              onClick={handleDownloadAll}
+              className="btn-secondary flex items-center gap-2"
+            >
+              <Download size={18} />
+              Download All ({images.length})
+            </button>
+            <button
+              onClick={() => setImages([])}
+              className="btn-ghost flex items-center gap-2"
+            >
+              <Trash2 size={18} />
+              Clear All
+            </button>
+          </>
+        )}
+        <input
+          ref={fileInputRef}
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={(e) => handleFileSelect(e.target.files)}
+          className="hidden"
+        />
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       {error && <ErrorMessage message={error} onDismiss={() => setError('')} />}
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -187,51 +239,51 @@ export default function ImageCompressor() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button
-          onClick={() => fileInputRef.current?.click()}
-          disabled={isCompressing}
-          className="btn-primary flex items-center gap-2"
-        >
-          {isCompressing ? (
-            <>
-              <LoadingSpinner size="sm" />
-              Compressing...
-            </>
-          ) : (
-            <>
-              <Upload size={18} />
-              Select Images
-            </>
-          )}
-        </button>
-        {images.length > 0 && (
-          <>
-            <button
-              onClick={handleDownloadAll}
-              className="btn-secondary flex items-center gap-2"
-            >
-              <Download size={18} />
-              Download All ({images.length})
-            </button>
-            <button
-              onClick={() => setImages([])}
-              className="btn-ghost flex items-center gap-2"
-            >
-              <Trash2 size={18} />
-              Clear All
-            </button>
-          </>
-        )}
-        <input
-          ref={fileInputRef}
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={(e) => handleFileSelect(e.target.files)}
-          className="hidden"
-        />
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       {images.length > 0 && (
         <div className="space-y-4">
@@ -300,7 +352,7 @@ export default function ImageCompressor() {
           <li>• All processing happens in your browser - your images never leave your device</li>
         </ul>
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 const cheatSheet = {
   'Character Classes': [
@@ -49,8 +51,10 @@ export default function RegexCheatSheet() {
     )
   })).filter(section => section.items.length > 0);
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Search</label>
         <input
@@ -87,7 +91,7 @@ export default function RegexCheatSheet() {
           </div>
         ))}
       </div>
-    </div>
+    </ToolShell>
   );
 }
 

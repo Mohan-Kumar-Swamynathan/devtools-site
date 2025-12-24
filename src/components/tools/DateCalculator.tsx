@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import OutputPanel from '@/components/common/OutputPanel';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function DateCalculator() {
   const [startDate, setStartDate] = useState('');
@@ -30,8 +32,20 @@ export default function DateCalculator() {
     setResult(date.toISOString().split('T')[0] + '\n' + date.toLocaleString());
   }, [startDate, operation, value, unit]);
 
+  
+  const controls = (
+          <div className="flex items-center gap-3">
+        <button onClick={calculate} disabled={!startDate} className="btn-primary">
+          Calculate
+        </button>
+        <button onClick={() => { setStartDate(''); setValue(0); setResult(''); }} className="btn-ghost">
+          Clear
+        </button>
+      </div>
+  );
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div>
         <label className="label">Start Date</label>
         <input
@@ -71,14 +85,14 @@ export default function DateCalculator() {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <button onClick={calculate} disabled={!startDate} className="btn-primary">
-          Calculate
-        </button>
-        <button onClick={() => { setStartDate(''); setValue(0); setResult(''); }} className="btn-ghost">
-          Clear
-        </button>
-      </div>
+{/* Controls moved to header */}
+
+
+
+
+
+
+
 
       {result && (
         <OutputPanel
@@ -87,7 +101,7 @@ export default function DateCalculator() {
           language="text"
         />
       )}
-    </div>
+    </ToolShell>
   );
 }
 

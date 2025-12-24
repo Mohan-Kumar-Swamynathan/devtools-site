@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
 import { FileText, BarChart3 } from 'lucide-react';
+import ToolShell from './ToolShell';
+import { useToast } from '@/hooks/useToast';
 
 export default function WordFrequencyCounter() {
   const [text, setText] = useState('');
@@ -27,8 +29,10 @@ export default function WordFrequencyCounter() {
   const uniqueWords = frequencies.length;
   const maxCount = frequencies[0]?.count || 0;
 
+  const controls = null;
+
   return (
-    <div className="space-y-6">
+    <ToolShell className="space-y-6" controls={controls}>
       <div className="space-y-4">
         <h3 className="text-lg font-semibold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
           <FileText size={20} />
@@ -120,6 +124,6 @@ export default function WordFrequencyCounter() {
           </div>
         </div>
       )}
-    </div>
+    </ToolShell>
   );
 }
