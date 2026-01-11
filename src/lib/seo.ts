@@ -5,7 +5,7 @@ export const generateToolMeta = (tool: Tool) => {
     title: `${tool.name} | DevTools`,
     description: tool.description,
     keywords: tool.keywords.join(', '),
-    canonical: `https://devtool.site/${tool.slug}`,
+    canonical: `https://devtool.site/${tool.slug}/`,
     ogImage: `https://devtool.site/og-image.png`
   };
 };

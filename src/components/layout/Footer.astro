@@ -20,7 +20,7 @@ const currentYear = new Date().getFullYear();
               .map(tool => (
                 <li>
                   <a 
-                    href={`/${tool.slug}`} 
+                    href={`/${tool.slug}/`} 
                     class="text-sm transition-colors hover:underline"
                     style="color: var(--text-muted);"
                   >
@@ -46,9 +46,9 @@ const currentYear = new Date().getFullYear();
       
       <!-- Links -->
       <div class="flex items-center gap-6 text-sm" style="color: var(--text-muted);">
-        <a href="/about" class="hover:underline">About</a>
-        <a href="/privacy" class="hover:underline">Privacy</a>
-        <a href="/terms" class="hover:underline">Terms</a>
+        <a href="/about/" class="hover:underline">About</a>
+        <a href="/privacy/" class="hover:underline">Privacy</a>
+        <a href="/terms/" class="hover:underline">Terms</a>
         <a 
           href="https://github.com/yourusername/devtools-site" 
           target="_blank" 

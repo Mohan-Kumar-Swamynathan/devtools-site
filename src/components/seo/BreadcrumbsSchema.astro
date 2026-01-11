@@ -18,7 +18,7 @@ const breadcrumbItems: BreadcrumbItem[] = [
 // Generate breadcrumbs from path segments
 let currentUrl = siteUrl;
 pathSegments.forEach((segment) => {
-  currentUrl += `/${segment}`;
+  currentUrl += `/${segment}/`;
   // Convert slug to readable name (e.g., "json-formatter" -> "Json Formatter")
   const name = segment
     .split('-')

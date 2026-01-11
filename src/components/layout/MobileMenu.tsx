@@ -90,7 +90,7 @@ export default function MobileMenu({ tools, categories }: Props) {
                       ⭐ Featured
                     </h3>
                     <a
-                      href={`/${flowBuilder.slug}`}
+                      href={`/${flowBuilder.slug}/`}
                       className="flex items-center justify-between py-3 px-4 rounded-lg transition-all hover:scale-[1.02] shadow-lg"
                       style={{
                         background: 'linear-gradient(135deg, var(--brand-primary) 0%, #7dd3fc 100%)',
@@ -109,7 +109,7 @@ export default function MobileMenu({ tools, categories }: Props) {
                   </div>
                 );
               })()}
-              
+
               {categories.map((category) => (
                 <div key={category.id} className="mb-6">
                   <h3 className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: 'var(--text-muted)' }}>
@@ -122,7 +122,7 @@ export default function MobileMenu({ tools, categories }: Props) {
                       .map((tool) => (
                         <li key={tool.id}>
                           <a
-                            href={`/${tool.slug}`}
+                            href={`/${tool.slug}/`}
                             className="flex items-center justify-between py-2 px-3 rounded-lg transition-colors hover:bg-[var(--bg-secondary)]"
                             style={{ color: 'var(--text-secondary)' }}
                             onClick={() => setIsOpen(false)}
@@ -138,11 +138,11 @@ export default function MobileMenu({ tools, categories }: Props) {
                   </ul>
                 </div>
               ))}
-              
+
               {/* Footer Links */}
               <div className="pt-4 border-t mt-4" style={{ borderColor: 'var(--border-primary)' }}>
                 <a
-                  href="/about"
+                  href="/about/"
                   className="block py-2 px-3 rounded-lg hover:bg-[var(--bg-secondary)]"
                   style={{ color: 'var(--text-secondary)' }}
                   onClick={() => setIsOpen(false)}
@@ -150,7 +150,7 @@ export default function MobileMenu({ tools, categories }: Props) {
                   About
                 </a>
                 <a
-                  href="/privacy"
+                  href="/privacy/"
                   className="block py-2 px-3 rounded-lg hover:bg-[var(--bg-secondary)]"
                   style={{ color: 'var(--text-secondary)' }}
                   onClick={() => setIsOpen(false)}

@@ -25,7 +25,7 @@ const siteUrl = 'https://devtool.site';
       type="SoftwareApplication"
       name={tool.name}
       description={tool.description}
-      url={`${siteUrl}/${tool.slug}`}
+      url={`${siteUrl}/${tool.slug}/`}
       applicationCategory="DeveloperApplication"
       operatingSystem="Any"
       offers={{ price: "0", priceCurrency: "USD" }}
@@ -33,7 +33,7 @@ const siteUrl = 'https://devtool.site';
     <Breadcrumbs items={[
       { name: 'Home', url: '/' },
       { name: tool.category.name, url: `/#${tool.category.id}` },
-      { name: tool.name, url: `/${tool.slug}` }
+      { name: tool.name, url: `/${tool.slug}/` }
     ]} />
     <!-- FAQ Schema -->
     <FaqSchema faqs={[

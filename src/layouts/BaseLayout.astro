@@ -45,7 +45,12 @@ const siteTitle = title === 'Home'
   : `${title} | DevTools`;
 
 const siteUrl = 'https://devtool.site';
-const canonicalUrl = canonical || new URL(Astro.url.pathname, siteUrl).href;
+let canonicalUrl = canonical;
+if (!canonicalUrl) {
+  const path = Astro.url.pathname;
+  const formattedPath = path.endsWith('/') ? path : `${path}/`;
+  canonicalUrl = new URL(formattedPath, siteUrl).href;
+}
 ---
 
 <!DOCTYPE html>

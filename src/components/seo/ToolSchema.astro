@@ -29,7 +29,9 @@ const {
 } = Astro.props;
 
 const siteUrl = 'https://devtool.site';
-const toolUrl = new URL(Astro.url.pathname, siteUrl).href;
+const path = Astro.url.pathname;
+const formattedPath = path.endsWith('/') ? path : `${path}/`;
+const toolUrl = new URL(formattedPath, siteUrl).href;
 
 const schema: any = {
   "@context": "https://schema.org",

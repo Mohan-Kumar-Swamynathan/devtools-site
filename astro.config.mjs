@@ -28,6 +28,7 @@ export default defineConfig({
     })
   ],
   output: 'static',
+  trailingSlash: 'always',
   compressHTML: true,
   build: {
     inlineStylesheets: 'auto',

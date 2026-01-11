@@ -12,7 +12,7 @@ export default function SearchBox({ tools }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // Recent searches
   const [recentSearches, setRecentSearches] = useState<string[]>(() => {
     if (typeof window !== 'undefined') {
@@ -37,8 +37,8 @@ export default function SearchBox({ tools }: Props) {
     if (!debouncedQuery.trim()) return [];
     const q = debouncedQuery.toLowerCase();
     return tools
-      .filter(t => 
-        t.name.toLowerCase().includes(q) || 
+      .filter(t =>
+        t.name.toLowerCase().includes(q) ||
         t.keywords.some(k => k.toLowerCase().includes(q)) ||
         t.tagline.toLowerCase().includes(q)
       )
@@ -86,7 +86,7 @@ export default function SearchBox({ tools }: Props) {
             setRecentSearches(updated);
             localStorage.setItem('recent-searches', JSON.stringify(updated));
           }
-          window.location.href = `/${tool.slug}`;
+          window.location.href = `/${tool.slug}/`;
         }
         break;
       case 'Escape':
@@ -116,8 +116,8 @@ export default function SearchBox({ tools }: Props) {
     <div ref={containerRef} className="relative w-full">
       {/* Input */}
       <div className="relative">
-        <Search 
-          size={18} 
+        <Search
+          size={18}
           className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none z-10"
           style={{ color: 'var(--text-primary)' }}
         />
@@ -130,7 +130,7 @@ export default function SearchBox({ tools }: Props) {
           onKeyDown={handleKeyDown}
           placeholder="Search tools... (⌘K)"
           className="w-full pl-10 pr-10 py-2.5 rounded-2xl text-sm input-base"
-          style={{ 
+          style={{
             backgroundColor: 'var(--bg-elevated)',
             color: 'var(--text-primary)',
             borderColor: 'var(--border-primary)'
@@ -154,9 +154,9 @@ export default function SearchBox({ tools }: Props) {
 
       {/* Results Dropdown */}
       {isOpen && results.length > 0 && (
-        <div 
+        <div
           className="absolute top-full left-0 right-0 mt-2 rounded-xl border overflow-hidden z-50 animate-fade-in-scale"
-          style={{ 
+          style={{
             backgroundColor: 'var(--bg-elevated)',
             borderColor: 'var(--border-primary)',
             boxShadow: 'var(--shadow-lg)',
@@ -165,9 +165,9 @@ export default function SearchBox({ tools }: Props) {
         >
           <ul className="py-2" role="listbox" aria-label="Search results">
             {results.map((tool, index) => (
-              <li 
-                key={tool.id} 
-                role="option" 
+              <li
+                key={tool.id}
+                role="option"
                 aria-selected={index === selectedIndex}
                 className="animate-slide-up"
                 style={{
@@ -176,9 +176,9 @@ export default function SearchBox({ tools }: Props) {
                 }}
               >
                 <a
-                  href={`/${tool.slug}`}
+                  href={`/${tool.slug}/`}
                   className="flex items-center gap-3 px-4 py-3 transition-all duration-200 hover:translate-x-1"
-                  style={{ 
+                  style={{
                     backgroundColor: index === selectedIndex ? 'var(--bg-secondary)' : 'transparent'
                   }}
                   onMouseEnter={() => setSelectedIndex(index)}
@@ -198,11 +198,11 @@ export default function SearchBox({ tools }: Props) {
               </li>
             ))}
           </ul>
-          
+
           {/* Footer */}
-          <div 
+          <div
             className="px-4 py-2 text-xs border-t flex items-center gap-4"
-            style={{ 
+            style={{
               backgroundColor: 'var(--bg-secondary)',
               borderColor: 'var(--border-primary)',
               color: 'var(--text-muted)'
@@ -217,9 +217,9 @@ export default function SearchBox({ tools }: Props) {
 
       {/* No Results */}
       {isOpen && query && results.length === 0 && (
-        <div 
+        <div
           className="absolute top-full left-0 right-0 mt-2 p-4 rounded-xl border animate-fade-in"
-          style={{ 
+          style={{
             backgroundColor: 'var(--bg-elevated)',
             borderColor: 'var(--border-primary)',
             boxShadow: 'var(--shadow-lg)'
@@ -256,12 +256,12 @@ export default function SearchBox({ tools }: Props) {
           )}
         </div>
       )}
-      
+
       {/* Empty State - Show recent searches */}
       {isOpen && !query && recentSearches.length > 0 && (
-        <div 
+        <div
           className="absolute top-full left-0 right-0 mt-2 p-4 rounded-xl border animate-fade-in"
-          style={{ 
+          style={{
             backgroundColor: 'var(--bg-elevated)',
             borderColor: 'var(--border-primary)',
             boxShadow: 'var(--shadow-lg)'
@@ -278,7 +278,7 @@ export default function SearchBox({ tools }: Props) {
               return (
                 <a
                   key={idx}
-                  href={`/${tool.slug}`}
+                  href={`/${tool.slug}/`}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg transition-colors"
                   style={{
                     backgroundColor: 'transparent',
