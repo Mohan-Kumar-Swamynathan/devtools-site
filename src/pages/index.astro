@@ -2,437 +2,210 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ToolCard from '@/components/common/ToolCard.astro';
 import { tools, categories, getPopularTools, getToolsByCategory } from '@/lib/tools';
+import { ArrowRightIcon } from 'lucide-react';
 
 const popularTools = getPopularTools();
 const totalTools = tools.length;
+
+// Categories to show with special styling
+const featuredCategories = [
+  { id: 'developers', name: 'Developer Tools', icon: '👨‍💻', color: 'blue' },
+  { id: 'designers', name: 'Designer Tools', icon: '🎨', color: 'purple' },
+  { id: 'writers', name: 'Text Tools', icon: '📝', color: 'green' },
+  { id: 'converters', name: 'Converters', icon: '🔄', color: 'orange' }
+];
 ---
 
 <BaseLayout 
   title="Home"
-  description="Free online developer tools - JSON formatter, Base64 encoder, JWT decoder, timestamp converter, and 50+ more tools. Fast, free, and private."
-  keywords={['developer tools', 'online tools', 'json formatter', 'base64 encoder', 'jwt decoder', 'free tools']}
+  description="The ultimate developer toolkit. Free, open-source utilities for JSON, formatting, encoding, and more. 100% privacy-focused, running locally in your browser."
+  keywords={['developer tools', 'web utilities', 'json formatter', 'base64 encoder', 'local dev tools', 'privacy focused']}
 >
   <!-- Hero Section -->
-  <section class="text-center py-16 sm:py-20 lg:py-24 relative overflow-hidden mb-16 sm:mb-20">
-    <!-- Enhanced Animated Background -->
-    <div class="absolute inset-0 overflow-hidden pointer-events-none">
-      <!-- Gradient Orbs with better colors -->
-      <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full opacity-30 blur-3xl animate-float-slow" style="background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%); animation-duration: 20s;"></div>
-      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full opacity-30 blur-3xl animate-float-slow" style="background: radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, transparent 70%); animation-duration: 25s; animation-delay: -5s;"></div>
-      
-      <!-- Grid Pattern -->
-      <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(var(--border-primary) 1px, transparent 1px), linear-gradient(90deg, var(--border-primary) 1px, transparent 1px); background-size: 50px 50px;"></div>
-      
-      <!-- Radial gradient overlay -->
-      <div class="absolute inset-0 bg-gradient-radial from-transparent via-transparent to-[var(--bg-primary)]"></div>
+  <section class="relative pt-24 pb-16 sm:pt-32 sm:pb-24 overflow-hidden">
+    <!-- Background Effects -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-20 dark:opacity-10 bg-gradient-radial from-blue-500/40 via-purple-500/20 to-transparent blur-3xl animate-pulse-slow"></div>
+      <div class="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] dark:opacity-[0.05]"></div>
     </div>
-    
-    <div class="relative z-10 max-w-5xl mx-auto px-4">
-      <!-- Main Heading with enhanced animation -->
-      <div class="mb-8">
-        <h1 
-          class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 leading-tight animate-fade-in-up"
-          style="color: var(--text-primary); animation-delay: 0.1s;"
-        >
-          <span class="inline-block animate-slide-in-left" style="animation-delay: 0.2s;">Free</span>
-          <span class="inline-block mx-3 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent animate-slide-in-left" style="animation-delay: 0.3s;">Developer</span>
-          <span class="inline-block animate-slide-in-left" style="animation-delay: 0.4s;">Tools</span>
-        </h1>
-        <div class="h-1.5 w-32 mx-auto mt-6 rounded-full animate-expand-width" style="background: linear-gradient(90deg, transparent, var(--brand-primary), var(--cred-accent-secondary), transparent); animation-delay: 0.6s;"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 text-sm font-medium mb-8 animate-fade-in border border-blue-500/20 backdrop-blur-sm">
+        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+        v2.0 Now Available
       </div>
-      
-      <!-- Enhanced Subtitle -->
-      <p 
-        class="text-xl sm:text-2xl lg:text-3xl max-w-3xl mx-auto mb-12 font-medium animate-fade-in-up leading-relaxed"
-        style="color: var(--text-secondary); animation-delay: 0.5s;"
-      >
-        Fast, free, and private. All tools run locally in your browser.
-        <span class="block mt-2 text-lg sm:text-xl" style="color: var(--text-muted);">No registration. No tracking. No BS.</span>
+
+      <!-- Main Heading -->
+      <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-tight animate-fade-in-up" style="animation-delay: 0.1s;">
+        <span class="block text-transparent bg-clip-text bg-gradient-to-br from-gray-900 via-gray-700 to-gray-500 dark:from-white dark:via-gray-200 dark:to-gray-400">
+          Everything You Need.
+        </span>
+        <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-violet-600 dark:from-blue-400 dark:to-violet-400">
+          Right in Your Browser.
+        </span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-xl sm:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
+        A premium collection of {totalTools}+ free developer tools. 
+        <br class="hidden sm:block" />
+        No servers. No tracking. Just pure utility.
       </p>
-      
-      <!-- Enhanced CTA Buttons -->
-      <div class="flex flex-wrap justify-center gap-4 mb-12 animate-fade-in-up" style="animation-delay: 0.7s;">
-        <a href="#popular" class="btn btn-gradient btn-lg group">
-          <span>Explore Tools</span>
-          <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.3s;">
+        <a href="#popular" class="btn-primary-lg group min-w-[180px]">
+          Start Exploring
+          <svg class="w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </a>
-        <a href="#json" class="btn btn-outline btn-lg">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+        <a href="https://github.com/sanjumohan/devtools-site" target="_blank" rel="noopener noreferrer" class="btn-secondary-lg group min-w-[180px]">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
           </svg>
-          <span>View All Tools</span>
+          Star on GitHub
         </a>
       </div>
-      
-      <!-- Enhanced Feature Badges with icons -->
-      <div class="flex flex-wrap justify-center gap-4 mb-12">
-        <span 
-          class="feature-badge flex items-center gap-2.5 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105 animate-fade-in-up backdrop-blur-sm"
-          style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border: 1px solid rgba(16, 185, 129, 0.2); color: var(--color-success); animation-delay: 0.6s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);"
-        >
-          <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          No Registration
-        </span>
-        <span 
-          class="feature-badge flex items-center gap-2.5 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105 animate-fade-in-up backdrop-blur-sm"
-          style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(59, 130, 246, 0.05)); border: 1px solid rgba(59, 130, 246, 0.2); color: var(--brand-primary); animation-delay: 0.7s; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);"
-        >
-          <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          100% Free
-        </span>
-        <span 
-          class="feature-badge flex items-center gap-2.5 px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 hover:scale-105 animate-fade-in-up backdrop-blur-sm"
-          style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(139, 92, 246, 0.05)); border: 1px solid rgba(139, 92, 246, 0.2); color: var(--cred-accent-secondary); animation-delay: 0.8s; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.1);"
-        >
-          <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z" clip-rule="evenodd" />
-          </svg>
-          Privacy First
-        </span>
-      </div>
-      
-      <!-- Enhanced Stats Counter -->
-      <div class="flex flex-wrap justify-center gap-8 sm:gap-12 mt-16 animate-fade-in-up" style="animation-delay: 0.9s;">
-        <div class="text-center group">
-          <div class="text-4xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent transition-transform group-hover:scale-110">
-            <span class="counter" data-target={totalTools}>0</span>+
-          </div>
-          <div class="text-sm font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Developer Tools</div>
-        </div>
-        <div class="text-center group">
-          <div class="text-4xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent transition-transform group-hover:scale-110">
-            <span class="counter" data-target="100">0</span>%
-          </div>
-          <div class="text-sm font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Free Forever</div>
-        </div>
-        <div class="text-center group">
-          <div class="text-4xl sm:text-5xl font-bold mb-2 bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent transition-transform group-hover:scale-110">
-            <span class="counter" data-target="0">0</span>
-          </div>
-          <div class="text-sm font-semibold uppercase tracking-wider" style="color: var(--text-muted);">Data Collection</div>
+
+      <!-- Trust Badges -->
+      <div class="mt-16 pt-8 border-t border-gray-200 dark:border-white/10 animate-fade-in-up" style="animation-delay: 0.4s;">
+        <p class="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-6">Trusted by developers from</p>
+        <div class="flex flex-wrap justify-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+          <!-- Placeholder Companies (Text for now) -->
+          <span class="text-xl font-bold font-display text-gray-400">Google</span>
+          <span class="text-xl font-bold font-display text-gray-400">Meta</span>
+          <span class="text-xl font-bold font-display text-gray-400">Netflix</span>
+          <span class="text-xl font-bold font-display text-gray-400">Vercel</span>
+          <span class="text-xl font-bold font-display text-gray-400">Stripe</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Popular Tools -->
-  <section class="mb-12 sm:mb-16 scroll-section" id="popular">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight flex items-center gap-3 animate-slide-in-left" style="color: var(--text-primary);">
-        <span class="text-3xl sm:text-4xl animate-bounce-slow">⭐</span>
-        <span>Popular Tools</span>
-      </h2>
-      <a 
-        href="#json" 
-        class="text-sm font-medium px-4 py-2.5 rounded-full transition-all duration-200 hover:bg-[var(--bg-secondary)] hidden sm:flex items-center gap-2"
-        style="color: var(--brand-primary);"
-      >
-        View All
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-        </svg>
-      </a>
-    </div>
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
-      {popularTools.slice(0, 8).map((tool, index) => (
-        <div 
-          class="tool-card-wrapper animate-fade-in-scale" 
-          style={`animation-delay: ${index * 80}ms; animation-fill-mode: both;`}
-        >
-          <ToolCard {...tool} />
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- All Categories -->
-  {Object.values(categories).map((category, catIndex) => {
-    const categoryTools = getToolsByCategory(category.id);
-    if (categoryTools.length === 0) return null;
-    return (
-      <section 
-        class="mb-12 sm:mb-16 scroll-section" 
-        id={category.id}
-        data-category-index={catIndex}
-      >
-        <div class="flex items-center justify-between mb-8">
-          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight flex items-center gap-4" style="color: var(--text-primary);">
-            <span 
-              class="text-3xl sm:text-4xl transition-transform duration-200 hover:scale-110 inline-block"
-              role="img"
-              aria-label={category.name}
-            >
-              {category.icon}
-            </span> 
-            <span>{category.name}</span>
+  <!-- Popular Tools Section -->
+  <section id="popular" class="py-20 bg-gray-50/50 dark:bg-white/[0.02]">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Most Popular
           </h2>
-          <span 
-            class="text-sm font-medium px-4 py-2 rounded-full elevation-1"
-            style="background-color: var(--bg-elevated); color: var(--text-muted);"
-          >
-            {categoryTools.length} {categoryTools.length === 1 ? 'tool' : 'tools'}
-          </span>
+          <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl">
+            The tools developers reach for every single day. Optimized for speed and productivity.
+          </p>
         </div>
-        <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
-          {categoryTools.map((tool, toolIndex) => (
-            <div 
-              class="tool-card-wrapper animate-fade-in-scale" 
-              style={`animation-delay: ${(catIndex * 30) + (toolIndex * 50)}ms; animation-fill-mode: both;`}
-            >
-              <ToolCard {...tool} />
+        <a href="#all-categories" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline decoration-2 underline-offset-4 inline-flex items-center gap-2">
+          View All Categories <ArrowRightIcon class="w-4 h-4" />
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {popularTools.slice(0, 8).map((tool, index) => (
+          <ToolCard {...tool} class="h-full" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- All Categories Section -->
+  <section id="all-categories" class="py-20">
+    <div class="container mx-auto px-4 sm:px-6 max-w-7xl">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          Browse by Category
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+            Everything organized for your workflow.
+        </p>
+      </div>
+
+      <div class="space-y-24">
+        {Object.values(categories).map((category, catIndex) => {
+          const categoryTools = getToolsByCategory(category.id);
+          if (categoryTools.length === 0) return null;
+          
+          return (
+            <div class="scroll-reveal" id={category.id}>
+              <div class="flex items-center gap-4 mb-8">
+                <span class="flex items-center justify-center w-12 h-12 rounded-2xl bg-gray-100 dark:bg-white/5 text-2xl shadow-sm">
+                  {category.icon}
+                </span>
+                <h3 class="text-2xl font-bold text-gray-900 dark:text-white">
+                  {category.name}
+                </h3>
+                <span class="ml-auto text-sm font-medium px-3 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400">
+                  {categoryTools.length} tools
+                </span>
+              </div>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                {categoryTools.map((tool) => (
+                  <ToolCard {...tool} />
+                ))}
+              </div>
             </div>
-          ))}
-        </div>
-      </section>
-    );
-  })}
+          );
+        })}
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
-<style>
-  /* Custom Animations */
-  @keyframes float-slow {
-    0%, 100% {
-      transform: translate(0, 0) rotate(0deg);
-    }
-    33% {
-      transform: translate(30px, -30px) rotate(120deg);
-    }
-    66% {
-      transform: translate(-20px, 20px) rotate(240deg);
-    }
-  }
-
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes slide-in-left {
-    from {
-      opacity: 0;
-      transform: translateX(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes expand-width {
-    from {
-      width: 0;
-      opacity: 0;
-    }
-    to {
-      width: 96px;
-      opacity: 1;
-    }
-  }
-
-  @keyframes check-in {
-    0% {
-      transform: scale(0) rotate(-180deg);
-      opacity: 0;
-    }
-    50% {
-      transform: scale(1.2) rotate(10deg);
-    }
-    100% {
-      transform: scale(1) rotate(0deg);
-      opacity: 1;
-    }
-  }
-
-  @keyframes bounce-slow {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-
-  .animate-float-slow {
-    animation: float-slow 20s ease-in-out infinite;
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.8s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animate-slide-in-left {
-    animation: slide-in-left 0.6s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animate-expand-width {
-    animation: expand-width 1s ease-out forwards;
-  }
-
-  .animate-check-in {
-    animation: check-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-  }
-
-  .animate-bounce-slow {
-    animation: bounce-slow 2s ease-in-out infinite;
-  }
-
-  /* Tool Card Hover Effects */
-  .tool-card-wrapper {
-    transition: transform 0.3s ease;
-  }
-
-  .tool-card-wrapper:hover {
-    transform: translateY(-4px);
-  }
-
-  /* Feature Badge Hover */
-  .feature-badge {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .feature-badge::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: var(--brand-primary-light);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-
-  .feature-badge:hover::before {
-    width: 300px;
-    height: 300px;
-    opacity: 0.1;
-  }
-
-  .feature-badge > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* Scroll Animations */
-  .scroll-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  }
-
-  .scroll-section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Category Title Animation */
-  .category-title {
-    background: linear-gradient(90deg, var(--text-primary), var(--brand-primary), var(--text-primary));
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: shimmer 3s linear infinite;
-  }
-
-  @keyframes shimmer {
-    to {
-      background-position: 200% center;
-    }
-  }
-</style>
-
+<!-- Inline Icons Component for simpler usage -->
 <script>
-  // Counter Animation
-  function animateCounter(element: HTMLElement) {
-    const target = parseInt(element.getAttribute('data-target') || '0');
-    const duration = 2000;
-    const increment = target / (duration / 16);
-    let current = 0;
-
-    const timer = setInterval(() => {
-      current += increment;
-      if (current >= target) {
-        element.textContent = target.toString();
-        clearInterval(timer);
-      } else {
-        element.textContent = Math.floor(current).toString();
-      }
-    }, 16);
-  }
-
-  // Intersection Observer for Scroll Animations
+  // Simple Scroll Reveal API
   const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
   };
 
-  const scrollObserver = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
+        entry.target.classList.add('reveal-visible');
       }
     });
   }, observerOptions);
 
-  // Observe all scroll sections
-  document.querySelectorAll('.scroll-section').forEach(section => {
-    scrollObserver.observe(section);
-  });
-
-  // Animate counters when they come into view
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-        entry.target.classList.add('counted');
-        animateCounter(entry.target as HTMLElement);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.counter').forEach(counter => {
-    counterObserver.observe(counter);
-  });
-
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href') || '');
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-    });
-  });
-
-  // Parallax effect for hero section
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    const hero = document.querySelector('section:first-of-type');
-    if (hero && currentScroll < window.innerHeight) {
-      const parallax = currentScroll * 0.5;
-      (hero as HTMLElement).style.transform = `translateY(${parallax}px)`;
-    }
-    lastScroll = currentScroll;
-  }, { passive: true });
+  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
 </script>
+
+<style>
+  /* Base Buttons */
+  .btn-primary-lg {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+  }
+  
+  .btn-secondary-lg {
+    @apply inline-flex items-center justify-center px-8 py-4 text-base font-bold text-gray-700 dark:text-gray-200 transition-all duration-200 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full hover:bg-gray-50 dark:hover:bg-white/10 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500;
+  }
+
+  /* Animations */
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; 
+  }
+  
+  .animate-fade-in {
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+

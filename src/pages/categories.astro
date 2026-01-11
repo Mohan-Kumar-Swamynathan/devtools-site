@@ -1,0 +1,52 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { categories, getToolsByCategory } from '@/lib/tools';
+
+const title = "Tool Categories";
+const description = "Browse all developer tool categories. Find JSON tools, encoders, converters, formatters, and more.";
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="max-w-4xl mx-auto py-12">
+    <div class="text-center mb-16 animate-fade-in-up">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">
+        Browse by <span class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">Category</span>
+      </h1>
+      <p class="text-xl text-[var(--text-secondary)]">
+        Explore our comprehensive collection of developer tools organized by purpose.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {Object.values(categories).map((category, index) => {
+        const toolCount = getToolsByCategory(category.id).length;
+        if (toolCount === 0) return null;
+
+        return (
+          <a 
+            href={`/#${category.id}`} 
+            class="group p-6 rounded-2xl bg-[var(--bg-elevated)] border border-[var(--border-primary)] hover:border-[var(--brand-primary)] transition-all duration-300 hover:shadow-lg flex items-start gap-5 animate-fade-in-up"
+            style={`animation-delay: ${index * 50}ms;`}
+          >
+            <div class="w-14 h-14 rounded-full bg-[var(--bg-secondary)] flex items-center justify-center text-3xl shrink-0 group-hover:scale-110 transition-transform">
+              {category.icon}
+            </div>
+            <div>
+              <div class="flex items-center gap-3 mb-2">
+                <h2 class="text-xl font-bold text-[var(--text-primary)] group-hover:text-[var(--brand-primary)] transition-colors">
+                  {category.name}
+                </h2>
+                <span class="text-xs font-semibold px-2 py-0.5 rounded bg-[var(--bg-tertiary)] text-[var(--text-muted)] border border-[var(--border-primary)]">
+                  {toolCount}
+                </span>
+              </div>
+              <p class="text-[var(--text-secondary)]">
+                {category.description}
+              </p>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>

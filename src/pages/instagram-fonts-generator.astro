@@ -1,0 +1,65 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import InstagramFonts from '@/components/tools/InstagramFonts';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('instagram-fonts-generator')!;
+---
+
+<ToolLayout tool={tool}>
+  <InstagramFonts client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Instagram Fonts Generator</h2>
+    <p>
+      Make your Instagram bio and captions stand out with our free font generator. Convert normal text into dozens of different Unicode font styles that you can copy and paste anywhere.
+    </p>
+
+    <h3>Available Styles</h3>
+    <ul>
+      <li><strong>Bold</strong>: Perfect for headings or emphasizing key points.</li>
+      <li><strong>Italic</strong>: Great for quotes or aesthetic captions.</li>
+      <li><strong>Script</strong>: Elegant cursive style for a sophisticated look.</li>
+      <li><strong>Monospace</strong>: Technical, typewriter-style look.</li>
+      <li><strong>Circles & Squares</strong>: Fun enclosed characters to grab attention.</li>
+      <li><strong>Double Struck</strong>: Unique outlined style often used in math but looks cool as text.</li>
+    </ul>
+
+    <h3>Where can I use these fonts?</h3>
+    <p>
+      These "fonts" are actually Unicode characters, which means they work on almost all social media platforms and messaging apps, including:
+    </p>
+    <ul>
+      <li>Instagram (Bio, Captions, Comments, Stories)</li>
+      <li>Twitter / X</li>
+      <li>TikTok</li>
+      <li>Facebook</li>
+      <li>WhatsApp & Telegram</li>
+      <li>Discord</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Why do some characters show as boxes?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        If you see rectangular boxes (□) instead of text, it means your device or browser doesn't have a font installed that supports those specific Unicode characters. Most modern smartphones support these natively.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Is it accessible for screen readers?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Use these fonts sparingly. Screen readers may try to read the mathematical description of the characters (e.g., "mathematical bold capital A") which can be annoying for visually impaired users. It's best used for decoration, not critical information.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="social" />
+  </Fragment>
+</ToolLayout>

@@ -1,0 +1,73 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import SocialImageResizer from '@/components/tools/SocialImageResizer';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('social-image-resizer')!;
+---
+
+<ToolLayout tool={tool}>
+  <SocialImageResizer client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Social Media Image Resizer</h2>
+    <p>
+      Resize your images perfectly for every social media platform. Our tool automatically crops and resizes your photos to meet the exact requirements of Instagram, Twitter, LinkedIn, Facebook, and YouTube.
+    </p>
+
+    <h3>Supported Sizes</h3>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      <div>
+        <h4 class="font-bold">Instagram</h4>
+        <ul>
+          <li><strong>Square (1:1)</strong>: 1080 x 1080 px</li>
+          <li><strong>Portrait (4:5)</strong>: 1080 x 1350 px</li>
+          <li><strong>Story (9:16)</strong>: 1080 x 1920 px</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold">Twitter / X</h4>
+        <ul>
+          <li><strong>Post (16:9)</strong>: 1200 x 675 px</li>
+          <li><strong>Header</strong>: 1500 x 500 px</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold">LinkedIn</h4>
+        <ul>
+          <li><strong>Post</strong>: 1200 x 627 px</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-bold">YouTube</h4>
+        <ul>
+          <li><strong>Thumbnail</strong>: 1280 x 720 px</li>
+        </ul>
+      </div>
+    </div>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Does this tool crop my images?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Yes, to fit specific aspect ratios (like Instagram Portraits), we intelligently crop the image to the center. We recommend using high-quality images with the subject in the center for best results.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Is the quality reduced?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        We maintain the highest possible quality output (High Quality JPEG). The dimensions are optimized for each platform to prevent compression artifacts.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="social" />
+  </Fragment>
+</ToolLayout>

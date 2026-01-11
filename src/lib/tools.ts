@@ -144,6 +144,12 @@ export const categories: Record<string, Category> = {
     name: 'AI Tools',
     icon: '🤖',
     description: 'Free browser-based AI tools powered by open source models'
+  },
+  social: {
+    id: 'social',
+    name: 'Social Media',
+    icon: '📱',
+    description: 'Tools for Instagram, Twitter, YouTube, and more'
   }
 };
 
@@ -677,6 +683,66 @@ export const tools: Tool[] = [
     icon: '📶'
   },
   {
+    id: 'caption-spacer',
+    name: 'Instagram Caption Spacer',
+    slug: 'caption-spacer',
+    tagline: 'Add line breaks to Instagram captions',
+    description: 'Format Instagram captions with invisible line breaks. Prevent text processing from removing your spacing.',
+    keywords: ['instagram caption spacer', 'instagram line breaks', 'caption formatter', 'instagram spaces'],
+    category: categories.social,
+    icon: '📝'
+  },
+  {
+    id: 'tweet-to-image',
+    name: 'Tweet to Image',
+    slug: 'tweet-to-image',
+    tagline: 'Convert tweets to images',
+    description: 'Create beautiful images from tweets and social media posts for Instagram, LinkedIn, and more.',
+    keywords: ['tweet to image', 'twitter screenshots', 'social media images', 'tweet generator'],
+    category: categories.social,
+    icon: '🐦'
+  },
+  {
+    id: 'social-image-resizer',
+    name: 'Social Media Image Resizer',
+    slug: 'social-image-resizer',
+    tagline: 'Resize images for social media',
+    description: 'Resize and crop images for Instagram, Twitter, LinkedIn, Facebook, and YouTube.',
+    keywords: ['image resizer', 'social media sizes', 'instagram crop', 'twitter header size'],
+    category: categories.social,
+    icon: '🖼️'
+  },
+  {
+    id: 'instagram-fonts-generator',
+    name: 'Instagram Fonts Generator',
+    slug: 'instagram-fonts-generator',
+    tagline: 'Generate Instagram fonts',
+    description: 'Generate cool text fonts for Instagram bio and captions. Copy and paste unicode characters.',
+    keywords: ['instagram fonts', 'bio fonts', 'ig fonts', 'font generator'],
+    category: categories.social,
+    icon: 'Aa'
+  },
+  {
+    id: 'youtube-thumbnail-downloader',
+    name: 'YouTube Thumbnail Downloader',
+    slug: 'youtube-thumbnail-downloader',
+    tagline: 'Download YouTube thumbnails',
+    description: 'Download HD thumbnails from any YouTube video in multiple resolutions.',
+    keywords: ['youtube thumbnail', 'thumbnail downloader', 'youtube image'],
+    category: categories.social,
+    icon: '▶️'
+  },
+  {
+    id: 'hashtag-generator',
+    name: 'Hashtag Generator',
+    slug: 'hashtag-generator',
+    tagline: 'Generate hashtags for social media',
+    description: 'Generate popular hashtags for Instagram and TikTok to boost your reach.',
+    keywords: ['hashtag generator', 'instagram hashtags', 'tiktok hashtags'],
+    category: categories.social,
+    icon: '#️⃣'
+  },
+  {
     id: 'markdown-table',
     name: 'Markdown Table Generator',
     slug: 'markdown-table',
@@ -790,6 +856,16 @@ export const tools: Tool[] = [
     icon: '🔍',
     isPopular: true,
     isNew: true
+  },
+  {
+    id: 'utm-builder',
+    name: 'UTM Builder',
+    slug: 'utm-builder',
+    tagline: 'Build Google Analytics URLs',
+    description: 'Easily build campaign URLs with UTM parameters for Google Analytics tracking.',
+    keywords: ['utm builder', 'campaign url builder', 'google analytics url', 'tracking url'],
+    category: categories.web,
+    icon: '🔗'
   },
   {
     id: 'url-parser',
@@ -1141,6 +1217,17 @@ export const tools: Tool[] = [
     icon: '🛡️'
   },
   // Image Tools
+  {
+    id: 'aspect-ratio-calculator',
+    name: 'Aspect Ratio Calculator',
+    slug: 'aspect-ratio-calculator',
+    tagline: 'Calculate image & video aspect ratios',
+    description: 'Calculate aspect ratios and dimensions for images and videos. Resize calculator for designers and developers.',
+    keywords: ['aspect ratio calculator', 'screen resolution', 'image resize', 'video ratio', '16:9 calculator'],
+    category: categories.image,
+    icon: '📐',
+    isPopular: true
+  },
   {
     id: 'image-metadata-extractor',
     name: 'Image Metadata Extractor',
@@ -2164,6 +2251,16 @@ export const tools: Tool[] = [
     isPopular: true
   },
   {
+    id: 'password-strength',
+    name: 'Password Strength Checker',
+    slug: 'password-strength',
+    tagline: 'Test password strength',
+    description: 'Check how strong your password is and get tips for improvement.',
+    keywords: ['password strength', 'password security', 'password checker', 'security test'],
+    category: categories.security,
+    icon: '💪'
+  },
+  {
     id: 'html-minifier',
     name: 'HTML Minifier',
     slug: 'html-minifier',
@@ -2265,6 +2362,16 @@ export const tools: Tool[] = [
     icon: '😀',
     isNew: true,
     isPopular: true
+  },
+  {
+    id: 'dns-lookup',
+    name: 'DNS Lookup',
+    slug: 'dns-lookup',
+    tagline: 'Check DNS records',
+    description: 'Perform Dns lookups to check A, AAAA, MX, NS, CNAME, TXT, and SOA records.',
+    keywords: ['dns lookup', 'dns checker', 'mx record', 'soa record', 'dns propagation'],
+    category: categories.network,
+    icon: '🌐'
   },
   {
     id: 'unicode-lookup',

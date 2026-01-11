@@ -1,0 +1,70 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import YouTubeThumbnail from '@/components/tools/YouTubeThumbnail';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('youtube-thumbnail-downloader')!;
+---
+
+<ToolLayout tool={tool}>
+  <YouTubeThumbnail client:load />
+
+  <Fragment slot="seo-content">
+    <h2>YouTube Thumbnail Downloader</h2>
+    <p>
+      Our free YouTube Thumbnail Downloader is the easiest way to find and download thumbnails from any YouTube video. 
+      Whether you need the HD (High Definition), SD (Standard Definition), or 4K thumbnail images, we've got you covered.
+    </p>
+
+    <h3>Why download YouTube thumbnails?</h3>
+    <p>
+      There are many reasons you might need to download a video thumbnail:
+    </p>
+    <ul>
+      <li>Use the thumbnail image for your blog post or article about the video.</li>
+      <li>Share the video on other social media platforms like Instagram or Twitter.</li>
+      <li>Archive metadata for your playlists or favorite videos.</li>
+      <li>Analyze successful thumbnails for design inspiration.</li>
+    </ul>
+
+    <h3>Supported Qualities</h3>
+    <ul>
+      <li><strong>Max HD (1280x720)</strong>: The highest resolution available. Best for big screens and high-quality prints.</li>
+      <li><strong>Standard (640x480)</strong>: Good balance of quality and file size. Great for blog posts.</li>
+      <li><strong>High Quality (480x360)</strong>: Suitable for smaller displays and mobile devices.</li>
+      <li><strong>Medium Quality (320x180)</strong>: Smallest size, best for quick previews or icons.</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Is it free to download YouTube thumbnails?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Yes, our YouTube Thumbnail Downloader is 100% free to use. You can download as many thumbnails as you want without any restrictions or registration.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        How do I get the 4K thumbnail?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        If a video was uploaded in 4K or high quality, YouTube usually generates a "Max HD" (1280x720) thumbnail which is the highest resolution available via their API. This is what we label as "Max HD".
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Are copyright issues involved?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Thumbnails are copyrighted by the video owner. You should only use them for fair use purposes (like reporting, criticism, or commentary) or if you have permission from the creator.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="social" />
+  </Fragment>
+</ToolLayout>

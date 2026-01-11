@@ -1,0 +1,55 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HashtagGenerator from '@/components/tools/HashtagGenerator';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('hashtag-generator')!;
+---
+
+<ToolLayout tool={tool}>
+  <HashtagGenerator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Hashtag Generator for Instagram & TikTok</h2>
+    <p>
+      Boost your social media engagement with our free Hashtag Generator. We've curated lists of the most popular and high-converting hashtags for various niches like Tech, Travel, Fitness, and Food.
+    </p>
+
+    <h3>Hashtag Strategy Tips</h3>
+    <ul>
+      <li><strong>Mix it up</strong>: Use a combination of highly popular (1M+ posts) and niche specific (10k-100k posts) hashtags.</li>
+      <li><strong>Use the limit</strong>: Instagram allows up to 30 hashtags per post. While you don't always need 30, using more relevant tags generally increases discoverability.</li>
+      <li><strong>Be relevant</strong>: Only use hashtags that actually describe your content to avoid being flagged as spam.</li>
+      <li><strong>Create your own</strong>: Include a branded hashtag specific to your business or campaign.</li>
+    </ul>
+
+    <h3>Why use hashtags?</h3>
+    <p>
+      Hashtags are the SEO of social media. They help the algorithm understand what your content is about and show it to users who are interested in those topics. Correct tagging can significantly increase your reach beyond your current followers.
+    </p>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        How many hashtags should I use?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Instagram allows up to 30 hashtags. Studies suggest using around 20-30 relevant hashtags for maximum reach, but quality and relevance naturally matter most.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Do these work for TikTok?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Yes! While TikTok descriptions are shorter, 3-5 targeted hashtags are crucial for the "For You" page algorithm.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="social" />
+  </Fragment>
+</ToolLayout>

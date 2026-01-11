@@ -1,0 +1,48 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import AspectRatioCalculator from '@/components/tools/AspectRatioCalculator';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('aspect-ratio-calculator')!;
+---
+
+<ToolLayout tool={tool}>
+  <AspectRatioCalculator client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Online Aspect Ratio Calculator</h2>
+    <p>
+      Easily calculate aspect ratios and resize dimensions for images, video, and screens. This tool helps designers and developers determine the correct width or height to maintain a specific aspect ratio.
+    </p>
+
+    <h3>Common Aspect Ratios</h3>
+    <ul>
+      <li><strong>16:9</strong>: Standard HD video (YouTube, TV) - 1920x1080, 1280x720.</li>
+      <li><strong>4:3</strong>: Standard definition TV and old monitors - 1024x768, 800x600.</li>
+      <li><strong>1:1</strong>: Square for Instagram and social media avatars.</li>
+      <li><strong>9:16</strong>: Vertical video for TikTok, Instagram Stories, YouTube Shorts.</li>
+      <li><strong>21:9</strong>: Ultrawide monitors and cinematic film.</li>
+    </ul>
+
+    <h3>How to use</h3>
+    <p>
+      Simply enter the original width and height (or select a preset ratio). Then enter one dimension (width or height) for the new size, and the tool will automatically calculate the other dimension to match the ratio.
+    </p>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        What is aspect ratio?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Aspect ratio is the proportional relationship between the width and height of an image or screen. It is usually expressed as two numbers separated by a colon, like 16:9.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="image" />
+  </Fragment>
+</ToolLayout>

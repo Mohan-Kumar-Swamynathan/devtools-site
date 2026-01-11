@@ -1,0 +1,59 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import DnsLookup from '@/components/tools/DnsLookup';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('dns-lookup')!;
+---
+
+<ToolLayout tool={tool}>
+  <DnsLookup client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Free DNS Record Checker</h2>
+    <p>
+      Instantly check DNS records for any domain name. Our tool performs a live query to Authoritative Name Servers to fetch current A, AAAA, MX, NS, CNAME, TXT, and SOA records.
+    </p>
+
+    <h3>What are DNS records?</h3>
+    <ul>
+      <li><strong>A Record</strong>: Maps a domain to the IPv4 address of the computer hosting the domain.</li>
+      <li><strong>AAAA Record</strong>: Maps a domain to the IPv6 address.</li>
+      <li><strong>MX Record</strong>: Directs email to a mail server.</li>
+      <li><strong>CNAME Record</strong>: Aliases one name to another.</li>
+      <li><strong>TXT Record</strong>: Holds text information, often used for email verification (SPF, DKIM) and ownership verification.</li>
+      <li><strong>NS Record</strong>: Delegates a DNS zone to use the given authoritative name servers.</li>
+    </ul>
+
+    <h3>Why use this tool?</h3>
+    <ul>
+      <li><strong>Trobleshoot Website Issues</strong>: Verify if your domain is pointing to the correct IP address.</li>
+      <li><strong>Check Propagation</strong>: See if your recent DNS changes have updated.</li>
+      <li><strong>Verify Email Setup</strong>: Check if MX and SPF records are correctly configured.</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        How often are these records updated?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        DNS records are cached by ISPs and browsers. The "TTL" (Time To Live) value determines how long a record is cached. Our tool queries a public DNS resolver (Cloudflare) which usually reflects changes very quickly.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        What is DNS propagation?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Propogation is the time it takes for DNS changes to spread across the internet. It can take anywhere from a few minutes to 48 hours depending on the TTL settings.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="network" />
+  </Fragment>
+</ToolLayout>

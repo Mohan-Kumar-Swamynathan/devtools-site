@@ -1,0 +1,62 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CaptionSpacer from '@/components/tools/CaptionSpacer';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('caption-spacer')!;
+---
+
+<ToolLayout tool={tool}>
+  <CaptionSpacer client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Instagram Caption Spacer</h2>
+    <p>
+      Have you ever posted a long Instagram caption only to find it turned into one giant, unreadable block of text? Our Caption Spacer tool fixes this common annoyance by automatically adding invisible line breaks to your text.
+    </p>
+
+    <h3>Why do line breaks disappear on Instagram?</h3>
+    <p>
+      Instagram's algorithm aggressively strips out formatting, especially empty lines. Unless you use specific invisible characters (like we do in this tool), your carefully crafted paragraphs will merge together.
+    </p>
+
+    <h3>Benefits of clean formatting</h3>
+    <ul>
+      <li><strong>Readability</strong>: Breaking text into short paragraphs makes it easier to read.</li>
+      <li><strong>Engagement</strong>: Users are more likely to read the full caption if it's visually scannable.</li>
+      <li><strong>Professionalism</strong>: Shows attention to detail and care for your audience content.</li>
+    </ul>
+
+    <h3>How to use</h3>
+    <ol>
+      <li>Type or paste your caption into the left box.</li>
+      <li>Add emojis and hashtags as you normally would.</li>
+      <li>Click "Format Caption".</li>
+      <li>Copy the result and paste it directly into Instagram.</li>
+    </ol>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Does this work for comments too?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Yes! You can use this tool to format long comments or replies as well.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Will the invisible spaces count towards my character limit?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Technically yes, but they are just single characters. They consume negligible space in your 2,200 character limit.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="social" />
+  </Fragment>
+</ToolLayout>

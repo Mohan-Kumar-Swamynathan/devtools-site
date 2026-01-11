@@ -1,0 +1,55 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TweetToImage from '@/components/tools/TweetToImage';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('tweet-to-image')!;
+---
+
+<ToolLayout tool={tool}>
+  <TweetToImage client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Turn Tweets into Beautiful Images</h2>
+    <p>
+      Create stunning, shareable images from tweets/posts for Instagram, LinkedIn, and Facebook. Our Tweet to Image generator lets you create verified mockups with customizable backgrounds, themes, and metrics.
+    </p>
+
+    <h3>Features</h3>
+    <ul>
+      <li><strong>Customizable Themes</strong>: Choose from Light, Dim, and Dark modes.</li>
+      <li><strong>Background Gradients</strong>: Select beautiful gradient backgrounds to make your tweet pop.</li>
+      <li><strong>Verified Badge</strong>: Add a blue checkmark to simulate verified accounts.</li>
+      <li><strong>High Quality Export</strong>: Download 2x retina quality PNGs perfect for sharing.</li>
+    </ul>
+
+    <h3>Why convert tweets to images?</h3>
+    <p>
+      Screenshots of tweets often look low quality or cluttered. By using a generator, you get a clean, professional-looking image that boosts engagement on visual platforms like Instagram and LinkedIn where text-only posts don't perform as well.
+    </p>
+  </Fragment>
+
+  <Fragment slot="faq">
+    <details class="group">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Do I need a Twitter account?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        No! You can manually enter any name, username, and text. You don't need to log in to Twitter.
+      </p>
+    </details>
+    <details class="group mt-4">
+      <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
+        Is this tool free?
+      </summary>
+      <p class="mt-2 text-sm" style="color: var(--text-secondary);">
+        Yes, it's 100% free and generates images without watermarks.
+      </p>
+    </details>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="social" />
+  </Fragment>
+</ToolLayout>

@@ -1,0 +1,36 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import UtmBuilder from '@/components/tools/UtmBuilder';
+import RelatedTools from '@/components/common/RelatedTools.astro';
+import { getToolBySlug } from '@/lib/tools';
+
+const tool = getToolBySlug('utm-builder')!;
+---
+
+<ToolLayout tool={tool}>
+  <UtmBuilder client:load />
+
+  <Fragment slot="seo-content">
+    <h2>Campaign URL Builder</h2>
+    <p>
+      Create custom Campaign URLs for tracking custom campaigns in Google Analytics 4 (GA4) and other analytics tools. Our free UTM Builder makes it easy to add UTM parameters to your URLs so you can track the effectiveness of your marketing campaigns.
+    </p>
+
+    <h3>What are UTM Parameters?</h3>
+    <p>
+      UTM (Urchin Tracking Module) parameters are tags added to the end of a URL. When a user clicks on a URL with UTM parameters, the tags are sent back to your Google Analytics for tracking.
+    </p>
+
+    <h3>How to use</h3>
+    <ul>
+      <li><strong>Website URL:</strong> The full URL of your landing page.</li>
+      <li><strong>Source:</strong> The advertiser, site, publication, etc. (e.g. google, newsletter).</li>
+      <li><strong>Medium:</strong> The advertising or marketing medium (e.g. cpc, banner, email).</li>
+      <li><strong>Campaign Name:</strong> The individual campaign name, slogan, promo code, etc.</li>
+    </ul>
+  </Fragment>
+
+  <Fragment slot="related-tools">
+    <RelatedTools currentToolSlug={tool.slug} category="web" />
+  </Fragment>
+</ToolLayout>
