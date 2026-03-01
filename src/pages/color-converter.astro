@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.
 <ToolLayout tool={tool}>
   <ColorConverter client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Color Converter?</h2>
     <p>
       Convert between color formats: HEX, RGB, HSL, and more. Color picker included.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

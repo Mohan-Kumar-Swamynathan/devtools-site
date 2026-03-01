@@ -10,7 +10,7 @@ const tool = getToolBySlug('caption-spacer')!;
 <ToolLayout tool={tool}>
   <CaptionSpacer client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Instagram Caption Spacer</h2>
     <p>
       Have you ever posted a long Instagram caption only to find it turned into one giant, unreadable block of text? Our Caption Spacer tool fixes this common annoyance by automatically adding invisible line breaks to your text.
@@ -35,9 +35,9 @@ const tool = getToolBySlug('caption-spacer')!;
       <li>Click "Format Caption".</li>
       <li>Copy the result and paste it directly into Instagram.</li>
     </ol>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         Does this work for comments too?
@@ -54,9 +54,9 @@ const tool = getToolBySlug('caption-spacer')!;
         Technically yes, but they are just single characters. They consume negligible space in your 2,200 character limit.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="social" />
-  </Fragment>
+  </div>
 </ToolLayout>

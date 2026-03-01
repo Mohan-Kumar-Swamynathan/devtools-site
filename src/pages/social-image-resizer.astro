@@ -10,7 +10,7 @@ const tool = getToolBySlug('social-image-resizer')!;
 <ToolLayout tool={tool}>
   <SocialImageResizer client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Social Media Image Resizer</h2>
     <p>
       Resize your images perfectly for every social media platform. Our tool automatically crops and resizes your photos to meet the exact requirements of Instagram, Twitter, LinkedIn, Facebook, and YouTube.
@@ -45,10 +45,9 @@ const tool = getToolBySlug('social-image-resizer')!;
           <li><strong>Thumbnail</strong>: 1280 x 720 px</li>
         </ul>
       </div>
-    </div>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         Does this tool crop my images?
@@ -65,9 +64,9 @@ const tool = getToolBySlug('social-image-resizer')!;
         We maintain the highest possible quality output (High Quality JPEG). The dimensions are optimized for each platform to prevent compression artifacts.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="social" />
-  </Fragment>
+  </div>
 </ToolLayout>

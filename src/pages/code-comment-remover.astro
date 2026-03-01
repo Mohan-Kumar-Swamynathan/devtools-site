@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('code').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <CodeCommentRemover client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Code Comment Remover?</h2>
     <p>
       Code Comment Remover is a free online tool that removes comments from code files. 
@@ -25,11 +25,9 @@ const relatedTools = getToolsByCategory('code').filter(t => t.id !== tool.id).sl
       <li>Copy or download cleaned code</li>
       <li>100% client-side</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>

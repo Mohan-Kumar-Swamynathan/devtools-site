@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).s
 <ToolLayout tool={tool}>
   <ImageRotator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Image Rotator & Flipper?</h2>
     <p>
       Image Rotator & Flipper is a free online tool that allows you to rotate images 90°, 180°, 270° 
@@ -27,12 +27,10 @@ const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).s
       <li>Batch process multiple images</li>
       <li>100% client-side - your images never leave your device</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).s
 <ToolLayout tool={tool}>
   <SvgToPng client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is SVG to PNG/JPEG Converter?</h2>
     <p>
       SVG to PNG/JPEG Converter is a free online tool that converts SVG images to PNG or JPEG format. 
@@ -26,12 +26,10 @@ const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).s
       <li>Real-time preview</li>
       <li>100% client-side</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

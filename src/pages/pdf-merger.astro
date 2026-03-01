@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('pdf').filter(t => t.id !== tool.id).sli
 <ToolLayout tool={tool}>
   <PdfMerger client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is PDF Merger?</h2>
     <p>
       PDF Merger is a free online tool that allows you to merge multiple PDF files into one. 
@@ -26,12 +26,10 @@ const relatedTools = getToolsByCategory('pdf').filter(t => t.id !== tool.id).sli
       <li>Download merged PDF</li>
       <li>100% client-side - your files never leave your device</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

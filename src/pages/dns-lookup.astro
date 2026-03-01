@@ -10,7 +10,7 @@ const tool = getToolBySlug('dns-lookup')!;
 <ToolLayout tool={tool}>
   <DnsLookup client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Free DNS Record Checker</h2>
     <p>
       Instantly check DNS records for any domain name. Our tool performs a live query to Authoritative Name Servers to fetch current A, AAAA, MX, NS, CNAME, TXT, and SOA records.
@@ -32,9 +32,9 @@ const tool = getToolBySlug('dns-lookup')!;
       <li><strong>Check Propagation</strong>: See if your recent DNS changes have updated.</li>
       <li><strong>Verify Email Setup</strong>: Check if MX and SPF records are correctly configured.</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         How often are these records updated?
@@ -51,9 +51,9 @@ const tool = getToolBySlug('dns-lookup')!;
         Propogation is the time it takes for DNS changes to spread across the internet. It can take anywhere from a few minutes to 48 hours depending on the TTL settings.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="network" />
-  </Fragment>
+  </div>
 </ToolLayout>

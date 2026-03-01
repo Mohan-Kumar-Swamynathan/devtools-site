@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id
 <ToolLayout tool={tool}>
   <Base64 client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Base64 Encoding?</h2>
     <p>
       Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. 
@@ -25,13 +25,11 @@ const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id
       <li>Copy results with one click</li>
       <li>Works with any text input</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
 

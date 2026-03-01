@@ -10,7 +10,7 @@ const tool = getToolBySlug('utm-builder')!;
 <ToolLayout tool={tool}>
   <UtmBuilder client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Campaign URL Builder</h2>
     <p>
       Create custom Campaign URLs for tracking custom campaigns in Google Analytics 4 (GA4) and other analytics tools. Our free UTM Builder makes it easy to add UTM parameters to your URLs so you can track the effectiveness of your marketing campaigns.
@@ -28,9 +28,9 @@ const tool = getToolBySlug('utm-builder')!;
       <li><strong>Medium:</strong> The advertising or marketing medium (e.g. cpc, banner, email).</li>
       <li><strong>Campaign Name:</strong> The individual campaign name, slogan, promo code, etc.</li>
     </ul>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="web" />
-  </Fragment>
+  </div>
 </ToolLayout>

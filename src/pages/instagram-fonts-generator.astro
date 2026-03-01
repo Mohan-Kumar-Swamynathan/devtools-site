@@ -10,7 +10,7 @@ const tool = getToolBySlug('instagram-fonts-generator')!;
 <ToolLayout tool={tool}>
   <InstagramFonts client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Instagram Fonts Generator</h2>
     <p>
       Make your Instagram bio and captions stand out with our free font generator. Convert normal text into dozens of different Unicode font styles that you can copy and paste anywhere.
@@ -38,9 +38,9 @@ const tool = getToolBySlug('instagram-fonts-generator')!;
       <li>WhatsApp & Telegram</li>
       <li>Discord</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         Why do some characters show as boxes?
@@ -57,9 +57,9 @@ const tool = getToolBySlug('instagram-fonts-generator')!;
         Use these fonts sparingly. Screen readers may try to read the mathematical description of the characters (e.g., "mathematical bold capital A") which can be annoying for visually impaired users. It's best used for decoration, not critical information.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="social" />
-  </Fragment>
+  </div>
 </ToolLayout>

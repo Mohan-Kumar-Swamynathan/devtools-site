@@ -11,14 +11,14 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <JsonCsvConverter client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is JSON to CSV Converter?</h2>
     <p>
       Convert JSON arrays to CSV format. Perfect for exporting JSON data to spreadsheet applications.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         How does JSON to CSV conversion work?
@@ -28,12 +28,10 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
         with object keys as column headers.
       </p>
     </details>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

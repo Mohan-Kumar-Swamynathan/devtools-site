@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('text').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <AsciiArtGenerator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is ASCII Art Generator?</h2>
     <p>
       Convert text to ASCII art with different font styles. Create decorative text for terminals and plain text documents.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

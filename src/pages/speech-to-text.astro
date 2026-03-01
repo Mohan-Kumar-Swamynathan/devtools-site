@@ -11,18 +11,16 @@ const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <SpeechToText client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Speech to Text?</h2>
     <p>
       Convert speech to text using browser-native Web Speech API. Real-time transcription as you speak. 
       Perfect for dictation, voice notes, and accessibility.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

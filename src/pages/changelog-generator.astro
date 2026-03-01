@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('documentation').filter(t => t.id !== to
 <ToolLayout tool={tool}>
   <ChangelogGenerator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Changelog Generator?</h2>
     <p>
       Generate CHANGELOG.md files following Keep a Changelog format. Organize changes by type (Added, Changed, Fixed, etc.).
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

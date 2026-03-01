@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).sli
 <ToolLayout tool={tool}>
   <RgbToHex client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is RGB to Hex Converter?</h2>
     <p>
       RGB to Hex Converter is a free online tool that converts RGB color values to hex codes. 
@@ -27,12 +27,10 @@ const relatedTools = getToolsByCategory('css').filter(t => t.id !== tool.id).sli
       <li>CSS values output</li>
       <li>100% client-side</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

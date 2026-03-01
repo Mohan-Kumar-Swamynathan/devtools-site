@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('formatters').filter(t => t.id !== tool.
 <ToolLayout tool={tool}>
   <SqlFormatter client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is SQL Formatter?</h2>
     <p>
       Beautify and format SQL queries with proper indentation. Supports MySQL, PostgreSQL, SQL Server.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

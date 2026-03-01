@@ -10,7 +10,7 @@ const tool = getToolBySlug('youtube-thumbnail-downloader')!;
 <ToolLayout tool={tool}>
   <YouTubeThumbnail client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>YouTube Thumbnail Downloader</h2>
     <p>
       Our free YouTube Thumbnail Downloader is the easiest way to find and download thumbnails from any YouTube video. 
@@ -35,9 +35,9 @@ const tool = getToolBySlug('youtube-thumbnail-downloader')!;
       <li><strong>High Quality (480x360)</strong>: Suitable for smaller displays and mobile devices.</li>
       <li><strong>Medium Quality (320x180)</strong>: Smallest size, best for quick previews or icons.</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         Is it free to download YouTube thumbnails?
@@ -62,9 +62,9 @@ const tool = getToolBySlug('youtube-thumbnail-downloader')!;
         Thumbnails are copyrighted by the video owner. You should only use them for fair use purposes (like reporting, criticism, or commentary) or if you have permission from the creator.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="social" />
-  </Fragment>
+  </div>
 </ToolLayout>

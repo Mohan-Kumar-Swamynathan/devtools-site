@@ -13,7 +13,7 @@ const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slic
     <p class="text-sm" style="color: var(--text-muted);">This tool will be available soon. Check back later!</p>
   </div>
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Text Paraphrase Tool?</h2>
     <p>
       Text Paraphrase Tool is a free AI tool that rewrites sentences and paragraphs while maintaining meaning. 
@@ -28,13 +28,11 @@ const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slic
       <li>Works offline after first load</li>
       <li>Privacy-focused - your data never leaves your device</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
 

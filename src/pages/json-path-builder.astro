@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <JsonPathBuilder client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is JSON Path Builder?</h2>
     <p>
       JSON Path Builder is a free online tool that allows you to build and test JSON paths visually. 
@@ -26,12 +26,10 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
       <li>Copy results</li>
       <li>100% client-side</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

@@ -10,7 +10,7 @@ const tool = getToolBySlug('tweet-to-image')!;
 <ToolLayout tool={tool}>
   <TweetToImage client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Turn Tweets into Beautiful Images</h2>
     <p>
       Create stunning, shareable images from tweets/posts for Instagram, LinkedIn, and Facebook. Our Tweet to Image generator lets you create verified mockups with customizable backgrounds, themes, and metrics.
@@ -28,9 +28,9 @@ const tool = getToolBySlug('tweet-to-image')!;
     <p>
       Screenshots of tweets often look low quality or cluttered. By using a generator, you get a clean, professional-looking image that boosts engagement on visual platforms like Instagram and LinkedIn where text-only posts don't perform as well.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         Do I need a Twitter account?
@@ -47,9 +47,9 @@ const tool = getToolBySlug('tweet-to-image')!;
         Yes, it's 100% free and generates images without watermarks.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="social" />
-  </Fragment>
+  </div>
 </ToolLayout>

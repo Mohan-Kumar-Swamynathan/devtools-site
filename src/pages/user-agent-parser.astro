@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).sli
 <ToolLayout tool={tool}>
   <UserAgentParser client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is User Agent Parser?</h2>
     <p>
       User Agent Parser is a free online tool that parses and displays browser, device, and OS information 
@@ -26,11 +26,9 @@ const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).sli
       <li>Detect device type</li>
       <li>View rendering engine</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>

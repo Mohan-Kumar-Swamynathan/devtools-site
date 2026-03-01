@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).s
 <ToolLayout tool={tool}>
   <GifFrameExtractor client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is GIF Frame Extractor?</h2>
     <p>
       GIF Frame Extractor is a free online tool that allows you to extract individual frames from animated GIFs. 
@@ -26,12 +26,10 @@ const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).s
       <li>Download all frames as a ZIP file</li>
       <li>100% client-side - your GIFs never leave your device</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('documentation').filter(t => t.id !== to
 <ToolLayout tool={tool}>
   <ContributingGuideGenerator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Contributing Guide Generator?</h2>
     <p>
       Generate CONTRIBUTING.md files with setup instructions, code style guidelines, and testing requirements.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

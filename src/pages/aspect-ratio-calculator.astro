@@ -10,7 +10,7 @@ const tool = getToolBySlug('aspect-ratio-calculator')!;
 <ToolLayout tool={tool}>
   <AspectRatioCalculator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Online Aspect Ratio Calculator</h2>
     <p>
       Easily calculate aspect ratios and resize dimensions for images, video, and screens. This tool helps designers and developers determine the correct width or height to maintain a specific aspect ratio.
@@ -29,9 +29,9 @@ const tool = getToolBySlug('aspect-ratio-calculator')!;
     <p>
       Simply enter the original width and height (or select a preset ratio). Then enter one dimension (width or height) for the new size, and the tool will automatically calculate the other dimension to match the ratio.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         What is aspect ratio?
@@ -40,9 +40,9 @@ const tool = getToolBySlug('aspect-ratio-calculator')!;
         Aspect ratio is the proportional relationship between the width and height of an image or screen. It is usually expressed as two numbers separated by a colon, like 16:9.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="image" />
-  </Fragment>
+  </div>
 </ToolLayout>

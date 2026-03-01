@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <JsonYamlConverter client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is JSON to YAML Converter?</h2>
     <p>
       Convert JSON data to YAML format instantly. This tool helps you transform JSON objects 
@@ -25,9 +25,9 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
       <li>Supports nested objects and arrays</li>
       <li>Copy result with one click</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         What is YAML?
@@ -37,12 +37,10 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
         commonly used for configuration files.
       </p>
     </details>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

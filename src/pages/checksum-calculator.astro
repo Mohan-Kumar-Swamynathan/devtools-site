@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('security').filter(t => t.id !== tool.id
 <ToolLayout tool={tool}>
   <ChecksumCalculator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Checksum Calculator?</h2>
     <p>
       Calculate SHA-1, SHA-256, and SHA-512 checksums for text data. Useful for data integrity verification.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

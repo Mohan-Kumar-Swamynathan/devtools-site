@@ -10,7 +10,7 @@ const tool = getToolBySlug('hashtag-generator')!;
 <ToolLayout tool={tool}>
   <HashtagGenerator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>Hashtag Generator for Instagram & TikTok</h2>
     <p>
       Boost your social media engagement with our free Hashtag Generator. We've curated lists of the most popular and high-converting hashtags for various niches like Tech, Travel, Fitness, and Food.
@@ -28,9 +28,9 @@ const tool = getToolBySlug('hashtag-generator')!;
     <p>
       Hashtags are the SEO of social media. They help the algorithm understand what your content is about and show it to users who are interested in those topics. Correct tagging can significantly increase your reach beyond your current followers.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         How many hashtags should I use?
@@ -47,9 +47,9 @@ const tool = getToolBySlug('hashtag-generator')!;
         Yes! While TikTok descriptions are shorter, 3-5 targeted hashtags are crucial for the "For You" page algorithm.
       </p>
     </details>
-  </Fragment>
+  </div>
 
   <Fragment slot="related-tools">
     <RelatedTools currentToolSlug={tool.slug} category="social" />
-  </Fragment>
+  </div>
 </ToolLayout>

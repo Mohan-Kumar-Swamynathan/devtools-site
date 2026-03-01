@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id
 <ToolLayout tool={tool}>
   <UnicodeConverter client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Unicode Converter?</h2>
     <p>
       Convert text to Unicode escape sequences and decode Unicode back to text.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

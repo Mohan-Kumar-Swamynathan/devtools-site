@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <JsonFormatter client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is JSON Formatter?</h2>
     <p>
       JSON Formatter is a free online tool that helps you format, validate, and beautify JSON data. 
@@ -34,9 +34,9 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
       <li>Click "Format" to beautify or "Minify" to compress</li>
       <li>Copy the result or download it as a file</li>
     </ol>
-  </Fragment>
+  </div>
 
-  <Fragment slot="faq">
+  <div slot="faq">
     <details class="group">
       <summary class="cursor-pointer font-medium" style="color: var(--text-primary);">
         What is JSON?
@@ -55,13 +55,11 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
         It adds proper indentation and line breaks.
       </p>
     </details>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
 

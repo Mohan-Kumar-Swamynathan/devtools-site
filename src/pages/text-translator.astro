@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slic
 <ToolLayout tool={tool}>
   <TextTranslator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is AI Text Translator?</h2>
     <p>
       AI Text Translator is a free tool that translates text between multiple languages using browser-based AI models. 
@@ -26,13 +26,11 @@ const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slic
       <li>Works offline after first load</li>
       <li>Privacy-focused - your data never leaves your device</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
 

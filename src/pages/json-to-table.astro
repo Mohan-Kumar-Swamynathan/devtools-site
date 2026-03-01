@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <JsonToTable client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is JSON to Table?</h2>
     <p>
       JSON to Table is a free online tool that converts JSON data to a sortable and filterable table. 
@@ -26,12 +26,10 @@ const relatedTools = getToolsByCategory('json').filter(t => t.id !== tool.id).sl
       <li>Automatic column detection</li>
       <li>100% client-side</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).sl
 <ToolLayout tool={tool}>
   <FlowBuilder client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Flow Builder?</h2>
     <p>
       Flow Builder is a free, browser-based visual flowchart builder that combines Canva-level ease with Linear-level precision. 
@@ -56,13 +56,11 @@ const relatedTools = getToolsByCategory('misc').filter(t => t.id !== tool.id).sl
       <li>Business analysts mapping processes</li>
       <li>Anyone who needs to create clear, visual flowcharts</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
 

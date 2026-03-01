@@ -11,18 +11,16 @@ const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).sli
 <ToolLayout tool={tool}>
   <QueryStringParser client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Query String Parser?</h2>
     <p>
       Parse query strings to JSON format or build query strings from JSON objects. 
       Perfect for working with URL parameters and API query strings.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

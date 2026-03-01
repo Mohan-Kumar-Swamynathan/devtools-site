@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.
 <ToolLayout tool={tool}>
   <EnvFileValidator client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is .env File Validator?</h2>
     <p>
       Validate .env files for syntax errors, duplicate keys, and best practices. Ensure your environment variables are properly formatted.
@@ -26,13 +26,11 @@ const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.
       <li>Line-by-line error reporting</li>
       <li>Best practices suggestions</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
 

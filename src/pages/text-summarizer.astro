@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slic
 <ToolLayout tool={tool}>
   <TextSummarizer client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is AI Text Summarizer?</h2>
     <p>
       AI Text Summarizer is a free browser-based tool that uses AI to create concise summaries 
@@ -26,13 +26,11 @@ const relatedTools = getToolsByCategory('ai').filter(t => t.id !== tool.id).slic
       <li>Free and open source</li>
       <li>Privacy-focused - your data never leaves your device</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
 

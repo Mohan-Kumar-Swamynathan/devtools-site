@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id)
 <ToolLayout tool={tool}>
   <ApiTester client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is API Tester?</h2>
     <p>
       Test REST APIs with different HTTP methods. View responses, headers, and timing information. Perfect for API debugging.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

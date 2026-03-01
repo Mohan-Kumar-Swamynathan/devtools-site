@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).sli
 <ToolLayout tool={tool}>
   <BrowserCompatibility client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Browser Compatibility Checker?</h2>
     <p>
       Browser Compatibility Checker is a free online tool that checks browser compatibility for CSS properties 
@@ -26,12 +26,10 @@ const relatedTools = getToolsByCategory('web').filter(t => t.id !== tool.id).sli
       <li>Search for specific features</li>
       <li>100% client-side</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

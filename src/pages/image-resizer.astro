@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('image').filter(t => t.id !== tool.id).s
 <ToolLayout tool={tool}>
   <ImageResizer client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Image Resizer?</h2>
     <p>
       Resize images to custom dimensions. Supports maintaining aspect ratio. All processing happens in your browser.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

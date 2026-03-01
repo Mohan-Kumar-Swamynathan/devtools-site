@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id)
 <ToolLayout tool={tool}>
   <HttpHeadersParser client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is HTTP Headers Parser?</h2>
     <p>
       HTTP Headers Parser is a free online tool that parses and formats HTTP request and response headers. 
@@ -25,11 +25,9 @@ const relatedTools = getToolsByCategory('network').filter(t => t.id !== tool.id)
       <li>Export as JSON</li>
       <li>100% client-side</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>

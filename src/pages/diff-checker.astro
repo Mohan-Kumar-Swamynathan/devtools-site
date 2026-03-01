@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('validators').filter(t => t.id !== tool.
 <ToolLayout tool={tool}>
   <DiffChecker client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Diff Checker?</h2>
     <p>
       Compare two texts and highlight the differences. Side-by-side diff view.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

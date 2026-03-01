@@ -11,17 +11,15 @@ const relatedTools = getToolsByCategory('encoders').filter(t => t.id !== tool.id
 <ToolLayout tool={tool}>
   <Base64ImageDecoder client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Base64 Image Decoder?</h2>
     <p>
       Decode base64 encoded strings back to downloadable images. Convert base64 data URLs to image files.
     </p>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 

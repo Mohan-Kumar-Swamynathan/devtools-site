@@ -11,7 +11,7 @@ const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.
 <ToolLayout tool={tool}>
   <ImageFormatConverter client:load />
 
-  <Fragment slot="seo-content">
+  <div slot="seo-content">
     <h2>What is Image Format Converter?</h2>
     <p>
       Convert images between different formats including PNG, JPG, WebP, and BMP. 
@@ -26,12 +26,10 @@ const relatedTools = getToolsByCategory('converters').filter(t => t.id !== tool.
       <li>Preserve image dimensions</li>
       <li>Download converted images instantly</li>
     </ul>
-  </Fragment>
+  </div>
 
-  <Fragment slot="related-tools">
-    <div class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
+  <div slot="related-tools" class="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-4">
       {relatedTools.map(t => <ToolCard {...t} />)}
-    </div>
-  </Fragment>
+  </div>
 </ToolLayout>
 
